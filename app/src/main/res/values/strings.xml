@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ProjectMain</string>
+    <string name="action_home">Home</string>
+    <string name="action_search">Search</string>
+    <string name="action_add">Add</string>
+    <string name="action_notify">Notification</string>
+    <string name="action_profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
