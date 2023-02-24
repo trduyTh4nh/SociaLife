@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -21,6 +23,8 @@ public class HomeActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
     FloatingActionButton btnAdd;
 
+    TextView test;
+    EditText testedit;
     Toolbar toolbar;
     @SuppressLint("MissingInflatedId")
     @Override
