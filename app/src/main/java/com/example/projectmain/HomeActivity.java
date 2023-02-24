@@ -24,7 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton btnAdd;
 
     TextView test;
-    EditText testedit;
+    EditText testedit   ;
     Toolbar toolbar;
     @SuppressLint("MissingInflatedId")
     @Override
