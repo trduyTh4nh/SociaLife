@@ -128,28 +128,37 @@
                            android:layout_height="wrap_content">
 
                            <LinearLayout
+
                                android:layout_marginBottom="8dp"
                                android:layout_width="wrap_content"
                                android:layout_height="wrap_content">
 
                                <Button
+                                   android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   style="?android:attr/borderlessButtonStyle"
                                    android:layout_marginRight="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framelike" />
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framelike" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:backgroundTint="@color/back"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framecmt" />
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framecmt" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/frameshare" />
+                                  style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/frameshare" />
                            </LinearLayout>
 
                            <TextView
@@ -310,23 +319,31 @@
                                android:layout_height="wrap_content">
 
                                <Button
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
                                    android:layout_marginRight="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framelike" />
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framelike" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:backgroundTint="@color/back"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framecmt" />
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framecmt" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/frameshare" />
+                                  style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/frameshare" />
                            </LinearLayout>
 
                            <TextView
@@ -486,23 +503,31 @@
                                android:layout_height="wrap_content">
 
                                <Button
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
                                    android:layout_marginRight="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framelike" />
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framelike" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:backgroundTint="@color/back"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framecmt" />
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framecmt" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/frameshare" />
+                                  style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/frameshare" />
                            </LinearLayout>
 
                            <TextView
@@ -662,23 +687,31 @@
                                android:layout_height="wrap_content">
 
                                <Button
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
                                    android:layout_marginRight="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framelike" />
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framelike" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:backgroundTint="@color/back"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/framecmt" />
+                                   style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/framecmt" />
 
                                <Button
-                                   android:layout_marginEnd="25dp"
-                                   android:layout_width="30dp"
-                                   android:layout_height="30dp"
-                                   android:background="@drawable/frameshare" />
+                                  style="?android:attr/borderlessButtonStyle"
+                                     android:paddingTop="4dp"
+                                   android:paddingLeft="9dp"
+                                   android:layout_marginRight="25dp"
+                                   android:layout_width="50dp"
+                                   android:layout_height="50dp"
+                                   android:drawableLeft="@drawable/frameshare" />
                            </LinearLayout>
 
                            <TextView
@@ -747,6 +780,7 @@
 
        </LinearLayout>
    </ScrollView>
+
     <androidx.appcompat.widget.Toolbar
         android:layout_marginLeft="-15dp"
         android:id="@+id/toolbar"
@@ -776,4 +810,5 @@
           </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
