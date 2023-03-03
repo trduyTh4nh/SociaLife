@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,12 +26,17 @@ public class HomeActivity extends AppCompatActivity {
 
     TextView test;
     EditText testedit   ;
-    Toolbar toolbar;
+    Toolbar toolbar, toolbar_main;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        toolbar_main = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar_main);
+
+
         // this is line hide
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,8 +57,6 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-
                 Fragment fragment = null;
 
 
@@ -79,5 +83,39 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.header, menu);
+        return  super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        Fragment fragment = null;
+        switch (id){
+            case R.id.nav_home:
+                fragment = new HomeFragment();
+                break;
+            case R.id.nav_search:
+                fragment = new SreachFragment();
+                break;
+            case R.id.nav_add:
+
+                fragment = new AddFragment();
+                break;
+            case R.id.nav_notify:
+                fragment = new NotifyFragment();
+                break;
+            case R.id.nav_user:
+                fragment = new UserFragment();
+                break;
+            default:
+                break;
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, fragment).commit();
+        return true;
     }
 }

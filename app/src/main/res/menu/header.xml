@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home_header"
+        android:title="Home"></item>
+    <item
+        android:id="@+id/nav_search_header"
+        android:title="Search"></item>
+    <item
 
+        android:id="@+id/nav_add_header"
+        android:title="Add"></item>
+    <item
+        android:id="@+id/nav_notify_header"
+        android:title="Notification"></item>
+    <item
+        android:id="@+id/nav_use_header"
+        android:title="User"></item>
 </menu>
