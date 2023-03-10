@@ -45,43 +45,50 @@
             android:paddingRight="50dp">
 
             <EditText
-                android:inputType="textPassword"
+                android:id="@+id/edtUsername"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
                 android:drawableStart="@drawable/ic_user_input"
+                android:drawablePadding="8dp"
                 android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
                 android:hint="username"
-                android:drawablePadding="8dp"
+                android:inputType="text"
+                android:paddingLeft="28dp"
                 android:paddingBottom="15dp"
-                android:textColorHint="#686868"></EditText>
+                android:textColorHint="#686868">
+
+            </EditText>
+
             <EditText
-                android:inputType="textPassword"
+                android:id="@+id/edtPassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
                 android:drawableStart="@drawable/ic_lock_input"
+                android:drawablePadding="8dp"
                 android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
                 android:hint="password"
-                android:drawablePadding="8dp"
+                android:inputType="textPassword"
+                android:paddingLeft="28dp"
                 android:paddingBottom="15dp"
                 android:textColorHint="#686868"></EditText>
+
             <EditText
-                android:inputType="textPassword"
+                android:id="@+id/edtConfirmPassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
                 android:drawableStart="@drawable/ic_lock_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="confirm"
                 android:drawablePadding="8dp"
+                android:drawableTint="#2B2A2A"
+                android:hint="confirm"
+                android:inputType="textPassword"
+                android:paddingLeft="28dp"
                 android:paddingBottom="15dp"
                 android:textColorHint="#686868"></EditText>
 

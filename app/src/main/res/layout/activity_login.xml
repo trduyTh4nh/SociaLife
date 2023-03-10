@@ -56,31 +56,33 @@
             android:paddingRight="50dp">
 
             <EditText
-                android:inputType="textPassword"
+                android:id="@+id/edtUsername"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
                 android:drawableStart="@drawable/ic_user_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="Username"
                 android:drawablePadding="8dp"
+                android:drawableTint="#2B2A2A"
+                android:hint="Username"
+                android:inputType="text"
+                android:paddingLeft="28dp"
                 android:paddingBottom="15dp"
                 android:textColorHint="#686868"></EditText>
 
             <EditText
-                android:inputType="textPassword"
+                android:id="@+id/edtPassword"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
                 android:drawableStart="@drawable/ic_lock_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="Username"
                 android:drawablePadding="8dp"
+                android:drawableTint="#2B2A2A"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="28dp"
                 android:paddingBottom="15dp"
                 android:textColorHint="#686868"></EditText>
 
@@ -151,20 +153,24 @@
                 android:text="Bạn chưa có tài khoản"></TextView>
 
             <TextView
+                android:id="@+id/tvCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:clickable="true"
+                android:onClick="tvCreate_onClick"
                 android:text="Create"
                 android:textColor="@color/black"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold">
+
+            </TextView>
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:layout_width="190dp"
         android:layout_height="190dp"
-        android:layout_marginTop="679dp"
+        android:layout_marginTop="700dp"
         android:background="@drawable/shadow_color_box"
         app:layout_constraintEnd_toEndOf="parent"
 
