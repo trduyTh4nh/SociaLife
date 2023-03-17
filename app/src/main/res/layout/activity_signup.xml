@@ -45,9 +45,9 @@
             android:paddingRight="50dp">
 
             <EditText
-                android:id="@+id/edtUsername"
+                android:id="@+id/edtEmailLogin"
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/background_input"
                 android:backgroundTint="#E1E1E1"
@@ -55,6 +55,24 @@
                 android:drawablePadding="8dp"
                 android:drawableTint="#2B2A2A"
                 android:hint="username"
+                android:inputType="text"
+                android:paddingLeft="28dp"
+                android:paddingBottom="15dp"
+                android:textColorHint="#686868">
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="67dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/background_input"
+                android:backgroundTint="#E1E1E1"
+                android:drawableStart="@drawable/ic_user_input"
+                android:drawablePadding="8dp"
+                android:drawableTint="#2B2A2A"
+                android:hint="email"
                 android:inputType="text"
                 android:paddingLeft="28dp"
                 android:paddingBottom="15dp"

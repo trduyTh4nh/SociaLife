@@ -11,9 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignupActivity extends AppCompatActivity {
-    EditText medtUsername, medtPassword, medtConfirmPassword;
+    EditText medtUsername, medtPassword, medtConfirmPassword ,medtEmail;
     Button mbtnSignup , mbtnSignin;
     DBHelper DB;
+
+    //Share Preferences
     SharedPreferences sharedPreferences;
 
     private static final String SHARED_PREF_NAME = "mypref";
@@ -25,7 +27,8 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        medtUsername = (EditText) findViewById(R.id.edtUsername);
+        medtEmail = (EditText) findViewById(R.id.edtEmail);
+        medtUsername = (EditText) findViewById(R.id.edtEmailLogin);
         medtPassword = (EditText) findViewById(R.id.edtPassword);
         medtConfirmPassword = (EditText) findViewById(R.id.edtConfirmPassword);
         mbtnSignup = (Button) findViewById(R.id.fbLogin);
@@ -44,37 +47,58 @@ public class SignupActivity extends AppCompatActivity {
         mbtnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String email = medtEmail.getText().toString();
                 String user = medtUsername.getText().toString();
                 String pass = medtPassword.getText().toString();
                 String repass = medtConfirmPassword.getText().toString();
 
 
                 //Kiểm tra lỗ trống của 3 Edt
-                if(user.equals("")||pass.equals("")||repass.equals(""))
+                if(email.equals("")||pass.equals("")||repass.equals("")||user.equals(""))
                     Toast.makeText(SignupActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 else{
-                    if(pass.equals(repass)){
-                        Boolean checkuser = DB.CheckUsername(user);
-                        if(checkuser==false){
-                            Boolean insert = DB.insertData(user, pass);
-                            if(insert==true){
-                                //Share Preference
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(KEY_NAME,medtUsername.getText().toString());
-                                editor.putString(KEY_PASSWORD,medtPassword.getText().toString());
-                                editor.apply();
 
-                                Toast.makeText(SignupActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-                                startActivity(intent);
-                            }else{
-                                Toast.makeText(SignupActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                    //Check repass
+                    if(pass.equals(repass)){
+
+                        //check name
+                        Boolean checkname = DB.CheckName(name);
+                        if(checkname==false){
+
+                            //check email
+                            Boolean checkemail = DB.CheckEmail(email);
+                            if(checkemail==false){
+
+                                //Truyền dữ liệu
+                                Boolean insert = DB.insertUser(user);
+                                int iduser = DB.getIduser(user);
+                                Boolean insert1 = DB.insertData(iduser,email, pass);
+                                if(insert==true){
+                                    //Share Preference
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(KEY_NAME,medtUsername.getText().toString());
+                                    editor.putString(KEY_PASSWORD,medtPassword.getText().toString());
+                                    editor.apply();
+                                    //
+
+                                    Toast.makeText(SignupActivity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                                else{
+                                    Toast.makeText(SignupActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                Toast.makeText(SignupActivity.this, "Email này đã được tạo !", Toast.LENGTH_SHORT).show();
                             }
                         }
-                        else{
-                            Toast.makeText(SignupActivity.this, "Tài khoản này đã được tạo !", Toast.LENGTH_SHORT).show();
+                        else {
+                            Toast.makeText(SignupActivity.this, "Tên này đã được sử dụng !", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    }
+                    else{
                         Toast.makeText(SignupActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
                     }
                 }

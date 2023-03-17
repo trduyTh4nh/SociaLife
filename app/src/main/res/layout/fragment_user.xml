@@ -27,6 +27,12 @@
                 android:layout_marginStart="-15dp"
                 android:src="@drawable/logo" />
 
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout" />
+
             <TextView
                 android:layout_marginLeft="-10dp"
                 android:layout_marginTop="10dp"
@@ -60,6 +66,7 @@
                 android:paddingLeft="20dp">
 
                 <TextView
+                    android:id="@+id/tvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sơn Tùng MTP"
@@ -99,6 +106,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvFollowingCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -123,6 +131,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvFollowerCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -147,6 +156,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvPostCount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
