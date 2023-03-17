@@ -10,16 +10,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.projectmain.models.User;
+
 public class LoginActivity extends AppCompatActivity {
     EditText medtEmail, medtPassword;
     Button mbtnLogin;
     DBHelper DB;
+    User user;
 
     //Share Preferences
     SharedPreferences sharedPreferences;
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
     @Override
@@ -31,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         medtPassword = (EditText) findViewById(R.id.edtPassword);
         mbtnLogin = (Button) findViewById(R.id.fbLogin);
         DB = new DBHelper(this);
+        user = new User();
+
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
         //Kiểm tra share preference có tồn tại hay không?
@@ -56,7 +62,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         //Share Preference
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(KEY_NAME,medtEmail.getText().toString());
+                        user = DB.getUser(email);
+                        editor.putString(KEY_NAME,user.getName());
+                        editor.putString(KEY_EMAIL,medtEmail.getText().toString());
                         editor.putString(KEY_PASSWORD,medtPassword.getText().toString());
                         editor.apply();
 

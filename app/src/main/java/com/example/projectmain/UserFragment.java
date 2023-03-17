@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectmain.models.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class UserFragment extends Fragment {
@@ -26,9 +27,10 @@ public class UserFragment extends Fragment {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ListView listView;
-    TextView mtvUsername,mtvFollowingCount;
+    TextView mtvUsername,mtvFollowingCount,mtvFollowerCount,mtvPostCount;
     Button mbtnLogout;
     DBHelper DB;
+    User user;
 
     public UserFragment() {
         // Required empty public constructor
@@ -43,6 +45,7 @@ public class UserFragment extends Fragment {
     SharedPreferences sharedPreferences;
 
     private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
     private static final String KEY_PASSWORD = "password";
 
@@ -65,15 +68,23 @@ public class UserFragment extends Fragment {
 
         mtvUsername = view.findViewById(R.id.tvUsername);
         mtvFollowingCount = view.findViewById(R.id.tvFollowingCount);
+        mtvFollowerCount = view.findViewById(R.id.tvFollowerCount);
+        mtvPostCount = view.findViewById(R.id.tvPostCount);
         mbtnLogout = view.findViewById(R.id.btnLogout);
         DB = new DBHelper(getActivity());
+        user = new User();
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String name = sharedPreferences.getString(KEY_NAME,null);
+        String email = sharedPreferences.getString(KEY_EMAIL,null);
+        user = DB.getUser(email);
 
         if(name != null){
             mtvUsername.setText(name);
+            mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
+            mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
+            mtvPostCount.setText(String.valueOf(user.getPost_count()));
         }
 
         mbtnLogout.setOnClickListener(new View.OnClickListener() {

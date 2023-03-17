@@ -1,5 +1,6 @@
 package com.example.projectmain;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.projectmain.models.User;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
@@ -78,14 +81,41 @@ public class DBHelper extends SQLiteOpenHelper {
         myDB.execSQL("drop Table if exists follower");
     }
 
+    //Get toàn bộ thông tin của User liên quan
+    @SuppressLint("Range")
+    //Tạo 1 dữ liệu User
+    public User getUser (String email){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        //Hiển thị toàn bị thông tin của User có liên quan với Email Account
+        Cursor cursor = MyDB.rawQuery("Select u.* from user u join account ac on u.id = ac.iduser where ac.email = ?", new String[]{email});
+        User user = new User();
+        if (cursor.moveToFirst()) {
+            //Lấy thông tin từ SQLite xuống
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            user.setName(cursor.getString(cursor.getColumnIndex("name")));
+            user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
+            user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
+            user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
+            user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
+            user.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+        }
+        cursor.close();
+        MyDB.close();
+        return user;
+    }
+
     //Get ID của user để truyển qua cho Account
     public int getIduser(String name) {
-        SQLiteDatabase MyDB = this.getWritableDatabase();
+        SQLiteDatabase MyDB = this.getReadableDatabase();
         //Do name không thể trùng nên ta tìm theo name
         //Tìm theo name để xuất id
         Cursor cursor = MyDB.rawQuery("Select * from user where name = ?", new String[]{name});
         //getCount để lấy id
-        return cursor.getCount();
+        int id = -1;
+        if (cursor.moveToFirst()) id = cursor.getInt(0);
+        cursor.close();
+        MyDB.close();
+        return id;
     }
 
     //Insert thông tin của User
@@ -96,7 +126,7 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = MyDB.insert("user" , null, contentValues);
         if(result==-1) return false;
         else
-        return true;
+            return true;
     }
 
     //Insert thông tin của Account

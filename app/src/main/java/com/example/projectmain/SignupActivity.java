@@ -63,7 +63,7 @@ public class SignupActivity extends AppCompatActivity {
                     if(pass.equals(repass)){
 
                         //check name
-                        Boolean checkname = DB.CheckName(name);
+                        Boolean checkname = DB.CheckName(user);
                         if(checkname==false){
 
                             //check email
