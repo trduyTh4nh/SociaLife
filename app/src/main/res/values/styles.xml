@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Apptheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="LoginEDT">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:background">@drawable/input_bg</item>
+    </style>
+    <style name="LoginBTN">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/btn_login</item>
+    </style>
+    <style name="GenericBTN">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/btn_generic</item>
+    </style>
+    <style name="SpecialBTN">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@drawable/btn_special</item>
+        <item name="android:textColor">#fff</item>
+    </style>
+
+    <style name="HeaderTitle">
+        <item name="android:textSize">35sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="HeaderSubTitle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="ParagraphTitle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="ParagraphContent">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+    <style name="ParagraphSmall">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/icon</item>
+    </style>
+    <style name="DialogAnimatation">
+        <item name="android:windowEnterAnimation">@anim/test</item>
+        <item name="android:windowExitAnimation">@anim/test</item>
+    </style>
+</resources>

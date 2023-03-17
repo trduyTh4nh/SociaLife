@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bubble_round">100dp</dimen>
+    <dimen name="slight_round">10dp</dimen>
+    <dimen name="text">20dp</dimen>
+</resources>

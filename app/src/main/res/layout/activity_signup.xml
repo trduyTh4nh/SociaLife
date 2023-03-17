@@ -4,145 +4,187 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-
-        <TextView
-            android:layout_width="190dp"
-            android:layout_height="190dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="-80dp"
-            android:background="@drawable/shadow_color_box_signup"></TextView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/roboto_black"
-            android:gravity="center"
-            android:text="Tạo tài khoản"
-            android:textColor="@color/black"
-            android:textSize="35dp"></TextView>
-
-
+        <View
+            android:id="@+id/viewBubble2"
+            android:layout_width="171dp"
+            android:layout_height="171dp"
+            android:layout_marginStart="-75dp"
+            android:layout_marginTop="-75dp"
+            android:background="@drawable/circle_login" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal"
+            android:paddingEnd="20dp"/>
 
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/background_input"
-                android:backgroundTint="#E1E1E1"
-                android:drawableStart="@drawable/ic_user_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="username"
-                android:drawablePadding="8dp"
-                android:paddingBottom="15dp"
-                android:textColorHint="#686868"></EditText>
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_input"
-                android:backgroundTint="#E1E1E1"
-                android:drawableStart="@drawable/ic_lock_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="password"
-                android:drawablePadding="8dp"
-                android:paddingBottom="15dp"
-                android:textColorHint="#686868"></EditText>
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/background_input"
-                android:backgroundTint="#E1E1E1"
-                android:drawableStart="@drawable/ic_lock_input"
-                android:drawableTint="#2B2A2A"
-                android:paddingLeft="28dp"
-                android:hint="confirm"
-                android:drawablePadding="8dp"
-                android:paddingBottom="15dp"
-                android:textColorHint="#686868"></EditText>
+    </LinearLayout>
 
-        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ContentWrapper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center|center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="241dp"
+            android:layout_height="wrap_content"
+            android:cropToPadding="true"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/tvHello"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Xin chào!"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Vui lòng nhập các thông tin của mình để đăng ký"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="right"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <EditText
+                android:id="@+id/userName_account"
+                style="@style/LoginEDT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/user_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Tên người dùng"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/email_account"
+                style="@style/LoginEDT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/envelope_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/pasword_account"
+                style="@style/LoginEDT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/lock_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Mật khẩu"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/confirm_account"
+                style="@style/LoginEDT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/lock_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Nhập lại mật khẩu"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnRegis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_ripple"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical|end"
+            android:longClickable="true"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:gravity="center_vertical"
-                android:text="Create"
-                android:textColor="@color/black"
-                android:textSize="30dp"
-                android:textStyle="bold"></TextView>
+                android:layout_marginEnd="20dp"
+                android:text="Tiếp tục"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text" />
 
-            <FrameLayout
+            <ImageButton
+                android:id="@+id/btnLoginSmall"
+                style="@style/LoginBTN"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/fbLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/button_style"
-                    android:drawableLeft="@drawable/vector_right"
-                    android:gravity="center"
-                    android:minWidth="0dp"
-                    android:minHeight="90dp"
-                    android:paddingLeft="30dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="30dp"
-                    android:paddingBottom="10dp"
-                    android:textColor="@android:color/white" />
-            </FrameLayout>
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/baseline_arrow_forward_24" />
 
         </LinearLayout>
 
-
     </LinearLayout>
 
-    <TextView
-        android:layout_width="290dp"
-        android:layout_height="290dp"
-        android:layout_marginTop="616dp"
-        android:background="@drawable/shadow_color_box_signup"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/linearLayout2"
-        tools:ignore="MissingConstraints"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

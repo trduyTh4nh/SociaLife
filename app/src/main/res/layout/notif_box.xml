@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:padding="15dp"
+        app:cardBackgroundColor="@color/button"
+        app:cardCornerRadius="@dimen/slight_round">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:cardCornerRadius="@dimen/slight_round">
+
+                <ImageView
+                    android:id="@+id/ivAvt"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_weight="0"
+                    android:adjustViewBounds="false"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/profilepic" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            style="@style/ParagraphTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="Tên" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvMsg"
+                        style="@style/ParagraphContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nội dung" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    style="@style/ParagraphSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="0"
+                    android:text="Thời gian" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</FrameLayout>

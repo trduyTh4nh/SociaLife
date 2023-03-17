@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android" android:insetLeft="10dp" android:insetRight="10dp">
+    <layer-list android:paddingMode="nest">
+        <item>
+            <shape android:shape="rectangle">
+                <solid android:color="@android:color/transparent"/>
+            </shape>
+        </item>
+        <item android:top="-27px" android:right="-57px" android:left="-57px">
+            <shape android:shape="rectangle">
+                <solid android:color="@android:color/transparent"/>
+                <stroke
+                    android:dashGap="0px"
+                    android:dashWidth="10px"
+                    android:width="4dp"
+                    android:color="@color/primary" />
+            </shape>
+        </item>
+    </layer-list>
+</inset>

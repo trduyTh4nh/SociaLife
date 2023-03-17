@@ -18,4 +18,16 @@
     <color name="card_3">#D7BDE2</color>
     <color name="card_4">#D2C3D8</color>
     <color name="buttonfollow">#6979F8</color>
+    <color name="primary">#F97794</color>
+    <color name="secondary">#6979F8</color>
+    <color name="secondary_alt">#FF5252</color>
+    <color name="foreground">#E7E7E7</color>
+    <color name="button">#CECECE</color>
+    <color name="background">#FFFFFF</color>
+    <color name="text">#000000</color>
+    <color name="test">@drawable/test</color>
+    <color name="icon">#4a4a4a</color>
+    <!-- color load -->
+
+
 </resources>

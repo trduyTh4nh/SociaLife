@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -17,6 +16,11 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.projectmain.Fragment.AddFragment;
+import com.example.projectmain.Fragment.HomeFragment;
+import com.example.projectmain.Fragment.NotifyFragment;
+import com.example.projectmain.Fragment.SreachFragment;
+import com.example.projectmain.Fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -25,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     FloatingActionButton btnAdd;
 
     TextView test;
-    EditText testedit   ;
+    EditText testedit;
     Toolbar toolbar, toolbar_main;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -33,8 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar_main = findViewById(R.id.toolbar_main);
-        setSupportActionBar(toolbar_main);
+
 
 
         // this is line hide
