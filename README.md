@@ -5,11 +5,13 @@ Hiện nay mạng xã hội ngày càng được phát triển và yêu thích, 
 Để phát triển ứng dụng này, chúng em sẽ dùng đến ngôn ngữ lập trình Java với sự giúp đỡ của các API của Android Studio để thiết kế giao diện, chức năng cũng như là việc kết nối với Cơ sở dữ liệu qua SQLite.\
 Với giao diện đẹp, trực quan và trẻ trung, ứng dụng sẽ hướng đến đối tượng là các bạn trẻ, những người có nhu cầu thể hiện và kết nối với mọi người cao nhất.\
 # Credits
-Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.\
+Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
 2. Tiêu Trí Quang
 3. Hồ Gia Đường.\
+
 Cũng như xin chân thành cảm ơn giảng viên:
+
 - Cô Võ Thị Hồng Tuyết\
 vì đã hướng dẫn tụi em.
 # Kỹ thuật
