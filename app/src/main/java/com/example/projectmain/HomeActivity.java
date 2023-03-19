@@ -6,14 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.projectmain.Fragment.AddFragment;
@@ -27,35 +28,48 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class HomeActivity extends AppCompatActivity {
     BottomNavigationView navigationView;
     FloatingActionButton btnAdd;
-
     TextView test;
-    EditText testedit;
-    Toolbar toolbar, toolbar_main;
+
+    UserFragment uf;
+    Toolbar toolbar_main;
+
+    FragmentManager Fmanager = getSupportFragmentManager();
+
+    ImageButton bars;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        toolbar_main = (Toolbar) findViewById(R.id.toolbar_main);
 
+        Fmanager = getSupportFragmentManager();
 
+        bars = findViewById(R.id.btnSetting);
 
-        // this is line hide
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         navigationView = findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
         navigationView.setSelectedItemId(R.id.nav_home);
 
         btnAdd = findViewById(R.id.fab);
-        btnAdd .setOnClickListener(new View.OnClickListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new AddFragment()).commit();
             }
         });
+        bars.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent iSetting = new Intent(HomeActivity.this, SettingActivity.class);
+                startActivity(iSetting);
+//                overridePendingTransition(R.anim.in_left, R.anim.out_left);
+            }
+        });
+
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -63,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
                 Fragment fragment = null;
 
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_home:
                         fragment = new HomeFragment();
                         break;
@@ -89,16 +103,17 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu(Menu menu){
+
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.header, menu);
-        return  super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Fragment fragment = null;
-        switch (id){
+        switch (id) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 break;

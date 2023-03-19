@@ -1,9 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SettingActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:layout_marginTop="-38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/background_setting_1"></ImageView>
+
+    <LinearLayout
+        android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+      <RelativeLayout
+          android:id="@+id/realtive_layout_setting"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+          <ImageButton
+              android:id="@+id/btn_exit"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
+              android:layout_marginStart="5dp"
+              android:layout_marginTop="5dp"
+              android:layout_marginEnd="5dp"
+              android:layout_marginBottom="5dp"
+              android:background="@drawable/transparent_ripple"
+              android:src="@drawable/btn_close"></ImageButton>
+          <TextView
+              android:textStyle="bold"
+              android:textSize="20dp"
+              android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true"
+              android:text="Cài đặt"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"></TextView>
+          <View
+              android:background="#767676"
+              android:layout_below="@+id/btn_exit"
+              android:layout_width="match_parent"
+              android:layout_height="1dp"></View>
+      </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+
+                android:src="@drawable/avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ImageView>
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/setting_userName"
+                android:textSize="28dp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:text="Sontungmpt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <TextView
+                android:textSize="16dp"
+                android:layout_marginTop="5dp"
+                android:text="sontungmpt@gmail.com | + 0383847293"
+                android:id="@+id/setting_email_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:background="@drawable/wrap_bg"
+            style="@style/Wrap"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Chỉnh sửa thông tin cá nhân"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_bell"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Thông báo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+
+                <TextView
+                    android:textColor="#42BCEE"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="110dp"
+                    android:text="On"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_language"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Ngôn ngữ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+
+                <TextView
+                    android:textColor="#42BCEE"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="110dp"
+                    android:text="Tiếng Việt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/wrap_bg"
+            style="@style/Wrap"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_theme"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+                <TextView
+                    android:textColor="#42BCEE"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="110dp"
+                    android:text="Light mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_logout"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Đăng xuất"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/wrap_bg"
+            style="@style/Wrap"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_contact"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Help &amp; Support"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_communicate"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Contact us"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/transparent_ripple"
+                android:focusable="true"
+                android:padding="10dp"
+                android:clickable="true"
+                android:contextClickable="true"
+                android:paddingLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/ic_privacy"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"></ImageView>
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="30dp"
+                    android:text="Privacy policy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+  </LinearLayout>
+
+</RelativeLayout>

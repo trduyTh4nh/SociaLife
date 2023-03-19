@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -61,15 +61,16 @@
 
                     <Button
                         android:textSize="14dp"
-                        android:layout_width="150dp"
+                        android:layout_width="140dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="50dp"
                         android:layout_marginTop="3dp"
                         android:backgroundTint="@color/material_on_surface_stroke"
                         android:drawableLeft="@drawable/ic_public"
                         android:text="Công Khai"
                         android:textAllCaps="false"
-                        android:textColor="@color/back"></Button>
+                        android:textColor="@color/back"
+                        ></Button>
                 </LinearLayout>
 
             <LinearLayout
@@ -84,17 +85,30 @@
                     android:padding="10dp"
                     android:gravity="top"
                     android:hint="Nội dung bài viết"
-                    android:background="#A7A7A7"
+                    android:background="#FFFBFB"
                     android:layout_width="match_parent"
                     android:layout_height="190dp"></EditText>
 
-                <Button
-                    android:gravity="center"
-                    android:backgroundTint="#FFFFFF"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@drawable/ic_up_image"
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"></Button>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:gravity="center"
+                        android:backgroundTint="#FFFFFF"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/ic_up_image"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"></Button>
+                    <Button
+                        android:backgroundTint="@color/test"
+                        android:textAllCaps="false"
+                        android:text="Đăng bài"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></Button>
+                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>

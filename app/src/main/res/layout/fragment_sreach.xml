@@ -6,22 +6,21 @@
     android:background="@color/white"
     tools:context=".Fragment.SreachFragment">
 
+
     <LinearLayout
+        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
 
         <androidx.appcompat.widget.SearchView
-            android:layout_width="420dp"
-            android:layout_height="100dp"
-            android:layout_margin="20dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:background="@drawable/background_input"
-            android:paddingBottom="10dp"
-            >
+            android:paddingLeft="10dp"
+            android:background="@drawable/search_background"
+            android:layout_width="350dp"
+            android:layout_height="70dp">
         </androidx.appcompat.widget.SearchView>
     </LinearLayout>
+
 
 
 

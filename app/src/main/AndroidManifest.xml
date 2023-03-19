@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ProjectMain"
         tools:targetApi="31">
         <activity
+            android:name=".SettingActivity"
+            android:exported="true">
+
+
+        </activity>
+        <activity
             android:name=".SignupActivity"
             android:exported="true">
 

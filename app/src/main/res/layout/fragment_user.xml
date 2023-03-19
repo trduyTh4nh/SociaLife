@@ -7,42 +7,24 @@
     android:orientation="vertical"
     tools:context=".Fragment.UserFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_marginLeft="-15dp"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        android:background="@color/white">
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent">
-            <ImageView
-                android:id="@+id/imageLogo"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="-15dp"
-                android:src="@drawable/logo" />
 
-            <TextView
-                android:layout_marginLeft="-10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/back"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"></TextView>
-        </LinearLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+<!--    <Button-->
+<!--        android:id="@+id/btnLogout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Button" />-->
 
     <LinearLayout
+       android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="center"
         android:orientation="vertical">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,6 +42,8 @@
                 android:paddingLeft="20dp">
 
                 <TextView
+
+                    android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sơn Tùng MTP"
@@ -99,6 +83,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tvFollowing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

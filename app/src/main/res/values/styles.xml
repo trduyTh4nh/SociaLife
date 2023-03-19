@@ -14,6 +14,13 @@
         <item name="android:elevation">10dp</item>
         <item name="android:background">@drawable/input_bg</item>
     </style>
+    <style name="Wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:elevation">8dp</item>
+        <item name="android:background">@drawable/wrap_bg</item>
+    </style>
     <style name="LoginBTN">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
