@@ -5,10 +5,13 @@ import static android.app.PendingIntent.getActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Activity activity = null;
                 Fragment fragment = null;
 
 
@@ -68,7 +72,6 @@ public class HomeActivity extends AppCompatActivity {
                         fragment = new SreachFragment();
                         break;
                     case R.id.nav_add:
-
                         fragment = new AddFragment();
                         break;
                     case R.id.nav_notify:
@@ -84,7 +87,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
     }
-
 
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.header, menu);

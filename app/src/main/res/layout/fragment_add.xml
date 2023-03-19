@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -46,12 +47,14 @@
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <TextView
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:text="Sơn Tùng MTP"
+                            android:id="@+id/tvName"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"></TextView>
+                            android:layout_height="wrap_content"
+                            android:text="Sơn Tùng MTP"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"></TextView>
                         <TextView
                             android:layout_marginTop="5dp"
                             android:text="\@sontungptmp"
@@ -59,17 +62,6 @@
                             android:layout_height="wrap_content"></TextView>
                     </LinearLayout>
 
-                    <Button
-                        android:textSize="14dp"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
-                        android:layout_marginTop="3dp"
-                        android:backgroundTint="@color/material_on_surface_stroke"
-                        android:drawableLeft="@drawable/ic_public"
-                        android:text="Công Khai"
-                        android:textAllCaps="false"
-                        android:textColor="@color/back"></Button>
                 </LinearLayout>
 
             <LinearLayout
@@ -78,23 +70,30 @@
                 android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <EditText
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:padding="10dp"
+                    android:id="@+id/edtNoiDung"
+                    android:layout_width="match_parent"
+                    android:layout_height="190dp"
+                    android:background="#A7A7A7"
                     android:gravity="top"
                     android:hint="Nội dung bài viết"
-                    android:background="#A7A7A7"
-                    android:layout_width="match_parent"
-                    android:layout_height="190dp"></EditText>
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"></EditText>
+
 
                 <Button
-                    android:gravity="center"
-                    android:backgroundTint="#FFFFFF"
-                    android:layout_marginTop="10dp"
-                    android:drawableLeft="@drawable/ic_up_image"
-                    android:layout_width="55dp"
-                    android:layout_height="wrap_content"></Button>
+                    android:id="@+id/btnDangBai"
+                    android:layout_width="345dp"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng bài" />
+
+                <ImageView
+                    android:id="@+id/imgDangBai"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/avatar" />
             </LinearLayout>
 
         </LinearLayout>

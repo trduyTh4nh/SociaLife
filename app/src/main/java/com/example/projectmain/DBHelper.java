@@ -6,10 +6,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
 import com.example.projectmain.models.User;
+
+import java.io.ByteArrayOutputStream;
 
 public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
@@ -33,8 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "follower_count Integer NOT NULL DEFAULT (0)," +
                 "following_count Integer NOT NULL DEFAULT (0)," +
                 "description  TEXT)");
-        //post
-        myDB.execSQL("create Table post(" +
+        //posts
+        myDB.execSQL("create Table posts(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "content Text," +
@@ -42,25 +47,25 @@ public class DBHelper extends SQLiteOpenHelper {
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "datetime Datetime)");
+                "datetime  Date)");
         //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
-                "idpost Integer REFERENCES post(id) NOT NULL," +
+                "idpost Integer REFERENCES posts(id) NOT NULL," +
                 "datetime Datetime)");
         //comment
         myDB.execSQL("create Table comment(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
-                "idpost Integer REFERENCES post(id) NOT NULL," +
+                "idpost Integer REFERENCES posts(id) NOT NULL," +
                 "content Text," +
                 "datetime Datetime)");
         //share
         myDB.execSQL("create Table share(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
-                "idpost Integer REFERENCES post(id) NOT NULL," +
+                "idpost Integer REFERENCES posts(id) NOT NULL," +
                 "datetime Datetime)");
         //follower
         myDB.execSQL("create Table follower(" +
@@ -74,12 +79,28 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
         myDB.execSQL("drop Table if exists account");
         myDB.execSQL("drop Table if exists user");
-        myDB.execSQL("drop Table if exists post");
+        myDB.execSQL("drop Table if exists posts");
         myDB.execSQL("drop Table if exists likes");
         myDB.execSQL("drop Table if exists comment");
         myDB.execSQL("drop Table if exists share");
         myDB.execSQL("drop Table if exists follower");
+        onCreate(myDB);
     }
+
+
+    //Post
+    public Boolean insertPost(int iduser,String content) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("iduser", iduser);
+        contentValues.put("content", content);
+        long result = MyDB.insert("posts" , null, contentValues);
+        if(result==-1) return false;
+        else
+            return true;
+    }
+
+
 
     //Get toàn bộ thông tin của User liên quan
     @SuppressLint("Range")
@@ -103,6 +124,7 @@ public class DBHelper extends SQLiteOpenHelper {
         MyDB.close();
         return user;
     }
+
 
     //Get ID của user để truyển qua cho Account
     public int getIduser(String name) {

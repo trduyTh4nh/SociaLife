@@ -20,6 +20,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
     @Override
@@ -38,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         //Kiểm tra share preference có tồn tại hay không?
 
         String name = sharedPreferences.getString(KEY_NAME,null);
+        String email = sharedPreferences.getString(KEY_EMAIL,null);
 
         if (name != null){
             Intent i = new Intent(SignupActivity.this , HomeActivity.class);
@@ -77,6 +79,7 @@ public class SignupActivity extends AppCompatActivity {
                                 if(insert==true){
                                     //Share Preference
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(KEY_EMAIL,medtEmail.getText().toString());
                                     editor.putString(KEY_NAME,medtUsername.getText().toString());
                                     editor.putString(KEY_PASSWORD,medtPassword.getText().toString());
                                     editor.apply();
