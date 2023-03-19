@@ -4,6 +4,9 @@ Hiện nay mạng xã hội ngày càng được phát triển và yêu thích, 
 Ứng dụng chúng em có những chức năng cơ bản của một ứng dụng Mạng xã hội như tương tác với các bài viết, đăng bài, theo dõi các người dùng khác và tùy biến thông tin tài khoản để cho mọi người biết về mình nhiều hơn.\
 Để phát triển ứng dụng này, chúng em sẽ dùng đến ngôn ngữ lập trình Java với sự giúp đỡ của các API của Android Studio để thiết kế giao diện, chức năng cũng như là việc kết nối với Cơ sở dữ liệu qua SQLite.\
 Với giao diện đẹp, trực quan và trẻ trung, ứng dụng sẽ hướng đến đối tượng là các bạn trẻ, những người có nhu cầu thể hiện và kết nối với mọi người cao nhất.\
+# Tiến độ
+![](https://geps.dev/progress/10)
+5% - Hoàn thành giao diện, tính năng cứng. Tiến hành kết nối DB
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
