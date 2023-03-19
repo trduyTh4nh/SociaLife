@@ -9,9 +9,10 @@ Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.\
 Trần Duy Thanh\
 Tiêu Trí Quang\
 Hồ Gia Đường.\
-# Ngôn ngữ
+# Kỹ thuật
+## Ngôn ngữ
 Java
-# API
+## API
 Android SDK. Phiên bản API: 26.
-# Activites
+## Activites
 6 activities.
