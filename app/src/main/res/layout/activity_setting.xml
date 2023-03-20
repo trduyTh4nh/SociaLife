@@ -10,7 +10,7 @@
         android:layout_marginTop="-38dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/background_setting_1"></ImageView>
+        android:src="@drawable/background_setting_1" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -30,8 +30,9 @@
               android:layout_marginTop="5dp"
               android:layout_marginEnd="5dp"
               android:layout_marginBottom="5dp"
-              android:background="@drawable/transparent_ripple"
-              android:src="@drawable/btn_close"></ImageButton>
+              android:background="@drawable/exitbtn"
+              android:src="@drawable/close_line" />
+
           <TextView
               android:textStyle="bold"
               android:textSize="20dp"
@@ -39,12 +40,13 @@
               android:layout_centerHorizontal="true"
               android:text="Cài đặt"
               android:layout_width="wrap_content"
-              android:layout_height="wrap_content"></TextView>
+              android:layout_height="wrap_content" />
+
           <View
               android:background="#767676"
               android:layout_below="@+id/btn_exit"
               android:layout_width="match_parent"
-              android:layout_height="1dp"></View>
+              android:layout_height="1dp" />
       </RelativeLayout>
 
         <LinearLayout
@@ -54,11 +56,12 @@
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
 
                 android:src="@drawable/avatar"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></ImageView>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:textColor="@color/black"
@@ -93,93 +96,99 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transparent_ripple"
-                android:focusable="true"
-                android:padding="10dp"
                 android:clickable="true"
                 android:contextClickable="true"
-                android:paddingLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingLeft="30dp">
+
                 <ImageView
-                    android:src="@drawable/ic_profile"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></ImageView>
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/user_3_line"></ImageView>
 
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:text="Chỉnh sửa thông tin cá nhân"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transparent_ripple"
-                android:focusable="true"
-                android:padding="10dp"
                 android:clickable="true"
                 android:contextClickable="true"
-                android:paddingLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingLeft="30dp">
+
                 <ImageView
-                    android:src="@drawable/ic_bell"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"></ImageView>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/notification_2_line"></ImageView>
 
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
                     android:text="Thông báo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"></TextView>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bật"
                     android:textColor="#42BCEE"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="110dp"
-                    android:text="On"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transparent_ripple"
-                android:focusable="true"
-                android:padding="10dp"
                 android:clickable="true"
                 android:contextClickable="true"
-                android:paddingLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingLeft="30dp">
+
                 <ImageView
-                    android:src="@drawable/ic_language"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"></ImageView>
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="30dp"
-                    android:text="Ngôn ngữ"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/earth_line"></ImageView>
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:text="Ngôn ngữ"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"></TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tiếng Việt"
                     android:textColor="#42BCEE"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="110dp"
-                    android:text="Tiếng Việt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
 
@@ -197,59 +206,64 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transparent_ripple"
-                android:focusable="true"
-                android:padding="10dp"
                 android:clickable="true"
                 android:contextClickable="true"
-                android:paddingLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingLeft="30dp">
+
                 <ImageView
-                    android:src="@drawable/ic_theme"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"></ImageView>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/brush_line"></ImageView>
 
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="30dp"
-                    android:text="Theme"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:text="Chủ đề"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"></TextView>
+
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Light mode"
                     android:textColor="#42BCEE"
                     android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="110dp"
-                    android:text="Light mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textStyle="bold"></TextView>
             </LinearLayout>
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/transparent_ripple"
-                android:focusable="true"
-                android:padding="10dp"
                 android:clickable="true"
                 android:contextClickable="true"
-                android:paddingLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:paddingLeft="30dp">
+
                 <ImageView
-                    android:src="@drawable/ic_logout"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"></ImageView>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/logout_box_r_line"></ImageView>
 
                 <TextView
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
                     android:text="Đăng xuất"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TextView>
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"></TextView>
 
 
             </LinearLayout>

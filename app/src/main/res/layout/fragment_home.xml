@@ -30,13 +30,6 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="fill_parent">
-              <ImageView
-                  android:id="@+id/imageLogo"
-                  android:layout_width="match_parent"
-                  android:layout_height="40dp"
-                  android:layout_alignParentTop="true"
-                  android:layout_marginStart="-15dp"
-                  android:src="@drawable/logo" />
 
               <TextView
                   android:layout_marginLeft="-10dp"

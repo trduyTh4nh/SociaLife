@@ -1,587 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Fragment.UserFragment">
 
 
-
-<!--    <Button-->
-<!--        android:id="@+id/btnLogout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Button" />-->
-
-    <LinearLayout
-       android:layout_marginTop="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/image_main"></ImageView>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="20dp">
-
-                <TextView
-
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sơn Tùng MTP"
-                    android:textColor="@color/black"
-                    android:textSize="30dp"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="\@sontungmtp"
-                    android:textSize="16dp"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Loves to travel around the world"
-                    android:textColor="@color/black"></TextView>
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvFollowing"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="4"
-                    android:textColor="@color/black"
-                    android:textSize="28dp"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đang theo dõi"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="1tr"
-                    android:textColor="@color/black"
-                    android:textSize="28dp"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Người theo dõi"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"></TextView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="234"
-                    android:textColor="@color/black"
-                    android:textSize="28dp"
-                    android:textStyle="bold"></TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bài đăng"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"></TextView>
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/buttonfollow"
-            android:gravity="center"
-            android:text="Chỉnh sửa tài khoản"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold"></Button>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#575757"></TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="254 bài viết"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold"></TextView>
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingTop="67dp">
 
-        <TableLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_margin="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
 
-
-            <TableRow
+            <LinearLayout
+                android:id="@+id/profile_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/bubble_round">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/catpfp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingLeft="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trí Quang"
+                            android:textColor="@color/text"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="\@wuang96"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="Code is love, code is life"
+                            android:textColor="@color/text" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
+                    android:layout_marginTop="30dp"
+                    android:gravity="center">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="4"
+                            android:textColor="@color/text"
+                            android:textSize="28dp"
+                            android:textStyle="bold" />
 
-            </TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Đang theo dõi"
+                            android:textColor="@color/text"
+                            android:textSize="18dp" />
+                    </LinearLayout>
 
-            <TableRow
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="1tr"
+                            android:textColor="@color/text"
+                            android:textSize="28dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Người theo dõi"
+                            android:textColor="@color/text"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvPostCount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="234"
+                            android:textColor="@color/text"
+                            android:textSize="28dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bài đăng"
+                            android:textColor="@color/text"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <Button
+                    style="@style/GenericBTN"
+                    android:layout_width="300dp"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Chỉnh sửa tài khoản"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvImages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
+                android:layout_below="@+id/profile_wrapper"
+                android:paddingBottom="50dp" />
+        </RelativeLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img2"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img3"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img4"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img5"></ImageView>
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="5dp"
-                    android:scaleX="1.1"
-                    android:scaleY="1.1"
-                    android:src="@drawable/list_img1"></ImageView>
-
-            </TableRow>
-
-
-        </TableLayout>
 
     </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>
