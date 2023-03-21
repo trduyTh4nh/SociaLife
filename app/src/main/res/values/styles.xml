@@ -20,6 +20,7 @@
         <item name="android:padding">20dp</item>
         <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/wrap_bg</item>
+        <item name="cardCornerRadius">@dimen/slight_round</item>
     </style>
     <style name="LoginBTN">
         <item name="android:layout_width">wrap_content</item>
