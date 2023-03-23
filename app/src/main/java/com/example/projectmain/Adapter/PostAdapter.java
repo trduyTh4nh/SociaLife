@@ -1,6 +1,8 @@
 package com.example.projectmain.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Class.Post;
+import com.example.projectmain.ImageActivity;
 import com.example.projectmain.R;
 
 import java.util.List;
@@ -46,6 +49,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.numberLike.setText(post.getNumber_like());
         holder.content.setText(post.getContent());
         holder.time.setText(post.getTime());
+        holder.imgPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, ImageActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bd = new Bundle();
+                bd.putInt("ImgRes", post.getImgPost());
+                bd.putString("ImgPoster", post.getName());
+                bd.putString("ImgUsername", post.getUsername());
+                bd.putInt("ImgPfp", post.getAvatar());
+                i.putExtras(bd);
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
@@ -62,10 +79,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         public PostViewHolder(@NonNull View view) {
             super(view);
-            avatar = (ImageView) view.findViewById(R.id.avatar);
+            avatar = (ImageView) view.findViewById(R.id.ivPfp);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
-            name = (TextView) view.findViewById(R.id.name);
-            userName = (TextView) view.findViewById(R.id.nameu_user);
+            name = (TextView) view.findViewById(R.id.tvPName);
+            userName = (TextView) view.findViewById(R.id.tvUsername);
             nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
             numberLike = (TextView) view.findViewById(R.id.number_like);
             content = (TextView) view.findViewById(R.id.content_post);
