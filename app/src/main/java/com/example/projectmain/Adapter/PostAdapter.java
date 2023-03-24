@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Class.Post;
 import com.example.projectmain.ImageActivity;
+import com.example.projectmain.PostInfoActivity;
 import com.example.projectmain.R;
 
 import java.util.List;
@@ -63,6 +65,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 context.startActivity(i);
             }
         });
+        holder.btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PostInfoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bn = new Bundle();
+                bn.putString("Username", post.getUsername());
+                bn.putInt("Img", post.getImgPost());
+                bn.putInt("Pfp", post.getAvatar());
+                bn.putString("Name", post.getName());
+                bn.putBoolean("IsCmt", true);
+                intent.putExtras(bn);
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -76,17 +94,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         private ImageView avatar, imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost;
-
+        private ImageButton btnComment;
         public PostViewHolder(@NonNull View view) {
             super(view);
             avatar = (ImageView) view.findViewById(R.id.ivPfp);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.tvPName);
             userName = (TextView) view.findViewById(R.id.tvUsername);
-            nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
+            nameUserPost = (TextView) view.findViewById(R.id.tvUser);
             numberLike = (TextView) view.findViewById(R.id.number_like);
-            content = (TextView) view.findViewById(R.id.content_post);
+            content = (TextView) view.findViewById(R.id.tvContent);
             time = (TextView) view.findViewById(R.id.time_post);
+            btnComment = view.findViewById(R.id.btnComment);
         }
     }
 }

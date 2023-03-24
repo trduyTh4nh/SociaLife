@@ -155,11 +155,11 @@
 
 
                             <ImageButton
-                                android:background="@drawable/comment_alt_regular"
+                                android:id="@+id/btnComment"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:layout_margin="20dp">
-                            </ImageButton>
+                                android:layout_margin="20dp"
+                                android:background="@drawable/comment_alt_regular" />
 
                             <ImageButton
                                 android:background="@drawable/paper_plane_regular"
@@ -207,7 +207,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                android:id="@+id/nameuser_post"
+                                android:id="@+id/tvUser"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="18dp"
@@ -217,7 +217,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/content_post"
+                                android:id="@+id/tvContent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Tulen đặc cầu, đùi bầu,.."
