@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.projectmain.Class.NotifClass;
+import com.example.projectmain.Model.NotifClass;
 import com.example.projectmain.R;
 
 import java.util.ArrayList;

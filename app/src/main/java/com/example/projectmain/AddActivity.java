@@ -1,0 +1,256 @@
+package com.example.projectmain;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.provider.MediaStore;
+import android.Manifest;
+import android.widget.Toast;
+
+import com.example.projectmain.Database.DB;
+import com.example.projectmain.Fragment.HomeFragment;
+import com.example.projectmain.Model.User;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+import com.squareup.picasso.Picasso;
+
+public class AddActivity extends AppCompatActivity {
+
+    EditText medtNoidung;
+    TextView mtvName;
+    Button mbtnDangBai;
+    ImageView mimgDangBai;
+    DB db;
+    User user;
+    SharedPreferences sharedPreferences;
+
+    Uri imageUri;
+
+    public static  final int CAMERA_REQUEST = 100;
+    public static final int STORAGE_REQUEST = 101;
+    public static final int IMAGE_PICK_GALLERY = 102;
+    public static final int IMAGE_PICK_CAMERA = 103;
+
+    private String[]cameraPermission;
+    private String[]storagePermission;
+
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_NAME = "name";
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add);
+        // init
+        initView();
+
+        db = new DB(this);
+        user = new User();
+
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        String name = sharedPreferences.getString(KEY_NAME, null);
+
+        mtvName.setText(name);
+
+        mbtnDangBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = medtNoidung.getText().toString();
+                if(content.equals("")){
+                    Toast.makeText(AddActivity.this, "Hãy nhập nội dung bài viết", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    int iduser = db.getIduser(name);
+                    SQLiteDatabase myDB = db.getWritableDatabase();
+                    ContentValues contentValues = new ContentValues();
+
+                    contentValues.put("iduser", iduser);
+                    contentValues.put("content", content);
+                    contentValues.put("image",String.valueOf(imageUri));
+
+                    long result = myDB.insert("post", null, contentValues);
+                    if(result > 0){
+                        Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(AddActivity.this, HomeFragment.class);
+                        startActivity(i);
+                    }
+                    else {
+                        Toast.makeText(AddActivity.this, "Đăng bài thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        mimgDangBai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImagePickDialog();
+            }
+        });
+    }
+
+    public void ImagePickDialog(){
+        String[] option = {"Camera", "Thư viện"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Chọn ảnh từ ");
+
+        builder.setItems(option, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                if(i == 0){
+                    if(!CheckCamneraPermission()){
+                        requestCameraPermisson();
+                    }
+                    else {
+                        pickFormCamera();
+                    }
+                }
+                else if (i == 1){
+                    if(!CheckCamneraPermission()){
+                        requestStoragePermission();
+                    }
+                    else {
+                        pickFromGallery();
+                    }
+                }
+            }
+        });
+
+        builder.create().show();
+    }
+
+
+    private boolean CheckCamneraPermission(){
+        boolean result_storage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+
+        boolean result_camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+        return  result_camera && result_storage;
+    }
+
+    private void requestCameraPermisson(){
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST);
+    }
+    private boolean CheckStoragePermission(){
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return  result;
+    }
+    private void requestStoragePermission(){
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST);
+    }
+    private void pickFormCamera(){
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Image title");
+        values.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
+
+
+        imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA);
+
+    }
+
+    private void pickFromGallery(){
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+
+        galleryIntent.setType("image/*");
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case CAMERA_REQUEST:
+                if(grantResults.length > 0){
+                    boolean camera_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                    boolean storage_accepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if(camera_accepted && storage_accepted){
+                        pickFromGallery();
+                    }
+                    else {
+                        Toast.makeText(this, "Yêu cầu thư viện ảnh và camera", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            break;
+            case STORAGE_REQUEST:
+                if(grantResults.length > 0){
+                    boolean storage_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+                    if(storage_accepted){
+                        pickFromGallery();
+                    }
+                    else
+                        Toast.makeText(this, "Yêu cầu thư viện ảnh", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+        if(resultCode == RESULT_OK){
+            if(requestCode == IMAGE_PICK_GALLERY){
+                CropImage.activity(data.getData())
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(this);
+            } else if (requestCode == IMAGE_PICK_CAMERA) {
+                CropImage.activity(imageUri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(1,1)
+                        .start(this);
+            }
+            else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if(requestCode == RESULT_OK){
+                    Uri resultUri = result.getUri();
+                    imageUri = resultUri;
+
+                    mimgDangBai.setImageURI(resultUri);
+
+                }
+                else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+                    Exception error = result.getError();
+                    Toast.makeText(this, " " + error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void initView(){
+        mtvName = findViewById(R.id.vbn);
+        medtNoidung = findViewById(R.id.qwe);
+        mbtnDangBai = findViewById(R.id.zxc);
+        mimgDangBai = findViewById(R.id.asd);
+    }
+}

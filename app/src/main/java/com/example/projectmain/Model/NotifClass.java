@@ -1,4 +1,4 @@
-package com.example.projectmain.Class;
+package com.example.projectmain.Model;
 
 public class NotifClass {
     private String name;

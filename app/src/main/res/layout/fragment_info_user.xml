@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.InfoUserFragment">
+
+    <LinearLayout
+        android:id="@+id/ContentWrapper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="241dp"
+            android:layout_height="wrap_content"
+            android:cropToPadding="true"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/logo" />
+
+
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Vui lòng nhập họ tên của mình"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="25dp">
+
+            <EditText
+                android:id="@+id/editTextTextPersonName5"
+                style="@style/LoginEDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/user_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Họ"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/edtUsrname"
+                style="@style/LoginEDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/user_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:ems="10"
+                android:hint="Tên"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="25dp">
+            <EditText
+                android:id="@+id/edtNgaySinh"
+                style="@style/LoginEDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_bg"
+                android:drawableLeft="@drawable/calendar_solid"
+                android:drawablePadding="15dp"
+                android:drawableTint="#9A9A9A"
+                android:elevation="10dp"
+                android:textColorHint="#767676"
+                android:textSize="17dp"
+                android:ems="10"
+                android:hint="Ngày sinh"
+                android:inputType="textPersonName"
+                android:padding="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/transparent_ripple"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical|end"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="Tiếp"
+                android:textColor="@color/text"
+                android:textSize="@dimen/text" />
+
+            <ImageButton
+                android:id="@+id/btnLoginSmall"
+                style="@style/LoginBTN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                app:srcCompat="@drawable/baseline_arrow_forward_24" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

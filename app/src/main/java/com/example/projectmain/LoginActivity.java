@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Model.User;
 
 public class LoginActivity extends AppCompatActivity  implements View.OnClickListener{
     Button mBtnRegister;
@@ -20,9 +22,15 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
     ImageButton mBtnLoginSmall;
     EditText edtEmail, edtPassword;
     ImageButton btnLogin;
+    User user;
 
 
     DB db;
+    SharedPreferences sharedPreferences;
+    private  static final String SHARED_PRE_NAME = "mypref";
+    private static final  String KEY_NAME = "name";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
@@ -43,36 +51,51 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
         // handle
         db = new DB(this);
 
+        user = new User();
+
+        sharedPreferences = getSharedPreferences(SHARED_PRE_NAME, MODE_PRIVATE);
+
+        String name = sharedPreferences.getString(KEY_NAME, null);
+
+        if(name != null)
+            SwitchActivity(HomeActivity.class);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = edtEmail.getText().toString();
-                String password = edtEmail.getText().toString();
-                SwitchActivity(HomeActivity.class);
-                // check
-//                if(email.equals("") || password.equals("")){
-//                    Toast.makeText(LoginActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-//                }
-//                else
-//                {
-//                    Boolean checkEmailandPass = db.CheckEmailAndPassword(email, password);
-//                    if(checkEmailandPass == true)
-//                    {
-//                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//                        startActivity(intent);
-//                    }
-//                    else {
-//                        Toast.makeText(LoginActivity.this, "Sai thông tin tài khoản hoặc mật khẩu", Toast.LENGTH_SHORT).show();
-//                        edtEmail.setText("");
-//                        edtPassword.setText("");
-//                    }
-//                }
+                String password = edtPassword.getText().toString();
+                if(edtEmail.equals("") || edtPassword.equals("")){
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập thông tin đầy đủ", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Boolean checkUser = db.CheckEmailPassword(email, password);
+                    if(checkUser){
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                        user = db.getUser(email);
+
+                        editor.putString(KEY_NAME, user.getName());
+                        editor.putString(KEY_EMAIL, edtEmail.getText().toString());
+                        editor.putString(KEY_PASSWORD, edtPassword.getText().toString());
+                        editor.apply();
+
+                        SwitchActivity(HomeActivity.class);
+                    }
+                    else
+                        Toast.makeText(LoginActivity.this, "tài khoản không tồn tại hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
     }
+
+//    private SharedPreferences getSharedPreferences(String keyName, Integer integer) {
+//
+//    }
 
     @SuppressLint("WrongViewCast")
     public void initView(){

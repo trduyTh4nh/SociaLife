@@ -37,13 +37,15 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp">
 
-                        <ImageView
+                        <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/avatar"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/avatarquang" />
-
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/imgquang"
+                            app:shapeAppearanceOverlay="@style/circleImageView"
+                            app:strokeWidth="10dp" />
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -86,15 +88,14 @@
                             android:text="Theo dõi"
                             android:textAlignment="center"
                             android:textAllCaps="false" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-10dp"
-                            android:gravity="center"
-                            android:text="..."
-                            android:textColor="@color/black"
-                            android:textSize="30sp" />
+                        <ImageButton
+                            android:paddingLeft="15dp"
+                            android:id="@+id/btnOptions"
+                            android:background="@drawable/transparent_ripple"
+                            android:src="@drawable/ellipsis_v_solid"
+                            android:layout_width="35dp"
+                            android:layout_height="50dp"
+                          />
 
                     </LinearLayout>
 
@@ -107,7 +108,7 @@
                         android:scaleType="centerCrop"
                         android:id="@+id/img_post"
                         android:layout_width="wrap_content"
-                        android:layout_height="220dp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/imgquang" />
@@ -135,24 +136,27 @@
 
                             <ImageButton
                                 android:id="@+id/btn_like"
-                                android:background="@drawable/heart_regular"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:src="@drawable/heart_regular"
+                                android:background="@drawable/transparent_ripple"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_margin="20dp">
                             </ImageButton>
 
 
                             <ImageButton
-                                android:background="@drawable/comment_alt_regular"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:src="@drawable/comment_alt_regular"
+                                android:background="@drawable/transparent_ripple"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_margin="20dp">
                             </ImageButton>
 
                             <ImageButton
-                                android:background="@drawable/paper_plane_regular"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:src="@drawable/paper_plane_regular"
+                                android:background="@drawable/transparent_ripple"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:layout_margin="20dp">
                             </ImageButton>
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditInfo_Activity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên: "></TextView>
+
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Email: "></TextView>
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User name: "></TextView>
+
+            <EditText
+                android:id="@+id/edt_user"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Tiểu sử: "></TextView>
+
+            <EditText
+                android:id="@+id/edt_story"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Mật khẩu: "></TextView>
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Xác nhân lại mật khẩu: "></TextView>
+
+            <EditText
+                android:id="@+id/edt_confirmPass"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"></EditText>
+
+        </LinearLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:backgroundTint="@color/buttonfollow"
+        android:textAllCaps="false"
+        android:text="Save"
+        android:layout_marginTop="20dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/avart_current"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/avatar"></ImageView>
+
+    <ImageButton
+        android:id="@+id/btnEdit_image"
+        android:background="@drawable/oval_bg"
+        android:src="@drawable/pen_solid"
+        android:layout_marginLeft="-30dp"
+        android:layout_toEndOf="@+id/avart_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/avart_current"
+       ></ImageButton>
+
+
+
+</RelativeLayout>

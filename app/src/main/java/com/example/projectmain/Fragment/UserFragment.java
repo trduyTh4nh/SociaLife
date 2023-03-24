@@ -16,11 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 import com.google.android.material.navigation.NavigationView;
-
+import android.annotation.SuppressLint;
 
 public class UserFragment extends Fragment {
+
 
     public static UserFragment newInstance(String param1, String param2) {
         UserFragment fragment = new UserFragment();
@@ -40,9 +42,10 @@ public class UserFragment extends Fragment {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ListView listView;
-    TextView mtvUsername,mtvFollowingCount;
+    TextView mtvUsername,mtvFollowingCount, mtvFollowerCount, mtvPostCount;
     Button mbtnLogout;
     DB db;
+    User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,16 +69,23 @@ public class UserFragment extends Fragment {
 
         mtvUsername = view.findViewById(R.id.tvName);
         mtvFollowingCount = view.findViewById(R.id.tvFollowing);
+        mtvFollowerCount = view.findViewById(R.id.tvFollowerCount);
+        mtvPostCount = view.findViewById(R.id.tvPostCount);
 //        mbtnLogout = view.findViewById(R.id.btnLogout);
 
         db = new DB(getActivity());
-
+        // còn cấn
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String name = sharedPreferences.getString(KEY_NAME,null);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        user = db.getUser(email);
 
         if(name != null){
             mtvUsername.setText(name);
+            mtvPostCount.setText(String.valueOf(user.getPost_count()));
+            mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
+            mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
         }
 
 //        mbtnLogout.setOnClickListener(new View.OnClickListener() {

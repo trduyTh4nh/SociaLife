@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.projectmain.Fragment.AddFragment;
 import com.example.projectmain.Fragment.HomeFragment;
+import com.example.projectmain.Fragment.InfoUserFragment;
 import com.example.projectmain.Fragment.NotifyFragment;
 import com.example.projectmain.Fragment.SreachFragment;
 import com.example.projectmain.Fragment.UserFragment;
@@ -66,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent iSetting = new Intent(HomeActivity.this, SettingActivity.class);
                 startActivity(iSetting);
-//                overridePendingTransition(R.anim.in_left, R.anim.out_left);
             }
         });
 

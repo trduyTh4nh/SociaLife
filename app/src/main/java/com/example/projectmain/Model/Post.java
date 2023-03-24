@@ -1,6 +1,6 @@
-package com.example.projectmain.Class;
+package com.example.projectmain.Model;
 
-public class Post {
+public class  Post {
     public Post() {
     }
 
@@ -77,4 +77,6 @@ public class Post {
         this.content = content;
         this.time = time;
     }
+
+
 }

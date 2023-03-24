@@ -31,7 +31,7 @@
               android:layout_marginEnd="5dp"
               android:layout_marginBottom="5dp"
               android:background="@drawable/transparent_ripple"
-              android:src="@drawable/btn_close"></ImageButton>
+              android:src="@drawable/round_close_24"></ImageButton>
           <TextView
               android:textStyle="bold"
               android:textSize="20dp"
@@ -40,11 +40,7 @@
               android:text="Cài đặt"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"></TextView>
-          <View
-              android:background="#767676"
-              android:layout_below="@+id/btn_exit"
-              android:layout_width="match_parent"
-              android:layout_height="1dp"></View>
+
       </RelativeLayout>
 
         <LinearLayout
@@ -229,6 +225,7 @@
             </LinearLayout>
 
             <LinearLayout
+
                 android:background="@drawable/transparent_ripple"
                 android:focusable="true"
                 android:padding="10dp"
@@ -237,10 +234,12 @@
                 android:paddingLeft="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
+                <ImageButton
+                    android:id="@+id/btnLogout"
+                    android:background="@drawable/transparent_round"
                     android:src="@drawable/ic_logout"
                     android:layout_width="25dp"
-                    android:layout_height="25dp"></ImageView>
+                    android:layout_height="25dp"></ImageButton>
 
                 <TextView
                     android:textStyle="bold"

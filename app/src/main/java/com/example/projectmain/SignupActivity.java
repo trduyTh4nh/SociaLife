@@ -25,12 +25,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 //    String Psswd;
 //    String Email;
 
-    DB DB;
+    DB db;
 
     SharedPreferences sharedPreferences;
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
+
+    private static  final String EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
     @Override
@@ -40,9 +42,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         // init
         initView();
         // handle
-        DB = new DB(this);
+        db = new DB(this);
         btnSignup.setOnClickListener(this);
         btnSignupSmall.setOnClickListener(this);
+
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
 //        btnSignup.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -102,17 +105,20 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             if(pass.equals(repass)){
 
                 //check name
-                Boolean checkname = DB.CheckName(user);
+                Boolean checkname = db.CheckName(user);
                 if(checkname == false){
 
                     //check email
-                    Boolean checkemail = DB.CheckEmail(email);
+                    Boolean checkemail = db.CheckEmail(email);
                     if(checkemail==false){
 
                         //Truyền dữ liệu
-                        Boolean insert = DB.insertUser(user);
-                        int iduser = DB.getIduser(user);
-                        Boolean insert1 = DB.insertData(iduser,email, pass);
+                        Boolean insert = db.insertUser(user);
+
+                        int iduser = db.getIduser(user);
+
+                        Boolean insert1 = db.insertData(iduser,email, pass);
+
                         if(insert==true){
                             //Share Preference
                             SharedPreferences.Editor editor = sharedPreferences.edit();
