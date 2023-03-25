@@ -7,29 +7,185 @@
     android:orientation="vertical"
     tools:context=".AddActivity">
 
-    <TextView
-        android:id="@+id/vbn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+<!--    <LinearLayout-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <TextView-->
+<!--            android:id="@+id/vbn"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="TextView" />-->
 
-    <EditText
-        android:id="@+id/qwe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+<!--        <EditText-->
+<!--            android:id="@+id/qwe"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:text="Name" />-->
 
-    <ImageView
-        android:id="@+id/asd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/avatar" />
+<!--        <ImageView-->
+<!--            android:id="@+id/asd"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/avatar" />-->
 
-    <Button
-        android:id="@+id/zxc"
+<!--        <Button-->
+<!--            android:id="@+id/zxc"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Button" />-->
+<!--    </LinearLayout>-->
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            style="@style/HeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="Đăng bài"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/button"
+            android:padding="10dp"
+            app:cardBackgroundColor="@color/foreground"
+            app:cardCornerRadius="@dimen/slight_round">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="@dimen/bubble_round">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/meo" />
+                    </androidx.cardview.widget.CardView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView2"
+                            style="@style/NameFull"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Trí Quang" />
+
+                        <TextView
+                            android:id="@+id/vbn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="\@wuang96" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/button"
+                        style="@style/GenericBTN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0"
+                        android:backgroundTint="@color/button"
+                        android:drawableLeft="@drawable/global_line"
+                        android:drawablePadding="10dp"
+                        android:text="Công khai"
+                        android:textColor="@color/text"
+                        app:rippleColor="@color/primary" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/qwe"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_selector"
+                    android:cursorVisible="true"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="Bạn đang nghĩ gì?"
+                    android:inputType="textMultiLine"
+                    android:padding="10dp"
+                    android:textCursorDrawable="@null" />
+                <ImageView
+                    android:scaleType="center"
+                    android:src="@drawable/camera_solid"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/asd"
+                    style="@style/GenericBTN"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:background="@drawable/btn_generic"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/zxc"
+                            style="@style/FollowBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            android:text="Đăng bài" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
 </LinearLayout>

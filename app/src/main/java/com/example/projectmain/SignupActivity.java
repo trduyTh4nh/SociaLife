@@ -32,7 +32,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
 
-    private static  final String EMAIL = "email";
+    private static  final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
 
     @Override
@@ -47,38 +47,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         btnSignupSmall.setOnClickListener(this);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME,MODE_PRIVATE);
-//        btnSignup.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String email = edtEmail.getText().toString();
-//                String userName = edtUserName.getText().toString();
-//                String password = edtPassword.getText().toString();
-//                String confirmPass = edtConfirm.getText().toString();
-////                 check lỗi khi nhập
-//                if (email.equals("") || userName.equals("") || password.equals("") || confirmPass.equals("")) {
-//                    Toast.makeText(SignupActivity.this, "Vui lòng diền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-//                } else {
-//
-//                    if (password.equals(confirmPass)) {
-//                        Boolean checkEmail = db.checkEmail(email);
-//                        if (checkEmail == false) {
-//
-//                            Boolean insert = db.insertData(email, userName, password);
-//                            if (insert == true) {
-//                                Toast.makeText(SignupActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-//                                startActivity(intent);
-//                            } else
-//                                Toast.makeText(SignupActivity.this, "Đăng kí thất bại", Toast.LENGTH_SHORT).show();
-//                        } else
-//                            Toast.makeText(SignupActivity.this, "Tài khoản này đã được tạo", Toast.LENGTH_SHORT).show();
-//                    } else
-//                        Toast.makeText(SignupActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }
-//        });
-
     }
 
     @SuppressLint("WrongViewCast")
@@ -122,6 +90,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if(insert==true){
                             //Share Preference
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(KEY_EMAIL,edtEmail.getText().toString());
                             editor.putString(KEY_NAME,edtUserName.getText().toString());
                             editor.putString(KEY_PASSWORD,edtPassword.getText().toString());
                             editor.apply();

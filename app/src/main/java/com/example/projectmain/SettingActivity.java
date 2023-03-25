@@ -41,14 +41,17 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-//        btnLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.clear();
-//                editor.commit();
-//            }
-//        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                finish();
+                Intent i = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

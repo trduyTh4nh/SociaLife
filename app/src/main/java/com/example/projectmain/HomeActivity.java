@@ -59,7 +59,8 @@ public class HomeActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new AddFragment()).commit();
+                Intent i = new Intent(HomeActivity.this, AddActivity.class);
+                startActivity(i);
             }
         });
         bars.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +85,7 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.nav_search:
                         fragment = new SreachFragment();
                         break;
-                    case R.id.nav_add:
 
-                        fragment = new AddFragment();
-                        break;
                     case R.id.nav_notify:
                         fragment = new NotifyFragment();
                         break;

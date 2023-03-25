@@ -1,6 +1,24 @@
 package com.example.projectmain.Model;
 
 public class User {
+    private int id;
+    private String name;
+    private byte[] image;
+    private int post_count;
+    private int following_count;
+    private int follower_count;
+    private String description;
+
+    public User() {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.post_count = post_count;
+        this.following_count = following_count;
+        this.follower_count = follower_count;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -56,24 +74,4 @@ public class User {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    private int id;
-    private String name;
-    private byte[] image;
-    private int post_count;
-    private int following_count;
-    private int follower_count;
-    private String description;
-
-    public User(int id, String name, byte[] image, int post_count, int following_count, int follower_count, String description) {
-        this.id = id;
-        this.name = name;
-        this.image = image;
-        this.post_count = post_count;
-        this.following_count = following_count;
-        this.follower_count = follower_count;
-        this.description = description;
-    }
-
-    public User(){}
 }

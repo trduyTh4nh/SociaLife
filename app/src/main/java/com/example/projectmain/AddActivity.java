@@ -94,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
                     long result = myDB.insert("post", null, contentValues);
                     if(result > 0){
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(AddActivity.this, HomeFragment.class);
+                        Intent i = new Intent(AddActivity.this, HomeActivity.class);
                         startActivity(i);
                     }
                     else {
@@ -213,38 +213,54 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
+
+
+    //Hình ảnh được thay đổi do Camera hoặc Thư viện ảnh sẽ trả kết quả ở đây
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        //Trả kết quá Image từ Camera và Gallery ở đây
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY){
+                //Được trả từ Thư viên ảnh
 
-        if(resultCode == RESULT_OK){
-            if(requestCode == IMAGE_PICK_GALLERY){
+                //Crop Hình ảnh
+                //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
-            } else if (requestCode == IMAGE_PICK_CAMERA) {
+            }
+            else if (requestCode == IMAGE_PICK_CAMERA){
+                //Được trả từ Camera
+
+                //Crop Hình ảnh
+                //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(imageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1,1)
                         .start(this);
             }
+
+            //Crop Hình ảnh trả kết quả
             else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if(requestCode == RESULT_OK){
+                if(resultCode == RESULT_OK){
                     Uri resultUri = result.getUri();
                     imageUri = resultUri;
 
+                    //Set hình ảnh vừa crop cho Image View
                     mimgDangBai.setImageURI(resultUri);
-
                 }
-                else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+                //error
+                else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
                     Exception error = result.getError();
-                    Toast.makeText(this, " " + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"" + error, Toast.LENGTH_SHORT).show();
                 }
             }
         }
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     public void initView(){

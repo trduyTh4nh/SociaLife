@@ -197,7 +197,8 @@ public class DB extends SQLiteOpenHelper {
             user.setName(cursor.getString(cursor.getColumnIndex("name")));
             user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
             user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
-            user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_post"))));
+            user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
+            user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
             user.setDescription(cursor.getString(cursor.getColumnIndex("description")));
         }
         cursor.close();
