@@ -1,6 +1,8 @@
 package com.example.projectmain.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +16,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -22,10 +26,11 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
 
-    public PostAdapter( Context context, List<Post> posts) {
+    public PostAdapter(Context context, List<Post> posts) {
         this.posts = posts;
         this.context = context;
     }
+
     Context context;
     List<Post> posts;
 
@@ -53,6 +58,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.content.setText(post.getContent());
         holder.time.setText(post.getTime());
 
+
+        holder.imgPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, ImageActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bd = new Bundle();
+                bd.putInt("ImgRes", post.getImgPost());
+                bd.putString("ImgPoster", post.getName());
+                bd.putString("ImgUsername", post.getUsername());
+                bd.putInt("ImgPfp", post.getAvatar());
+                i.putExtras(bd);
+                context.startActivity(i);
+            }
+        });
+
+        holder.btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, PostDetailActitivty.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("Username", post.getUsername());
+                bundle.putInt("Img", post.getImgPost());
+                bundle.putInt("Pfp", post.getAvatar());
+                bundle.putString("Name", post.getName());
+                bundle.putBoolean("IsCmt", true);
+
+                i.putExtras(bundle);
+                context.startActivity(i);
+            }
+        });
+
+
+        // menu
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,6 +137,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         private ImageButton btnOpenMenu;
+
+        private ImageButton btnComment;
         private ShapeableImageView avatar;
         private ImageView imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost;
@@ -110,8 +153,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             numberLike = (TextView) view.findViewById(R.id.number_like);
             content = (TextView) view.findViewById(R.id.content_post);
             time = (TextView) view.findViewById(R.id.time_post);
-
+            btnComment = (ImageButton) view.findViewById(R.id.btn_Pcomment);
             btnOpenMenu = (ImageButton) view.findViewById(R.id.btnOptions);
+
+
         }
 
 

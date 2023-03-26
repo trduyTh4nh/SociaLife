@@ -136,6 +136,23 @@ public class DB extends SQLiteOpenHelper {
             return true;
     }
 
+    // chưa xong
+    public boolean UpdateDataEditInfo(String email ,String name, String description){
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        //contentValues.put("password", password);
+        contentValues.put("description", description);
+
+        long kq = myDB.update("user", contentValues, "email=?" , new String[]{email});
+        myDB.close();
+        if(kq == -1)
+            return false;
+        else
+            return true;
+    }
+
     //Kiểm tra Email Account trong SQLite?
     public Boolean CheckEmail(String email) {
         SQLiteDatabase MyDB = this.getWritableDatabase();

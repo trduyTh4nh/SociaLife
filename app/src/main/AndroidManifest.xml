@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,29 +18,14 @@
         android:theme="@style/Theme.ProjectMain"
         tools:targetApi="31">
         <activity
+            android:name=".ImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PostDetailActitivty"
+            android:exported="false" />
+        <activity
             android:name=".RelationActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".EditInfo_Activity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".AddActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".SettingActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".SignupActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,10 +33,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".EditInfoActivity"
+            android:exported="true" />
+        <activity
+            android:name=".AddActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
 
-
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

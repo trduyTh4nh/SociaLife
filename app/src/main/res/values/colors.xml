@@ -28,6 +28,7 @@
     <color name="test">@drawable/test</color>
     <color name="icon">#4a4a4a</color>
     <!-- color load -->
-
+    <color name="thumb">@drawable/thumbsel</color>
+    <color name="transparent_black">#7C000000</color>
 
 </resources>

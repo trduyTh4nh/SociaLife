@@ -79,11 +79,12 @@
                         android:gravity="right">
 
                         <Button
+                            style="@style/FollowBtn"
                             android:backgroundTint="#5381F8"
                             android:layout_width="99dp"
-                            android:layout_height="38dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:layout_marginEnd="50dp"
+                            android:layout_marginEnd="10dp"
                             android:gravity="center"
                             android:text="Theo dõi"
                             android:textAlignment="center"
@@ -145,6 +146,7 @@
 
 
                             <ImageButton
+                                android:id="@+id/btn_Pcomment"
                                 android:src="@drawable/comment_alt_regular"
                                 android:background="@drawable/transparent_ripple"
                                 android:layout_width="wrap_content"

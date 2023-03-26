@@ -90,6 +90,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if(insert==true){
                             //Share Preference
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+
                             editor.putString(KEY_EMAIL,edtEmail.getText().toString());
                             editor.putString(KEY_NAME,edtUserName.getText().toString());
                             editor.putString(KEY_PASSWORD,edtPassword.getText().toString());

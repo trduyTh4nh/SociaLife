@@ -89,6 +89,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/btnUpdateInfo"
                 android:background="@drawable/transparent_ripple"
                 android:focusable="true"
                 android:padding="10dp"
@@ -225,7 +226,7 @@
             </LinearLayout>
 
             <LinearLayout
-
+                android:id="@+id/btnLogoff"
                 android:background="@drawable/transparent_ripple"
                 android:focusable="true"
                 android:padding="10dp"

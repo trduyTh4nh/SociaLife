@@ -18,7 +18,9 @@ import com.example.projectmain.Database.DB;
 public class SettingActivity extends AppCompatActivity {
     ImageButton btnExit;
     ImageButton btnLogout;
+    LinearLayout btnUpdate;
 
+    LinearLayout btnLogoff;
     private  static final String SHARED_PREF_NAME = "mypref";
     SharedPreferences sharedPreferences;
 
@@ -29,6 +31,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        btnLogoff = findViewById(R.id.btnLogoff);
         btnExit = findViewById(R.id.btn_exit);
         btnLogout = findViewById(R.id.btnLogout);
 
@@ -41,7 +44,7 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        btnLogoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -49,6 +52,15 @@ public class SettingActivity extends AppCompatActivity {
                 editor.commit();
                 finish();
                 Intent i = new Intent(SettingActivity.this, LoginActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnUpdate = findViewById(R.id.btnUpdateInfo);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SettingActivity.this, EditInfoActivity.class);
                 startActivity(i);
             }
         });

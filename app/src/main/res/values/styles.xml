@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="circleImageView" parent="">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <style name="Apptheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -17,6 +26,7 @@
         <item name="android:padding">20dp</item>
         <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/wrap_bg</item>
+        <item name="cardCornerRadius">@dimen/slight_round</item>
     </style>
     <style name="LoginBTN">
         <item name="android:layout_width">wrap_content</item>
@@ -95,5 +105,10 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/text</item>
     </style>
-
+    <style name="ImageButtonNormal">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/transparent_ripple</item>
+    </style>
 </resources>

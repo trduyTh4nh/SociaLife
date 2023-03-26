@@ -74,11 +74,12 @@ public class UserFragment extends Fragment {
 //        mbtnLogout = view.findViewById(R.id.btnLogout);
 
         db = new DB(getActivity());
-        // còn cấn
+
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String name = sharedPreferences.getString(KEY_NAME,null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
+
         user = db.getUser(email);
 
         if(name != null){
