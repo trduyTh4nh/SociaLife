@@ -104,7 +104,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_post:
-                                Toast.makeText(context, "Post", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.remove_post:
                                 Toast.makeText(context, "Remove", Toast.LENGTH_SHORT).show();
