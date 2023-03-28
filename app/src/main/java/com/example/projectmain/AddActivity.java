@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -67,8 +68,8 @@ public class AddActivity extends AppCompatActivity {
         db = new DB(this);
         user = new User();
 
-        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
@@ -192,8 +193,8 @@ public class AddActivity extends AppCompatActivity {
 
                     boolean storage_accepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if(camera_accepted && storage_accepted){
-                        pickFromGallery();
+                    if(camera_accepted){
+                        pickFormCamera();
                     }
                     else {
                         Toast.makeText(this, "Yêu cầu thư viện ảnh và camera", Toast.LENGTH_SHORT).show();
@@ -204,7 +205,7 @@ public class AddActivity extends AppCompatActivity {
                 if(grantResults.length > 0){
                     boolean storage_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
-                    if(storage_accepted){
+                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S || storage_accepted){
                         pickFromGallery();
                     }
                     else
