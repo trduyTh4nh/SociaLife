@@ -5,25 +5,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LoginActivity extends AppCompatActivity  implements View.OnClickListener{
     Button mBtnRegister;
     LinearLayout mBtnLogin;
     ImageButton mBtnLoginSmall;
+
+    AnimationDrawable animationloading;
     EditText edtEmail, edtPassword;
     ImageButton btnLogin;
     User user;
 
+
+    Timer timerStart;
 
     DB db;
     SharedPreferences sharedPreferences;
@@ -48,8 +57,22 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initView();
+        // ani
+        ImageView loading = (ImageView) findViewById(R.id.aniLoading);
+        animationloading = (AnimationDrawable) loading.getDrawable();
         // handle
         db = new DB(this);
+
+        mBtnRegister = findViewById(R.id.btnRegister);
+
+        mBtnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, SignupActivity.class);
+
+                startActivity(i);
+            }
+        });
 
         user = new User();
 
@@ -73,19 +96,30 @@ public class LoginActivity extends AppCompatActivity  implements View.OnClickLis
                     Boolean checkUser = db.CheckEmailPassword(email, password);
                     if(checkUser){
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-
                         user = db.getUser(email);
-
                         editor.putString(KEY_NAME, user.getName());
                         editor.putString(KEY_EMAIL, edtEmail.getText().toString());
                         editor.putString(KEY_PASSWORD, edtPassword.getText().toString());
                         editor.apply();
 
-                        SwitchActivity(HomeActivity.class);
+                        timerStart = new Timer();
+
+                        loading.setVisibility(View.VISIBLE);
+                        animationloading.start();
+
+                        timerStart.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                SwitchActivity(HomeActivity.class);
+                                finish();
+                            }
+                        },1800);
+
                     }
                     else
                         Toast.makeText(LoginActivity.this, "tài khoản không tồn tại hoặc mật khẩu sai", Toast.LENGTH_SHORT).show();
                 }
+
 
 
             }

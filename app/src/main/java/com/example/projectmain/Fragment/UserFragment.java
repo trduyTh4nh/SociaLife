@@ -62,7 +62,7 @@ public class UserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Random r = new Random();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 5; i++) {
             list.add(new Image(imageRes[r.nextInt(imageRes.length)]));
         }
     }

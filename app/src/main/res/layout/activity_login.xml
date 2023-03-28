@@ -163,6 +163,19 @@
                 android:layout_weight="0"
                 app:srcCompat="@drawable/baseline_arrow_forward_24" />
 
+            <ImageView
+                android:id="@+id/aniLoading"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/loading"
+                tools:ignore="MissingConstraints">
+
+            </ImageView>
+
         </LinearLayout>
 
         <Button
@@ -170,7 +183,9 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chưa có tài khoản? Đăng ký" />
+            android:text="Chưa có tài khoản? Đăng ký"
+            android:textColor="@color/back" />
+
 
     </LinearLayout>
 

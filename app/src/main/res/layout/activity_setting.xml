@@ -89,12 +89,11 @@
                         app:cardCornerRadius="@dimen/bubble_round">
 
                         <ImageView
-
+                            android:scaleType="centerCrop"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-
-                            android:scaleType="centerCrop"
                             android:src="@drawable/meo" />
+
                     </androidx.cardview.widget.CardView>
 
                     <TextView

@@ -77,7 +77,17 @@ public class DB extends SQLiteOpenHelper {
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idfollowing Integer REFERENCES user(id) NOT NULL)");
-        //notification chưa nên ghi nào
+        //notification
+        myDB.execSQL("create Table notification (" +
+                "id Integer PRIMARY KEY NOT NULL UNIQUE, " +
+                "iduser Interger REFERENCES user(id) NOT NULL, " +
+                "content Text, " +
+                "datetime Datetime, " +
+                "idpost Integer REFERENCES post(id) NOT NULL," +
+                " idlike Integer REFERENCES likes(id) NOT NULL," +
+                " idcomment Integer REFERENCES comment(id) NOT NULL, " +
+                "idshare Integer REFERENCES share(id) NOT NULL, " +
+                "idfollower Integer REFERENCES follower(id) NOT NULL)");
     }
 
     @Override
@@ -89,6 +99,7 @@ public class DB extends SQLiteOpenHelper {
         myDB.execSQL("drop Table if exists comment");
         myDB.execSQL("drop Table if exists share");
         myDB.execSQL("drop Table if exists follower");
+        myDB.execSQL("drop Table if exists notification");
     }
 
     //Get ID của user để truyển qua cho Account
@@ -99,7 +110,7 @@ public class DB extends SQLiteOpenHelper {
         Cursor cursor = MyDB.rawQuery("Select * from user where name = ?", new String[]{name});
         //getCount để lấy id
         int id = -1;
-        if(cursor.moveToFirst())
+        if (cursor.moveToFirst())
             id = cursor.getInt(0);
 
         cursor.close();
@@ -137,7 +148,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // chưa xong
-    public boolean UpdateDataEditInfo(String email ,String name, String description){
+    public boolean UpdateDataEditInfo(String email, String name, String description) {
         SQLiteDatabase myDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -145,9 +156,9 @@ public class DB extends SQLiteOpenHelper {
         //contentValues.put("password", password);
         contentValues.put("description", description);
 
-        long kq = myDB.update("user", contentValues, "email=?" , new String[]{email});
+        long kq = myDB.update("user", contentValues, "email=?", new String[]{email});
         myDB.close();
-        if(kq == -1)
+        if (kq == -1)
             return false;
         else
             return true;

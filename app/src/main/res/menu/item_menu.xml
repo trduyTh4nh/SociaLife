@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+
         android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/home_svgrepo_com"
         android:title="Home"></item>
+
     <item
         android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/search_magnifying_glass_svgrepo_com"
         android:title="Search"></item>
-    <item
 
+    <item
         android:id="@+id/nav_add"
-        android:icon="@drawable/ic_add"
+        android:icon="@drawable/add_square_svgrepo_com"
         android:title="Add"></item>
+
     <item
         android:id="@+id/nav_notify"
-        android:icon="@drawable/ic_like"
+        android:icon="@drawable/favorite_svgrepo_com"
         android:title="Notification"></item>
+
     <item
         android:id="@+id/nav_user"
-        android:icon="@drawable/ic_user"
+        android:icon="@drawable/user_circle_svgrepo_com"
         android:title="User"></item>
 </menu>
