@@ -128,7 +128,7 @@
                 android:elevation="10dp"
                 android:ems="10"
                 android:hint="Mật khẩu"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:padding="20dp"
                 android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
                 android:elevation="10dp"
                 android:ems="10"
                 android:hint="Nhập lại mật khẩu"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 android:padding="20dp"
                 android:textStyle="bold" />
         </LinearLayout>

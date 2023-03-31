@@ -2,6 +2,7 @@ package com.example.projectmain.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -10,10 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +29,7 @@ import com.example.projectmain.R;
 import com.google.android.material.navigation.NavigationView;
 
 import android.annotation.SuppressLint;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -45,16 +50,17 @@ public class UserFragment extends Fragment {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
     private static final String KEY_PASSWORD = "password";
+    private static final String KEY_IMAGE_LINK = "linkImage";
 
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ListView listView;
-    TextView mtvUsername, mtvFollowingCount, mtvFollowerCount, mtvPostCount;
+    TextView mtvUsername, mtvFollowingCount, mtvFollowerCount, mtvPostCount, mtvDes;
     Button mbtnLogout;
     DB db;
     User user;
-
+    ImageView avatarMain;
     int[] imageRes = {R.drawable.imgquang, R.drawable.meo, R.drawable.imgcrew, R.drawable.imgpc};
     private ArrayList<Image> list = new ArrayList<Image>();
 
@@ -79,24 +85,37 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        avatarMain = view.findViewById(R.id.avatar_main);
         mtvUsername = view.findViewById(R.id.tvName);
         mtvFollowingCount = view.findViewById(R.id.tvFollowing);
         mtvFollowerCount = view.findViewById(R.id.tvFollowerCount);
         mtvPostCount = view.findViewById(R.id.tvPostCount);
+        mtvDes = view.findViewById(R.id.tvDes);
 //        mbtnLogout = view.findViewById(R.id.btnLogout);
 
         db = new DB(getActivity());
 
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
 
         String name = sharedPreferences.getString(KEY_NAME, null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
-
+        String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         user = db.getUser(email);
+        Uri link = Uri.parse(linkImage);
+        mtvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext().getApplicationContext(), linkImage, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (name != null) {
-            mtvUsername.setText(name);
+           avatarMain.setImageURI(link);
+            mtvUsername.setText(user.getName());
+            mtvDes.setText(user.getDescription());
             mtvPostCount.setText(String.valueOf(user.getPost_count()));
             mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
             mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
@@ -113,14 +132,7 @@ public class UserFragment extends Fragment {
             }
         };
         r.setLayoutManager(g);
-//        mbtnLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.clear();
-//                editor.commit();
-//                getActivity().finish();
-//            }
-//        });
+
     }
+
 }

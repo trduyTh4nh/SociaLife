@@ -6,102 +6,320 @@
     android:layout_height="match_parent"
     tools:context=".EditInfoActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbActionbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal">
+        android:layout_height="67dp"
+        android:background="@color/background"
+        android:elevation="20dp"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="140dp"
-            android:orientation="vertical">
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Tên: "></TextView>-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/edt_name"-->
-<!--                android:layout_width="300dp"-->
-<!--                android:layout_height="wrap_content"></EditText>-->
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="5dp">
 
             <TextView
+                style="@style/ParagraphTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User name: "></TextView>
+                android:text="Chỉnh sửa thông tin"
+                android:textSize="25dp" />
 
-            <EditText
-                android:id="@+id/edt_username"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"></EditText>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Tiểu sử: "></TextView>
-
-            <EditText
-                android:id="@+id/edt_story"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"></EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Mật khẩu: "></TextView>
-
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"></EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Xác nhân lại mật khẩu: "></TextView>
-
-            <EditText
-                android:id="@+id/edt_confirmPass"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"></EditText>
-
+                <ImageButton
+                    android:id="@+id/btnExit"
+                    style="@android:style/Widget.DeviceDefault.ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/exitbtn"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/close_line"
+                    app:tint="@color/icon" />
+            </LinearLayout>
         </LinearLayout>
-    <Button
-        android:id="@+id/btnSave"
-        android:backgroundTint="@color/buttonfollow"
-        android:textAllCaps="false"
-        android:text="Save"
-        android:layout_marginTop="20dp"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"></Button>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tbActionbar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="#E7E7E7"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:drawableLeft="@drawable/smile_regular"
+                    android:drawablePadding="5dp"
+                    android:text="Ảnh đại diện"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp">
+                        <ImageView
+                            android:id="@+id/avart_current"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dp"
+                            android:src="@drawable/img_denvau"></ImageView>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <Button
+                        android:id="@+id/btnEdit_image"
+                        android:layout_width="120dp"
+                        android:layout_height="45dp"
+                        android:layout_marginLeft="50dp"
+                        android:backgroundTint="@color/buttonfollow"
+                        android:drawableLeft="@drawable/pen_solid"
+                        android:text="Thay đổi"
+                        android:textAllCaps="false"></Button>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E7E7E7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="9dp"
+                    android:drawableLeft="@drawable/fingerprint_solid"
+                    android:drawablePadding="5dp"
+                    android:text="Nhận dạng"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="User name"></TextView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:textSize="16dp"
+                            android:padding="10dp"
+                            android:id="@+id/edt_username"
+                            style="@style/editTextStyle"
+                            android:layout_width="240dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/edt_background"></EditText>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"></Button>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="Họ và tên"></TextView>
+
+                        <EditText
+                            android:textSize="16dp"
+                            android:padding="10dp"
+                            android:id="@+id/edt_name"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/edt_background"></EditText>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#E7E7E7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="9dp"
+                    android:drawableLeft="@drawable/user_edit_svgrepo_com"
+                    android:drawablePadding="5dp"
+                    android:text="Mô tả bản thân"></TextView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <EditText
+                        android:textSize="16dp"
+                        android:padding="10dp"
+                        android:id="@+id/edt_story"
+                        style="@style/editTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/edt_background"></EditText>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="#E7E7E7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="9dp"
+                    android:drawableLeft="@drawable/password_svgrepo_com"
+                    android:drawablePadding="5dp"
+                    android:text="Xác nhận"></TextView>
+
+                <LinearLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mật khẩu: "></TextView>
+
+                        <EditText
+                            android:textSize="16dp"
+                            android:inputType="textPassword"
+                            android:padding="10dp"
+                            android:id="@+id/edt_password"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/edt_background"></EditText>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_margin="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xác nhân lại mật khẩu: "></TextView>
+
+                        <EditText
+                            android:layout_marginBottom="10dp"
+                            android:textSize="16dp"
+                            android:inputType="textPassword"
+                            android:padding="10dp"
+                            android:id="@+id/edt_confirmPass"
+                            style="@style/editTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/edt_background"></EditText>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:drawableLeft="@drawable/save_svgrepo_com"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/btnSave"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="20dp"
+                android:textSize="25dp"
+                android:backgroundTint="@color/buttonfollow"
+                android:text="Save"
+                android:textAllCaps="false"></Button>
+        </LinearLayout>
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/avart_current"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/user_circle_solid"></ImageView>
-
-    <ImageButton
-        android:id="@+id/btnEdit_image"
-        android:background="@drawable/oval_bg"
-        android:src="@drawable/pen_solid"
-        android:layout_marginLeft="-30dp"
-        android:layout_toEndOf="@+id/avart_current"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/avart_current"
-       ></ImageButton>
-
-
-
 </RelativeLayout>
+

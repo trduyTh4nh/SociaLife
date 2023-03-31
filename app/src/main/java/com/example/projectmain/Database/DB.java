@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Bitmap;
+import android.widget.Toast;
 
 import com.example.projectmain.Model.User;
 
@@ -132,6 +133,7 @@ public class DB extends SQLiteOpenHelper {
             return true;
     }
 
+
     //Insert thông tin của Account
 
     public Boolean insertData(int iduser, String email, String password) {
@@ -148,20 +150,21 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // chưa xong
-    public boolean UpdateDataEditInfo(String email, String name, String description) {
-        SQLiteDatabase myDB = this.getWritableDatabase();
+    public void UpdateDataEditInfo(User user, String name, String des) {
 
+        SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
-        //contentValues.put("password", password);
-        contentValues.put("description", description);
-
-        long kq = myDB.update("user", contentValues, "email=?", new String[]{email});
+        contentValues.put("description", des);
+        myDB.update("user", contentValues, "id = ?", new String[]{String.valueOf(user.getId())});
         myDB.close();
-        if (kq == -1)
-            return false;
-        else
-            return true;
+    }
+
+
+    public void CheckPassWord(String password) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        Cursor cursor = myDB.rawQuery("SELECT password FROM account ac JOIN user u on u.id = ac.iduser WHERE ac.password = ?", new String[]{password});
+
     }
 
     //Kiểm tra Email Account trong SQLite?

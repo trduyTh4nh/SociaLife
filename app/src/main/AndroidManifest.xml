@@ -19,10 +19,10 @@
         tools:targetApi="31">
         <activity
             android:name=".ImageActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".PostDetailActitivty"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RelationActivity"
             android:exported="true" >

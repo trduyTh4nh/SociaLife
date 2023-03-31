@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -90,6 +91,7 @@ public class AddActivity extends AppCompatActivity {
                     contentValues.put("iduser", iduser);
                     contentValues.put("content", content);
                     contentValues.put("image",String.valueOf(imageUri));
+
 
                     long result = myDB.insert("post", null, contentValues);
                     if(result > 0){
@@ -192,8 +194,8 @@ public class AddActivity extends AppCompatActivity {
 
                     boolean storage_accepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if(camera_accepted && storage_accepted){
-                        pickFromGallery();
+                    if(camera_accepted){
+                        pickFormCamera();
                     }
                     else {
                         Toast.makeText(this, "Yêu cầu thư viện ảnh và camera", Toast.LENGTH_SHORT).show();
@@ -204,7 +206,7 @@ public class AddActivity extends AppCompatActivity {
                 if(grantResults.length > 0){
                     boolean storage_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
-                    if(storage_accepted){
+                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S || storage_accepted){
                         pickFromGallery();
                     }
                     else
