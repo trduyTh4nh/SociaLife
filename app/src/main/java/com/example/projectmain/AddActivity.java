@@ -68,8 +68,8 @@ public class AddActivity extends AppCompatActivity {
         db = new DB(this);
         user = new User();
 
-        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
