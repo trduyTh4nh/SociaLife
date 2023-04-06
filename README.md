@@ -14,3 +14,11 @@ Cũng như xin chân thành cảm ơn giảng viên:
 - Cô Võ Thị Hồng Tuyết
 
 vì đã hướng dẫn tụi em.
+
+# Phiên bản mới có gì?
+## 0.0.11
+1. Thêm trang thông tin bài viết
+2. Thêm CSDL (SQLite)
+3. Đăng nhập, đăng ký
+4. Thêm trang xem ảnh
+5. Thêm chức năng đăng bài
