@@ -252,7 +252,7 @@ public class DB extends SQLiteOpenHelper {
 
         Cursor cursor = myDB.query("post", null, null, null, null, null, null);
 
-        Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+        //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
 
         while (cursor.moveToNext()) {
             int iduser = cursor.getInt(1);
@@ -279,6 +279,24 @@ public class DB extends SQLiteOpenHelper {
         Cursor cursor = mydb.query("user", null, null, null, null, null, null);
 
         while (cursor.moveToNext()) {
+            String name = cursor.getString(1);
+
+            listName.add(name);
+        }
+        return listName;
+    }
+
+    public List<String> getListNameID() {
+        String[] column = {"name"};
+
+        List<String> listName = new ArrayList<String>();
+
+        SQLiteDatabase mydb = this.getReadableDatabase();
+
+        Cursor cursor = mydb.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser" , null);
+
+        while(cursor.moveToNext()) {
+
             String name = cursor.getString(1);
 
             listName.add(name);

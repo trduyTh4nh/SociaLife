@@ -17,8 +17,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Model.User;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -35,6 +37,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     Context context;
     List<Post> posts;
+    List<User> users;
+    List<String> listName;
+    DB db;
 
 
     @NonNull
@@ -48,16 +53,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
-
+     //   User user = users.get(position);
 
 
         if (post == null)
             return;
+      //  db = new DB(context.getApplicationContext());
+
+        //
+
+
         holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
         holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
-        holder.nameUserPost.setText(post.getUsername());
         holder.numberLike.setText(post.getNumber_like());
         holder.content.setText(post.getContent());
 

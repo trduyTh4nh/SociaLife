@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.PerformanceHintManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -74,7 +77,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-
+    List<String> listName;
     ImageButton btnHeart;
     ImageButton btnMenu;
 
@@ -100,15 +103,37 @@ public class HomeFragment extends Fragment {
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
 
         db = new DB(getContext().getApplicationContext());
-        user = db.getUser(email);
 
-        List<Post> posts = db.getPost("file:///data/user/0/com.example.projectmain/cache/cropped577689494.jpg", "test cứng", "cứng ngắt");
+        user = db.getUser(email);
+        listName = db.getListNameID();
+
+        SQLiteDatabase database = db.getReadableDatabase();
+
+        Cursor cursorGetUser = database.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+
+       while (cursorGetUser.moveToNext()){
+
+           int idfit = cursorGetUser.getInt(0);
+
+           Log.d("value is" , String.valueOf(idfit));
+
+           List<Post> posts = db.getPost("file:///data/user/0/com.example.projectmain/cache/cropped577689494.jpg", listName.get(idfit), "");
+           adapter = new PostAdapter(getContext(), posts);
+       }
+        for (int i =0; i < listName.size(); i++){
+            Log.d("value is" , listName.get(i).toString());
+        }
+
+
+
+
+
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);
         recyclerView = view.findViewById(R.id.render);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PostAdapter(getContext(), posts);
+
 
         recyclerView.setAdapter(adapter);
 
