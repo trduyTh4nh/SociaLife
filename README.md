@@ -1,25 +1,13 @@
 # Branch của QUANG
 Ứng dụng mạng xã hội lỏ.
 # Lưu ý cần merge cái gì
-`post.xml`
-`post_img_notext.xml`
-`post_large_paragraph.xml`
-`post_small_paragraph.xml`
-`acitivity_post_info.xml`
-`PostInfoActivity.java`
-`PostAdapter.java`
-# Dev Log
-- INDEV0.0.1H (all branch): Tạo mới dự án (Cả nhóm)
-- INDEV0.0.2H (all branch): Trang đăng nhập, đăng ký (Duy Thanh)
-- INDEV0.0.3H (all branch): Trang home + Fragments (Duy Thanh)
-- INDEV0.0.3.1H (all branch): Trang User (Trí Quang [Implement Recyler view], Duy Thanh [Khung cứng])
-- INDEV0.0.4.2 (all branch): Trang Chủ (Duy Thanh [Implement Recycler view + Giao diện Layout])
-- INDEV0.0.4.2.1 (all branch): Cải tiến trang chủ (Trí Quang)
-- INDEV0.0.4.3 (all branch): Trang thông báo (Duy Thanh [Khung cứng], Trí Quang [RecyclerView implementation])
-- INDEV0.0.5 (all branch): Trang xem hình (Trí Quang)
-- INDEV0.0.6 (all branch): Tạo mới SQLite (Duy Thanh, Gia Đường [Chính])
-- INDEV0.0.7 (all branch): Thử nghiệm SQLte (Duy Thanh, Gia Đường)
-- INDEV0.0.8d (branch ĐƯỜNG): Crop hình, up hình, up post (Gia Đường [Đã Pull Request]) 
+`post.xml`: Một phần\
+`post_img_notext.xml`: Cả phần\
+`post_large_paragraph.xml`: Cả phần\
+`post_small_paragraph.xml`: Cả phần\
+`acitivity_post_info.xml`: Hầu hết (copy paste càng tốt)\
+`PostInfoActivity.java`: Hầu hết (copy paste càng tốt)\
+`PostAdapter.java`: Một phần
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
