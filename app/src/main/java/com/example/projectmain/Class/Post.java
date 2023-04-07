@@ -11,6 +11,7 @@ public class Post {
     String number_like;
     String content;
     String time;
+    String postContent;
     public int getAvatar() {
         return avatar;
     }
@@ -67,8 +68,15 @@ public class Post {
         this.time = time;
     }
 
+    public String getPostContent() {
+        return postContent;
+    }
 
-    public Post(int avatar, int imgPost, String username, String name, String number_like, String content, String time) {
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
+    }
+
+    public Post(int avatar, int imgPost, String username, String name, String number_like, String content, String time, String postContent) {
         this.avatar = avatar;
         this.imgPost = imgPost;
         this.username = username;
@@ -76,5 +84,6 @@ public class Post {
         this.number_like = number_like;
         this.content = content;
         this.time = time;
+        this.postContent = postContent;
     }
 }

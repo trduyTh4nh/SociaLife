@@ -38,7 +38,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btnExit"
+                    android:id="@+id/btnHome"
                     style="@android:style/Widget.DeviceDefault.ImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -73,225 +73,52 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/llPostContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_weight="0"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/edtComment"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:background="@drawable/button_selector"
+                        android:ems="10"
+                        android:hint="Viết bình luận của bạn"
+                        android:inputType="textPersonName"
+                        android:padding="10dp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:cardCornerRadius="@dimen/bubble_round">
-
-                                    <ImageView
-                                        android:id="@+id/ivPfp"
-                                        android:layout_width="60dp"
-                                        android:layout_height="60dp"
-                                        android:layout_gravity="center"
-                                        android:scaleType="centerCrop"
-                                        android:src="@drawable/profilepic" />
-                                </androidx.cardview.widget.CardView>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_marginLeft="20dp"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:id="@+id/tvPName"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="name"
-                                        android:textColor="@color/black"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:id="@+id/tvUsername"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="\@user"
-                                        android:textColor="#565656"></TextView>
-
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginStart="10dp"
-                                android:gravity="center_vertical|end"
-                                android:orientation="horizontal"
-                                android:paddingEnd="10dp">
-
-                                <Button
-                                    android:id="@+id/button2"
-                                    style="@style/FollowBtn"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="0"
-                                    android:background="@null"
-                                    android:backgroundTint="@color/secondary"
-                                    android:text="Theo dõi"
-                                    android:textAllCaps="false"
-                                    app:cornerRadius="@dimen/slight_round" />
-
-                                <ImageButton
-                                    android:id="@+id/imageButton2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="0"
-                                    android:background="@drawable/transparent_ripple"
-                                    android:padding="10dp"
-                                    app:srcCompat="@drawable/more_line" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <ImageView
-                                android:id="@+id/img_post"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="10dp"
-                                android:adjustViewBounds="true"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/meo" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="24dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="24dp"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:orientation="vertical">
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="8dp"
-                                    android:paddingLeft="-18dp">
-
-                                    <ImageButton
-                                        android:id="@+id/btn_like"
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:layout_margin="20dp"
-                                        android:background="@drawable/heart_regular"></ImageButton>
-
-
-                                    <ImageButton
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:layout_margin="20dp"
-                                        android:background="@drawable/comment_alt_regular"></ImageButton>
-
-                                    <ImageButton
-                                        android:layout_width="30dp"
-                                        android:layout_height="30dp"
-                                        android:layout_margin="20dp"
-                                        android:background="@drawable/paper_plane_regular"></ImageButton>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
-
-                                    <TextView
-                                        android:id="@+id/number_like"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="1.7m"
-                                        android:textColor="#333333"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="Lượt thích"
-                                        android:textColor="#333333"
-                                        android:textSize="15dp"
-                                        android:textStyle="bold" />
-                                </LinearLayout>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="0"
-                                android:orientation="horizontal">
-
-                                <EditText
-                                    android:id="@+id/edtComment"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/button_selector"
-                                    android:ems="10"
-                                    android:hint="Viết bình luận của bạn"
-                                    android:inputType="textPersonName"
-                                    android:padding="10dp" />
-
-                                <Button
-                                    android:id="@+id/btnUploadComment"
-                                    style="@style/FollowBtn"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_weight="0"
-                                    android:insetTop="3dp"
-                                    android:insetBottom="3dp"
-                                    android:text="Đăng" />
-                            </LinearLayout>
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/rcvComments"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_weight="0" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
+                    <Button
+                        android:id="@+id/btnUploadComment"
+                        style="@style/FollowBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="0"
+                        android:insetTop="3dp"
+                        android:insetBottom="3dp"
+                        android:text="Đăng" />
                 </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_weight="0" />
             </LinearLayout>
 
         </RelativeLayout>

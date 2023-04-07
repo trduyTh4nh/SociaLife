@@ -40,7 +40,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btnExit"
+                    android:id="@+id/btnHome"
                     style="@android:style/Widget.DeviceDefault.ImageButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -129,6 +129,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/btnEditPersonal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent_ripple"
@@ -155,6 +156,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/btnEditNotif"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent_ripple"
@@ -196,6 +198,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/btnEditLang"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent_ripple"
@@ -234,6 +237,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/btnApp"
                     style="@style/Wrap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -244,6 +248,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/btnAppearance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent_ripple"
@@ -279,6 +284,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/btnLogOut"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/transparent_ripple"

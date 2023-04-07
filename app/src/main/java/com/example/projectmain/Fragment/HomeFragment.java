@@ -111,12 +111,12 @@ public class HomeFragment extends Fragment {
 
     public List<Post> listPost(){
         List<Post> posts = new ArrayList<>();
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
-        posts.add(new Post(R.drawable.avatarvau, R.drawable.imgden, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
-        posts.add(new Post(R.drawable.avatarvau, R.drawable.imgden, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
+        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước", null));
+        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước", null));
+        posts.add(new Post(R.drawable.avatarvau, R.drawable.imgden, "@den:", "Đen Vâu", "1.1k", null, "1 ngày trước", null));
+        posts.add(new Post(R.drawable.avatarquang, -1, "@wuang:", "Trí Quang", "1.1m", "Cùng với quá trình toàn cầu hóa và sự phát triển của công nghệ thông tin, mạng internet trên thế giới và Việt Nam ngày càng phát triển mạnh mẽ, nó đã bao trùm hầu như toàn bộ các lãnh thỗ trên thế giới và có khoảng 66% dân số trên thế giới đã và đang sử dụng internet, nhu cầu chia sẽ thông tin, kết nối bạn bè là nhu cầu thúc đẩy sự ra đời và phát triển của mạng xã hội.", "30 phút trước", "Đặc cầu"));
+        posts.add(new Post(R.drawable.avatarduong, -1, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước", "null"));
+        posts.add(new Post(R.drawable.avatarvau, R.drawable.imgden, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước", "Đen thui luôn"));
         return posts;
     }
 }
