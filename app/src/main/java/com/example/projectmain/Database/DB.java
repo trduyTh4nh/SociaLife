@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.widget.Toast;
 
 import com.example.projectmain.Fragment.SreachFragment;
+import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 
@@ -243,35 +244,46 @@ public class DB extends SQLiteOpenHelper {
         return user;
     }
 
-//     "id Integer PRIMARY KEY NOT NULL UNIQUE," +
-//             "iduser Integer REFERENCES user(id) NOT NULL," +
-//             "content Text," +
-//             "image Blob," +
-//             "like_count Integer NOT NULL DEFAULT (0)," +
-//             "comment_count Integer NOT NULL DEFAULT (0)," +
-//             "share_count Integer NOT NULL DEFAULT (0)," +
-//             "datetime Datetime)");
-//
-//    public List<Post> getPost(String avatar, String userName, String name){
-//        String[] column = {"content", "image", "comment_count", "datetime"};
-//        List<Post> posts = new ArrayList<Post>();
-//        SQLiteDatabase myDB = this.getWritableDatabase();
-//        Cursor cursor = myDB.query("post", null, null, null, null,null,null);
-//
-//        while (cursor.moveToNext()){
-//            int iduser = cursor.getInt(1);
-//            String content = cursor.getString(2);
-//            String img = cursor.getString(3);
-//            int count_like = cursor.getInt(4);
-//            int count_comment = cursor.getInt(5);
-//            int count_share = cursor.getInt(6);
-//            String date = cursor.getString(7);
-//
-//
-//            posts.add(new Post(String.valueOf(avatar), String.valueOf(img), userName, name, String.valueOf(count_like), content, date));
-//        }
-//        return;
-//    }
 
+    public List<Post> getPost(String avatar, String userName, String name) {
+        String[] column = {"content", "image", "comment_count", "datetime"};
+        List<Post> posts = new ArrayList<Post>();
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        Cursor cursor = myDB.query("post", null, null, null, null, null, null);
+
+        Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+
+        while (cursor.moveToNext()) {
+            int iduser = cursor.getInt(1);
+            String content = cursor.getString(2);
+            String img = cursor.getString(3);
+            int count_like = cursor.getInt(4);
+            int count_comment = cursor.getInt(5);
+            int count_share = cursor.getInt(6);
+            String time = cursor.getString(7);
+
+            posts.add(new Post(avatar, img, userName, name, String.valueOf(count_like), content, time));
+
+        }
+        return posts;
+    }
+
+    public List<String> getListName() {
+        String[] column = {"name"};
+
+        List<String> listName = new ArrayList<String>();
+
+        SQLiteDatabase mydb = this.getReadableDatabase();
+
+        Cursor cursor = mydb.query("user", null, null, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            String name = cursor.getString(1);
+
+            listName.add(name);
+        }
+        return listName;
+    }
 
 }

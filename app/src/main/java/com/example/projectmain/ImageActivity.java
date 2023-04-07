@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -56,11 +57,11 @@ public class ImageActivity extends AppCompatActivity {
         });
         String poster = b.getString("ImgPoster");
         String username = b.getString("ImgUsername");
-        int avtRes = b.getInt("ImgPfp");
+        Uri avtRes = Uri.parse(b.getString("ImgPfp"));
         if (b.getString("ImgPoster") != null && b.getString("ImgUsername") != null) {
             tvPname.setText(poster);
             tvUsername.setText(username);
-            ivPfp.setImageResource(avtRes);
+            ivPfp.setImageURI(avtRes);
         }
     }
 

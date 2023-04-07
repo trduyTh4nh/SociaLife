@@ -21,10 +21,18 @@ public class SettingActivity extends AppCompatActivity {
     LinearLayout btnUpdate;
 
     LinearLayout btnLogoff;
-    private  static final String SHARED_PREF_NAME = "mypref";
+    private static final String SHARED_PREF_NAME = "mypref";
+
+    private static final String KEY_IMAGE_LINK = "linkImage";
+
+    private static final String KEY_NAME = "name";
+
+    private static final String KEY_EMAIL = "email";
+
     SharedPreferences sharedPreferences;
 
     DB db;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +40,13 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         btnLogoff = findViewById(R.id.btnLogoff);
-       btnExit = findViewById(R.id.btn_exit);
+        btnExit = findViewById(R.id.btn_exit);
 //        btnLogout = findViewById(R.id.btnLogout);
 
-         db = new DB(getApplicationContext());
-         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        db = new DB(getApplicationContext());
+        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

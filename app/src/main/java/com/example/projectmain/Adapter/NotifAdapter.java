@@ -55,6 +55,7 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull NotifAdapter.ViewHolder holder, int position) {
         NotifClass n = notifList.get(position);
+
         int day = n.getHour() / 24;
         adTvName.setText(n.getName());
         adTvMsg.setText(n.getMessage());

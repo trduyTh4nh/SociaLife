@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SreachFragment extends Fragment {
 
@@ -33,7 +37,7 @@ public class SreachFragment extends Fragment {
     AutoCompleteTextView sview;
 
     ArrayList<User> arrUser = new ArrayList<User>();
-
+    ArrayAdapter<String> a;
     public SreachFragment() {
 
     }
@@ -66,12 +70,33 @@ public class SreachFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sview = view.findViewById(R.id.searchView);
+        db = new DB(getContext().getApplicationContext());
 
+        sview = (AutoCompleteTextView) view.findViewById(R.id.searchView);
 
+        List<String> listName = db.getListName();
+
+        String[] names = new String[listName.size()];
+        for (int i =0 ;i < names.length;i++){
+            names[i] = listName.get(i);
+        }
+        a = new ArrayAdapter<String>(getContext(), R.layout.item_list_searchview, listName);
+        sview.setAdapter(a);
+        a.notifyDataSetChanged();
+        sview.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //tvRead.setText(autoCl.getText().toString());
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
     }
-
 
 
 }

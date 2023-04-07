@@ -27,6 +27,7 @@ import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import android.annotation.SuppressLint;
 import android.widget.Toast;
@@ -103,14 +104,10 @@ public class UserFragment extends Fragment {
         String email = sharedPreferences.getString(KEY_EMAIL, null);
 
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+
         user = db.getUser(email);
         Uri link = Uri.parse(linkImage);
-        mtvUsername.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext().getApplicationContext(), linkImage, Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
         if (name != null) {
            avatarMain.setImageURI(link);
@@ -120,6 +117,7 @@ public class UserFragment extends Fragment {
             mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
             mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
         }
+
 
         ImageAdapter adapter = new ImageAdapter(list, getContext().getApplicationContext());
         RecyclerView r = getView().findViewById(R.id.rcvImages);

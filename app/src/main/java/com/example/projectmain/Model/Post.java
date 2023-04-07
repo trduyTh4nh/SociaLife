@@ -4,30 +4,47 @@ public class  Post {
     public Post() {
     }
 
-    int avatar;
-    int imgPost;
+//    int avatar;
+//    int imgPost;
+//    String username;
+//    String name;
+//    String number_like;
+//    String content;
+//    String time;
+
+
+    String avatar;
+    String imgPost;
     String username;
     String name;
     String number_like;
     String content;
     String time;
 
-    public Post(String valueOf, String valueOf1, String userName, String name, String number_like, String content, String date) {
+
+    public Post(String avatar, String imgPost, String username, String name, String number_like, String content, String time) {
+        this.avatar = avatar;
+        this.imgPost = imgPost;
+        this.username = username;
+        this.name = name;
+        this.number_like = number_like;
+        this.content = content;
+        this.time = time;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(int avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public int getImgPost() {
+    public String getImgPost() {
         return imgPost;
     }
 
-    public void setImgPost(int imgPost) {
+    public void setImgPost(String imgPost) {
         this.imgPost = imgPost;
     }
 
@@ -70,17 +87,4 @@ public class  Post {
     public void setTime(String time) {
         this.time = time;
     }
-
-
-    public Post(int avatar, int imgPost, String username, String name, String number_like, String content, String time) {
-        this.avatar = avatar;
-        this.imgPost = imgPost;
-        this.username = username;
-        this.name = name;
-        this.number_like = number_like;
-        this.content = content;
-        this.time = time;
-    }
-
-
 }

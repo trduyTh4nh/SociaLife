@@ -2,6 +2,7 @@ package com.example.projectmain.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.sql.Time;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -47,28 +49,41 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
 
+
+
         if (post == null)
             return;
-        holder.avatar.setImageResource(post.getAvatar());
-        holder.imgPost.setImageResource(post.getImgPost());
+        holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
+        holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
         holder.nameUserPost.setText(post.getUsername());
         holder.numberLike.setText(post.getNumber_like());
         holder.content.setText(post.getContent());
-        holder.time.setText(post.getTime());
 
+        Time now = new Time(position);
 
+        int timer = now.getHours() / 24;
+
+        if (timer < 1) {
+            holder.time.setText(timer + " giờ trước");
+        } else if (timer > 14) {
+            holder.time.setText(timer / 7 + " tuần trước");
+        } else if (timer / 7 > 5) {
+            holder.time.setText(timer / 30 + " tháng trước");
+        } else {
+            holder.time.setText(timer + " ngày trước");
+        }
         holder.imgPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, ImageActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Bundle bd = new Bundle();
-                bd.putInt("ImgRes", post.getImgPost());
+                bd.putString("ImgRes", post.getImgPost());
                 bd.putString("ImgPoster", post.getName());
                 bd.putString("ImgUsername", post.getUsername());
-                bd.putInt("ImgPfp", post.getAvatar());
+                bd.putString("ImgPfp", post.getAvatar());
                 i.putExtras(bd);
                 context.startActivity(i);
             }
@@ -82,8 +97,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
                 Bundle bundle = new Bundle();
                 bundle.putString("Username", post.getUsername());
-                bundle.putInt("Img", post.getImgPost());
-                bundle.putInt("Pfp", post.getAvatar());
+                bundle.putString("Img", post.getImgPost());
+                bundle.putString("Pfp", post.getAvatar());
                 bundle.putString("Name", post.getName());
                 bundle.putBoolean("IsCmt", true);
 
@@ -127,6 +142,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     }
 
+
     @Override
     public int getItemCount() {
         if (posts != null)
@@ -155,8 +171,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             time = (TextView) view.findViewById(R.id.time_post);
             btnComment = (ImageButton) view.findViewById(R.id.btn_Pcomment);
             btnOpenMenu = (ImageButton) view.findViewById(R.id.btnOptions);
-
-
         }
 
 

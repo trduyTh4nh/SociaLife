@@ -14,228 +14,233 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:background="#F5F5F5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:padding="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/imgquang"
+                        app:shapeAppearanceOverlay="@style/circleImageView"
+                        app:strokeWidth="6dp" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Trí Quang"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/nameu_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="\@wuang"
+                            android:textColor="#565656"></TextView>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right">
+
+                    <Button
+                        style="@style/FollowBtn"
+                        android:backgroundTint="#5381F8"
+                        android:layout_width="99dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:text="Theo dõi"
+                        android:textAlignment="center"
+                        android:textAllCaps="false" />
+                    <ImageButton
+                        android:paddingLeft="15dp"
+                        android:id="@+id/btnOptions"
+                        android:background="@drawable/transparent_ripple"
+                        android:src="@drawable/ellipsis_v_solid"
+                        android:layout_width="35dp"
+                        android:layout_height="50dp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <com.google.android.material.imageview.ShapeableImageView
-                            android:id="@+id/avatar"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:padding="5dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/imgquang"
-                            app:shapeAppearanceOverlay="@style/circleImageView"
-                            app:strokeWidth="10dp" />
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="20dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Trí Quang"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/nameu_user"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="\@wuang"
-                                android:textColor="#565656"></TextView>
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:gravity="right">
-
-                        <Button
-                            style="@style/FollowBtn"
-                            android:backgroundTint="#5381F8"
-                            android:layout_width="99dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center"
-                            android:text="Theo dõi"
-                            android:textAlignment="center"
-                            android:textAllCaps="false" />
-                        <ImageButton
-                            android:paddingLeft="15dp"
-                            android:id="@+id/btnOptions"
-                            android:background="@drawable/transparent_ripple"
-                            android:src="@drawable/ellipsis_v_solid"
-                            android:layout_width="35dp"
-                            android:layout_height="50dp"
-                          />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
                         android:id="@+id/img_post"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/imgquang" />
                 </LinearLayout>
 
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="24dp"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="24dp"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:paddingLeft="-18dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:orientation="vertical">
+                        android:layout_marginBottom="8dp">
 
-                        <LinearLayout
-                            android:paddingLeft="-18dp"
+                        <ImageButton
+                            android:id="@+id/btn_like"
+                            android:src="@drawable/heart_regular"
+                            android:background="@drawable/transparent_ripple"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp">
-
-                            <ImageButton
-                                android:id="@+id/btn_like"
-                                android:src="@drawable/heart_regular"
-                                android:background="@drawable/transparent_ripple"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="20dp">
-                            </ImageButton>
+                            android:layout_margin="20dp">
+                        </ImageButton>
 
 
-                            <ImageButton
-                                android:id="@+id/btn_Pcomment"
-                                android:src="@drawable/comment_alt_regular"
-                                android:background="@drawable/transparent_ripple"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="20dp">
-                            </ImageButton>
-
-                            <ImageButton
-                                android:src="@drawable/paper_plane_regular"
-                                android:background="@drawable/transparent_ripple"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="20dp">
-                            </ImageButton>
-
-                        </LinearLayout>
-
-                        <LinearLayout
+                        <ImageButton
+                            android:id="@+id/btn_Pcomment"
+                            android:src="@drawable/comment_alt_regular"
+                            android:background="@drawable/transparent_ripple"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp">
+                        </ImageButton>
 
-                            <TextView
-                                android:id="@+id/number_like"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1.7m"
-                                android:textColor="#333333"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:text="Lượt thích"
-                                android:textColor="#333333"
-                                android:textSize="15dp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+                        <ImageButton
+                            android:src="@drawable/paper_plane_regular"
+                            android:background="@drawable/transparent_ripple"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dp">
+                        </ImageButton>
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/background_text_desciption"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:id="@+id/nameuser_post"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="18dp"
-                                android:text="\@Wuang: "
-                                android:textColor="@color/black"
-                                android:textSize="18dp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/content_post"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tulen đặc cầu, đùi bầu,.."
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
-                        </LinearLayout>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/time_post"
+                            android:id="@+id/number_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="30 phút trước"
-                            android:textColor="#696969"
+                            android:text="1.7m"
+                            android:textColor="#333333"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="Lượt thích"
+                            android:textColor="#333333"
+                            android:textSize="15dp"
                             android:textStyle="bold" />
                     </LinearLayout>
+
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="30dp"
-                    android:background="#AFAFAF" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_text_desciption"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/nameuser_post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="18dp"
+                            android:text="\@Wuang: "
+                            android:textColor="@color/black"
+                            android:textSize="18dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/content_post"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tulen đặc cầu, đùi bầu,.."
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/time_post"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="30 phút trước"
+                        android:textColor="#696969"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="30dp"
+                android:background="#AFAFAF" />
 
         </LinearLayout>
     </LinearLayout>

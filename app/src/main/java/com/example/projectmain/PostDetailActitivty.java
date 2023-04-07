@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -41,8 +42,8 @@ public class PostDetailActitivty extends AppCompatActivity {
 
         tvname.setText(b.getString("Name"));
         tvUsername.setText(b.getString("Username"));
-        ivPfp.setImageResource(b.getInt("Pfp"));
-        ivImg.setImageResource(b.getInt("Img"));
+        ivPfp.setImageURI(Uri.parse(b.getString("Img")));
+        ivImg.setImageURI(Uri.parse(b.getString("Img")));
 
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
