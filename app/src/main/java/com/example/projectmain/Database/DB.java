@@ -38,6 +38,9 @@ public class DB extends SQLiteOpenHelper {
         myDB.execSQL("create Table user(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "name Text," +
+                "firstname Text," +
+                "lastname Text," +
+                "birthday Text," +
                 "image Blob," +
                 "post_count Integer NOT NULL DEFAULT (0)," +
                 "follower_count Integer NOT NULL DEFAULT (0)," +

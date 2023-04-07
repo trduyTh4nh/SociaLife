@@ -62,13 +62,13 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         String email = edtEmail.getText().toString();
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
         String user = edtUserName.getText().toString();
         String pass = edtPassword.getText().toString();
         String repass = edtConfirm.getText().toString();
         if(email.equals("")||pass.equals("")||repass.equals("")||user.equals(""))
             Toast.makeText(SignupActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-        else{
-
+        else if (email.matches(emailPattern)) {
             //Check repass
             if(pass.equals(repass)){
 
@@ -116,6 +116,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             else{
                 Toast.makeText(SignupActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             }
+        }
+        else{
+            Toast.makeText(SignupActivity.this, "Vui lòng nhập đúng email", Toast.LENGTH_SHORT).show();
         }
 
     }
