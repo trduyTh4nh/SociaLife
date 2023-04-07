@@ -21,6 +21,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.projectmain.Adapter.PostAdapter;
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.R;
 
@@ -44,6 +45,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     PostAdapter adapter;
 
+    DB db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,11 +90,6 @@ public class HomeFragment extends Fragment {
 
     public List<Post> listPost() {
         List<Post> posts = new ArrayList<>();
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
-        posts.add(new Post(R.drawable.avatarvau, R.drawable.img_denvau, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
         posts.add(new Post(R.drawable.avatarvau, R.drawable.img_denvau, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
         return posts;
     }

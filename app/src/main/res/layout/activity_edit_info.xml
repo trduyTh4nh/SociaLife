@@ -93,7 +93,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="5dp">
                         <ImageView
                             android:id="@+id/avart_current"
                             android:layout_width="60dp"

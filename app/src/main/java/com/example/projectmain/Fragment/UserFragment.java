@@ -91,7 +91,6 @@ public class UserFragment extends Fragment {
         mtvFollowerCount = view.findViewById(R.id.tvFollowerCount);
         mtvPostCount = view.findViewById(R.id.tvPostCount);
         mtvDes = view.findViewById(R.id.tvDes);
-//        mbtnLogout = view.findViewById(R.id.btnLogout);
 
         db = new DB(getActivity());
 
@@ -102,6 +101,7 @@ public class UserFragment extends Fragment {
 
         String name = sharedPreferences.getString(KEY_NAME, null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
+
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         user = db.getUser(email);
         Uri link = Uri.parse(linkImage);

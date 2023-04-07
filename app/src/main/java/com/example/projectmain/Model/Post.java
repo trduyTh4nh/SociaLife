@@ -11,6 +11,10 @@ public class  Post {
     String number_like;
     String content;
     String time;
+
+    public Post(String valueOf, String valueOf1, String userName, String name, String number_like, String content, String date) {
+    }
+
     public int getAvatar() {
         return avatar;
     }

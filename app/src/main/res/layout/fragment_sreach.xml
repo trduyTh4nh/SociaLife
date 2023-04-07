@@ -13,12 +13,14 @@
         android:layout_height="wrap_content"
         android:gravity="center">
 
-        <androidx.appcompat.widget.SearchView
+        <AutoCompleteTextView
+            android:drawableLeft="@drawable/ic_search"
+            android:id="@+id/searchView"
             android:paddingLeft="10dp"
             android:background="@drawable/search_background"
             android:layout_width="350dp"
             android:layout_height="70dp">
-        </androidx.appcompat.widget.SearchView>
+        </AutoCompleteTextView>
     </LinearLayout>
 
 

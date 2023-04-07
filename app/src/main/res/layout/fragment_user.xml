@@ -26,7 +26,6 @@
         android:orientation="vertical">
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -39,7 +38,9 @@
                     android:id="@+id/avatar_main"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/img_denvau"></ImageView>
+                    android:src="@drawable/img_denvau">
+
+                </ImageView>
             </androidx.cardview.widget.CardView>
 
 
@@ -50,14 +51,15 @@
                 android:paddingLeft="20dp">
 
                 <TextView
-
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sơn Tùng MTP"
                     android:textColor="@color/black"
                     android:textSize="30dp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +67,9 @@
                     android:layout_marginTop="2dp"
                     android:text="\@sontungmtp"
                     android:textSize="16dp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
 
                 <TextView
                     android:id="@+id/tvDes"
@@ -73,7 +77,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:text="Loves to travel around the world"
-                    android:textColor="@color/black"></TextView>
+                    android:textColor="@color/black">
+
+                </TextView>
             </LinearLayout>
         </LinearLayout>
 
