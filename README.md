@@ -1,8 +1,13 @@
-# SocialNetworkApplication
+# Branch của QUANG
 Ứng dụng mạng xã hội lỏ.
-# Tiến độ
-![](https://geps.dev/progress/35)\
-35% - Hoàn thành giao diện, tính năng cứng. Tiến hành kết nối DB
+# Lưu ý cần merge cái gì
+`post.xml`
+`post_img_notext.xml`
+`post_large_paragraph.xml`
+`post_small_paragraph.xml`
+`acitivity_post_info.xml`
+`PostInfoActivity.java`
+`PostAdapter.java`
 # Dev Log
 - INDEV0.0.1H (all branch): Tạo mới dự án (Cả nhóm)
 - INDEV0.0.2H (all branch): Trang đăng nhập, đăng ký (Duy Thanh)
