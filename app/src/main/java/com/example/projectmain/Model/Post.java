@@ -4,6 +4,10 @@ public class  Post {
     public Post() {
     }
 
+
+
+
+    int iduser;
     int avatar;
     int imgPost;
     String username;
@@ -11,6 +15,13 @@ public class  Post {
     String number_like;
     String content;
     String time;
+    public int getIduser() {
+        return iduser;
+    }
+
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
     public int getAvatar() {
         return avatar;
     }
@@ -68,7 +79,8 @@ public class  Post {
     }
 
 
-    public Post(int avatar, int imgPost, String username, String name, String number_like, String content, String time) {
+    public Post(int iduser,int avatar, int imgPost, String username, String name, String number_like, String content, String time) {
+        this.iduser = iduser;
         this.avatar = avatar;
         this.imgPost = imgPost;
         this.username = username;

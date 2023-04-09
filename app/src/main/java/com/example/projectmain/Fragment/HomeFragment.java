@@ -3,6 +3,7 @@ package com.example.projectmain.Fragment;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.example.projectmain.Adapter.PostAdapter;
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.R;
 
@@ -43,6 +45,8 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView;
     PostAdapter adapter;
+    ArrayList<Post> PostArrayList;
+    DB db;
 
 
     @Override
@@ -73,10 +77,12 @@ public class HomeFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+
         View viewPost = getLayoutInflater().inflate(R.layout.post, null);
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);
         recyclerView = view.findViewById(R.id.render);
+        db = new DB(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new PostAdapter(getContext(), listPost());
@@ -85,15 +91,21 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     public List<Post> listPost() {
         List<Post> posts = new ArrayList<>();
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
-        posts.add(new Post(R.drawable.avatarvau, R.drawable.img_denvau, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
-        posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước"));
-        posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước"));
-        posts.add(new Post(R.drawable.avatarvau, R.drawable.img_denvau, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
+
+        Cursor cursor = db.readAllData();
+        Post post = new Post();
+        while (cursor.moveToNext()) {
+            post.setContent(cursor.getString(2));
+            post.setIduser(Integer.parseInt(cursor.getString(1)));
+            int iduser = post.getIduser();
+            post.setUsername(String.valueOf(db.checkUsername(iduser)));
+            posts.add(new Post(post.getIduser(), R.drawable.avatarquang, R.drawable.imgquang,post.getUsername(), "Trí Quang", "1.1m", post.getContent(), "30 phút trước"));
+        }
         return posts;
     }
+
+
+
 }

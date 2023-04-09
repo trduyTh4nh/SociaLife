@@ -88,8 +88,6 @@ public class Post_up {
         this.share_count = share_count;
         this.date = date;
     }
-
-
-    public Post_up(){}
+    
 
 }

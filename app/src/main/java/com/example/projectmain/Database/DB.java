@@ -1,24 +1,17 @@
 package com.example.projectmain.Database;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
-import androidx.annotation.Nullable;
-
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.Bitmap;
-import android.widget.Toast;
-
+import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 
-import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DB extends SQLiteOpenHelper {
@@ -106,6 +99,27 @@ public class DB extends SQLiteOpenHelper {
         myDB.execSQL("drop Table if exists notification");
     }
 
+    public List<String> checkUsername(int iduser) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select u.* from user u JOIN post p on u.id = p.iduser where iduser = ?", new String[]{String.valueOf(iduser)});
+        List<String> username = new ArrayList<>();
+        while (cursor.moveToNext()){
+            username.add(cursor.getString(1));
+        }
+        return username;
+    }
+
+    public Cursor readAllData(){
+        String query = "SELECT * FROM post ";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
     //Get ID của user để truyển qua cho Account
     public int getIduser(String name) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
@@ -181,6 +195,9 @@ public class DB extends SQLiteOpenHelper {
     }
 
     //Kiểm tra Name User trong SQLite
+
+
+    //Kiểm tra Name User trong SQLite
     public Boolean CheckName(String name) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from user where name = ?", new String[]{name});
@@ -239,6 +256,7 @@ public class DB extends SQLiteOpenHelper {
         myDB.close();
         return user;
     }
+
 
 
 }
