@@ -103,9 +103,8 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int pos = viewHolder.getAdapterPosition();
                 n.remove(pos);
-                String name = n.get(pos).getName();
                 adapter.notifyItemRemoved(pos);
-                Snackbar.make(getView().findViewById(R.id.rcvNotif), "Đã xóa thông báo từ " + name, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView().findViewById(R.id.rcvNotif), "Đã xóa thông báo", Snackbar.LENGTH_LONG).show();
             }
         };
         ItemTouchHelper touchHelper = new ItemTouchHelper(callBack);
