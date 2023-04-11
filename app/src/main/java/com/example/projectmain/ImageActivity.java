@@ -3,6 +3,8 @@ package com.example.projectmain;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +12,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
+
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Arrays;
 
 public class ImageActivity extends AppCompatActivity {
     ImageButton btnClose;
@@ -57,7 +65,12 @@ public class ImageActivity extends AppCompatActivity {
         });
         String poster = b.getString("ImgPoster");
         String username = b.getString("ImgUsername");
-        Uri avtRes = Uri.parse(b.getString("ImgPfp"));
+        Uri avtRes = null;
+        try {
+            avtRes = Uri.parse(b.getString("ImgPfp"));
+        } catch (Exception exception){
+            Toast.makeText(this, "Lỗi truy xuất hình ảnh \"mềm\". Đang dùng ảnh cứng." + " Lỗi do: " + exception, Toast.LENGTH_SHORT).show();
+        }
         if (b.getString("ImgPoster") != null && b.getString("ImgUsername") != null) {
             tvPname.setText(poster);
             tvUsername.setText(username);

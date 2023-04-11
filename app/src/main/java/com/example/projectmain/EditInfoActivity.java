@@ -88,12 +88,12 @@ public class EditInfoActivity extends AppCompatActivity {
         String name = sharedPreferences.getString(KEY_NAME, null);
         String desc = sharedPreferences.getString(KEY_DESCRIPTION, null);
         //
+        edtUserName.setText(name);
         user = db.getUser(email);
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent close = new Intent(EditInfoActivity.this, SettingActivity.class);
-                startActivity(close);
+                finish();
             }
         });
 

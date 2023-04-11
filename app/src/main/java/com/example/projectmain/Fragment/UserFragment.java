@@ -68,10 +68,11 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Random r = new Random();
-        for (int i = 1; i <= 5; i++) {
-            list.add(new Image(imageRes[r.nextInt(imageRes.length)]));
+
+        for (int r : imageRes) {
+            list.add(new Image(r));
         }
+
     }
 
 
@@ -104,13 +105,19 @@ public class UserFragment extends Fragment {
         String email = sharedPreferences.getString(KEY_EMAIL, null);
 
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
-
+        Uri link;
         user = db.getUser(email);
-        Uri link = Uri.parse(linkImage);
+        if(linkImage == null){
+            link = null;
+        } else
+            link = Uri.parse(linkImage);
 
 
         if (name != null) {
-           avatarMain.setImageURI(link);
+            if(link == null){
+                avatarMain.setImageResource(R.drawable.def);
+            } else
+                avatarMain.setImageURI(link);
             mtvUsername.setText(user.getName());
             mtvDes.setText(user.getDescription());
             mtvPostCount.setText(String.valueOf(user.getPost_count()));

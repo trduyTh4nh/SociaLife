@@ -22,7 +22,8 @@
                 android:id="@+id/rcvNotif"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/title_wrapper" />
+                android:layout_below="@+id/title_wrapper"
+                android:paddingBottom="50dp" />
 
             <LinearLayout
                 android:id="@+id/title_wrapper"

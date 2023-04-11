@@ -40,7 +40,7 @@
                     android:id="@+id/avatar_main"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/img_denvau">
+                    android:src="@drawable/def">
                 </ImageView>
             </androidx.cardview.widget.CardView>
 
@@ -55,7 +55,7 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sơn Tùng MTP"
+                    android:text="Placeholder để tránh bản quyền"
                     android:textColor="@color/black"
                     android:textSize="30dp"
                     android:textStyle="bold">
@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="\@sontungmtp"
+                    android:text="\@placeholder"
                     android:textSize="16dp"
                     android:textStyle="bold">
 
@@ -77,7 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="Loves to travel around the world"
+                    android:text="user_desc"
                     android:textColor="@color/black">
 
                 </TextView>

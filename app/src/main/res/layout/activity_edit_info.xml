@@ -53,252 +53,184 @@
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tbActionbar"
-        android:orientation="vertical">
-
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="20dp"
+            android:clipToPadding="false"
+            android:clipChildren="false">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:background="#E7E7E7"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:drawableLeft="@drawable/smile_regular"
-                    android:drawablePadding="5dp"
-                    android:text="Ảnh đại diện"></TextView>
+                android:padding="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="5dp">
-                        <ImageView
-                            android:id="@+id/avart_current"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_alignParentTop="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/img_denvau"></ImageView>
-                    </androidx.cardview.widget.CardView>
-
-
-                    <Button
-                        android:id="@+id/btnEdit_image"
-                        android:layout_width="120dp"
-                        android:layout_height="45dp"
-                        android:layout_marginLeft="50dp"
-                        android:backgroundTint="@color/buttonfollow"
-                        android:drawableLeft="@drawable/pen_solid"
-                        android:text="Thay đổi"
-                        android:textAllCaps="false"></Button>
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#E7E7E7"
-                android:orientation="vertical">
-
-                <TextView
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="9dp"
-                    android:drawableLeft="@drawable/fingerprint_solid"
-                    android:drawablePadding="5dp"
-                    android:text="Nhận dạng"></TextView>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/wrap_bg"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="5dp"
+                    style="@style/Wrap">
 
                     <TextView
+                        android:textSize="16dp"
                         android:textStyle="bold"
+                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:text="User name"></TextView>
+                        android:drawableLeft="@drawable/smile_regular"
+                        android:drawablePadding="5dp"
+                        android:text="Ảnh đại diện"></TextView>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
 
-                        <EditText
-                            android:textSize="16dp"
-                            android:padding="10dp"
-                            android:id="@+id/edt_username"
-                            style="@style/editTextStyle"
-                            android:layout_width="240dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/edt_background"></EditText>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="5dp">
+                            <ImageView
+                                android:id="@+id/avart_current"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_margin="5dp"
+                                android:src="@drawable/def"></ImageView>
+                        </androidx.cardview.widget.CardView>
+
 
                         <Button
+                            android:id="@+id/btnEdit_image"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"></Button>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="8dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:text="Họ và tên"></TextView>
-
-                        <EditText
-                            android:textSize="16dp"
-                            android:padding="10dp"
-                            android:id="@+id/edt_name"
-                            style="@style/editTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/edt_background"></EditText>
-
-
+                            android:layout_height="45dp"
+                            android:layout_marginLeft="10dp"
+                            android:backgroundTint="@color/buttonfollow"
+                            android:drawableLeft="@drawable/pen_solid"
+                            android:text="Thay đổi"
+                            android:textAllCaps="false"></Button>
                     </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="#E7E7E7"
-                android:orientation="vertical">
-
-                <TextView
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="9dp"
-                    android:drawableLeft="@drawable/user_edit_svgrepo_com"
-                    android:drawablePadding="5dp"
-                    android:text="Mô tả bản thân"></TextView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/wrap_bg"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:elevation="10dp">
 
-                    <EditText
+                    <TextView
                         android:textSize="16dp"
-                        android:padding="10dp"
-                        android:id="@+id/edt_story"
-                        style="@style/editTextStyle"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="9dp"
+                        android:drawableLeft="@drawable/fingerprint_solid"
+                        android:drawablePadding="5dp"
+                        android:text="Nhận dạng"></TextView>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/edt_background"></EditText>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:text="User name"></TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <EditText
+                                android:textSize="16dp"
+                                android:padding="10dp"
+                                android:id="@+id/edt_username"
+                                style="@style/editTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/edt_background"
+                                android:enabled="false"></EditText>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="8dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:textStyle="bold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="Họ và tên"></TextView>
+
+                            <EditText
+                                android:textSize="16dp"
+                                android:padding="10dp"
+                                android:id="@+id/edt_name"
+                                style="@style/editTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/edt_background"></EditText>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
-            </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="#E7E7E7"
-                android:orientation="vertical">
-
-                <TextView
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="9dp"
-                    android:drawableLeft="@drawable/password_svgrepo_com"
-                    android:drawablePadding="5dp"
-                    android:text="Xác nhận"></TextView>
 
                 <LinearLayout
-                    android:padding="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/wrap_bg"
+                    android:elevation="10dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="9dp"
+                        android:drawableLeft="@drawable/user_edit_svgrepo_com"
+                        android:drawablePadding="5dp"
+                        android:text="Mô tả bản thân"></TextView>
+
                     <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_margin="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Mật khẩu: "></TextView>
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
                         <EditText
                             android:textSize="16dp"
-                            android:inputType="textPassword"
                             android:padding="10dp"
-                            android:id="@+id/edt_password"
-                            style="@style/editTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/edt_background"></EditText>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:gravity="center_vertical"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:textStyle="bold"
-                            android:layout_margin="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Xác nhân lại mật khẩu: "></TextView>
-
-                        <EditText
-                            android:layout_marginBottom="10dp"
-                            android:textSize="16dp"
-                            android:inputType="textPassword"
-                            android:padding="10dp"
-                            android:id="@+id/edt_confirmPass"
+                            android:id="@+id/edt_story"
                             style="@style/editTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
@@ -306,20 +238,96 @@
                             android:background="@drawable/edt_background"></EditText>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <Button
-                android:drawableLeft="@drawable/save_svgrepo_com"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/btnSave"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="20dp"
-                android:textSize="25dp"
-                android:backgroundTint="@color/buttonfollow"
-                android:text="Save"
-                android:textAllCaps="false"></Button>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/wrap_bg"
+                    android:orientation="vertical"
+                    android:elevation="10dp">
+
+                    <TextView
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="9dp"
+                        android:drawableLeft="@drawable/password_svgrepo_com"
+                        android:drawablePadding="5dp"
+                        android:text="Xác nhận"></TextView>
+
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textStyle="bold"
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Mật khẩu: "></TextView>
+
+                            <EditText
+                                android:textSize="16dp"
+                                android:inputType="textPassword"
+                                android:padding="10dp"
+                                android:id="@+id/edt_password"
+                                style="@style/editTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/edt_background"></EditText>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:textStyle="bold"
+                                android:layout_margin="5dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Xác nhân lại mật khẩu: "></TextView>
+
+                            <EditText
+                                android:layout_marginBottom="10dp"
+                                android:textSize="16dp"
+                                android:inputType="textPassword"
+                                android:padding="10dp"
+                                android:id="@+id/edt_confirmPass"
+                                style="@style/editTextStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@drawable/edt_background"></EditText>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:drawableLeft="@drawable/save_svgrepo_com"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/btnSave"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="25dp"
+                    android:backgroundTint="@color/buttonfollow"
+                    android:text="Save"
+                    android:textAllCaps="false"></Button>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
 </RelativeLayout>
 
