@@ -37,8 +37,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/bubble_round">
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/ivPfp"
@@ -119,7 +118,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/profilepic" />
 
     <Toolbar

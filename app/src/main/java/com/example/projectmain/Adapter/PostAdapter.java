@@ -1,5 +1,6 @@
 package com.example.projectmain.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -40,31 +42,74 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     List<User> users;
     List<String> listName;
     DB db;
+    CheckBox btnLike;
 
+    /*
+     * Lấy kiểu view
+     * Hàm này được dùng để lấy kiểu view
+     * Tham số: position: int: Dùng để lấy vị trí hiện tại đang xét
+     * Các kiểu view:
+     * 0: Post có hình nhưng ko caption
+     * 1: Post có caption ngắn
+     * 2: Post có caption dài
+     * 3: Post vừa có hình, vừa có caption
+     * */
+    @Override
+    public int getItemViewType(int position) {
+        String postContent = posts.get(position).getContent();
+        String img = posts.get(position).getImgPost();
+
+        if (postContent == null && !img.equals("null")) {
+            return 0;
+        }
+        if (postContent.length() <= 50 && img.equals("null")) {
+            return 1;
+        }
+        if (postContent.length() >= 50 && img.equals("null")) {
+            return 2;
+        }
+        if (postContent != null && !img.equals("null")) {
+            return 3;
+        }
+        return 4;
+    }
 
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post, parent, false);
+        View view;
 
+
+        if (viewType == 0) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
+        } else if (viewType == 1) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_small_paragraph, parent, false);
+        } else if (viewType == 2) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_large_paragraph, parent, false);
+        } else if (viewType == 3) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.error, parent, false);
+        }
         return new PostViewHolder(view);
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         Post post = posts.get(position);
-     //   User user = users.get(position);
+        //   User user = users.get(position);
+        int type = getItemViewType(position);
 
 
         if (post == null)
             return;
-      //  db = new DB(context.getApplicationContext());
+        db = new DB(context.getApplicationContext());
 
-        //
 
 
         holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
-        holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
+        //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
         holder.numberLike.setText(post.getNumber_like());
@@ -83,40 +128,97 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             holder.time.setText(timer + " ngày trước");
         }
-        holder.imgPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, ImageActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle bd = new Bundle();
-                bd.putString("ImgRes", post.getImgPost());
-                bd.putString("ImgPoster", post.getName());
-                bd.putString("ImgUsername", post.getUsername());
-                bd.putString("ImgPfp", post.getAvatar());
-                i.putExtras(bd);
-                context.startActivity(i);
-            }
-        });
+
+
+        if (type == 0) {
+            //View 0: Hình ko caption
+            /*
+             * Hình ko caption, chỉ cần setImage và setOnClick cho imgPost, không cần set cho tvContent thứ khác (sẽ gây nullPointerException)
+             */
+            holder.imgPost.setImageResource(Integer.parseInt(post.getImgPost()));
+            holder.imgPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ImageActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle bd = new Bundle();
+                    bd.putString("ImgRes", post.getImgPost());
+                    bd.putString("ImgPoster", post.getName());
+                    bd.putString("ImgUsername", post.getUsername());
+                    bd.putString("ImgPfp", post.getAvatar());
+                    i.putExtras(bd);
+                    context.startActivity(i);
+                }
+            });
+        } else if (type == 1 || type == 2) {
+            //View 1, View 2: Có caption nhưng ko có hình
+            /*
+             * Post chỉ có mỗi caption, nên chỉ setText cho mỗi caption, cố gắng setImage sẽ gây nullPointerException
+             */
+            holder.content.setText(post.getContent());
+        } else if (type == 3) {
+            //View 1, View 2: Có caption và hình
+            /*
+             * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
+             */
+            holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
+            holder.content.setText(post.getContent());
+            holder.imgPost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context.getApplicationContext(), ImageActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle bd = new Bundle();
+                    bd.putString("ImgRes", post.getImgPost());
+                    bd.putString("ImgPoster", post.getName());
+                    bd.putString("ImgUsername", post.getUsername());
+                    bd.putString("ImgPfp", post.getAvatar());
+                    i.putExtras(bd);
+                    context.startActivity(i);
+                }
+            });
+        }
+
 
         holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, PostDetailActitivty.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                Bundle bundle = new Bundle();
-                bundle.putString("Username", post.getUsername());
-                bundle.putString("Img", post.getImgPost());
-                bundle.putString("Pfp", post.getAvatar());
-                bundle.putString("Name", post.getName());
-                bundle.putBoolean("IsCmt", true);
-
-                i.putExtras(bundle);
-                context.startActivity(i);
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PostDetailActitivty.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bn = new Bundle();
+                if (type == 0) {
+                    bn.putString("Img", post.getImgPost());
+                } else if (type == 1 || type == 2) {
+                    bn.putString("Content", post.getContent());
+                } else if (type == 3) {
+                    bn.putString("Content", post.getContent());
+                    bn.putString("Img", post.getImgPost());
+                }
+                bn.putInt("idPost", position);
+                bn.putString("Username", post.getUsername());
+                bn.putInt("idUser", post.getIduser());
+                bn.putString("Pfp", post.getAvatar());
+                bn.putString("Name", post.getName());
+                bn.putBoolean("IsCmt", true);
+                bn.putInt("ViewType", type);
+                intent.putExtras(bn);
+                context.startActivity(intent);
             }
         });
 
 
+        holder.btnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLike = v.findViewById(R.id.btn_like);
+                if (btnLike.isChecked()) {
+                    btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                } else {
+                    btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                }
+            }
+
+        });
         // menu
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +264,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         private ImageButton btnOpenMenu;
-
+        private CheckBox btnLike;
         private ImageButton btnComment;
         private ShapeableImageView avatar;
         private ImageView imgPost;
@@ -170,6 +272,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         public PostViewHolder(@NonNull View view) {
             super(view);
+
             avatar = (ShapeableImageView) view.findViewById(R.id.avatar);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.name);
@@ -180,6 +283,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             time = (TextView) view.findViewById(R.id.time_post);
             btnComment = (ImageButton) view.findViewById(R.id.btn_Pcomment);
             btnOpenMenu = (ImageButton) view.findViewById(R.id.btnOptions);
+            btnLike = (CheckBox) view.findViewById(R.id.btn_like);
         }
 
 

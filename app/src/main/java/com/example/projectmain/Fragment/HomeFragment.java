@@ -33,6 +33,7 @@ import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
+import com.google.android.material.internal.CollapsingTextHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,24 +110,30 @@ public class HomeFragment extends Fragment {
 
         SQLiteDatabase database = db.getReadableDatabase();
 
-        Cursor cursorGetUser = database.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+//        Cursor cursorGetUser = database.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+//        List<Integer> list = new ArrayList<Integer>();
+//
+//        List<Post> posts = null;
+//        while (cursorGetUser.moveToNext()) {
+//
+//            int idfit = cursorGetUser.getInt(0);
+//            list.add(idfit);
+//            String userName = cursorGetUser.getString(1);
+//
+//
+//            //  Log.d("value is", listName.get(idfit));
+//            // if(idfit == db.getIdUserPost(user.getId())){
+//
+//            //   }
+//
+//            //Index: 11, Size: 7
+//        }
+        List<Post> posts = null;
+        for (int i = 0; i < listName.size(); i++) {
+            posts = getPost("file:///data/user/0/com.example.projectmain/cache/cropped1112244420.jpg", listName.get(i), "cứng");
 
-       while (cursorGetUser.moveToNext()){
-
-           int idfit = cursorGetUser.getInt(0);
-
-           Log.d("value is" , String.valueOf(idfit));
-
-           List<Post> posts = db.getPost("file:///data/user/0/com.example.projectmain/cache/cropped577689494.jpg", listName.get(idfit), "");
-           adapter = new PostAdapter(getContext(), posts);
-       }
-        for (int i =0; i < listName.size(); i++){
-            Log.d("value is" , listName.get(i).toString());
         }
-
-
-
-
+        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
 
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);
@@ -137,6 +144,30 @@ public class HomeFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
+    }
+
+    public List<Post> getPost(String avatar, String userName, String name) {
+        String[] column = {"content", "image", "comment_count", "datetime"};
+        List<Post> posts = new ArrayList<Post>();
+        SQLiteDatabase myDB = db.getWritableDatabase();
+
+        Cursor cursor = myDB.query("post", null, null, null, null, null, null);
+
+        //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+
+        while (cursor.moveToNext()) {
+            int iduser = cursor.getInt(1);
+            String content = cursor.getString(2);
+            String img = cursor.getString(3);
+            int count_like = cursor.getInt(4);
+            int count_comment = cursor.getInt(5);
+            int count_share = cursor.getInt(6);
+            String time = cursor.getString(7);
+
+            posts.add(new Post(iduser, avatar, img, userName, name, String.valueOf(count_like), content, time));
+
+        }
+        return posts;
     }
 
 

@@ -128,6 +128,7 @@ public class DB extends SQLiteOpenHelper {
         return id;
     }
 
+
     //Insert thông tin của User
 
     public Boolean insertUser(String name) {
@@ -156,6 +157,34 @@ public class DB extends SQLiteOpenHelper {
         else
             return true;
     }
+
+
+    // comment bài post
+    public void insertComment(int idUser, int idPost, String content) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("content", content);
+        //Cursor cursor = db.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+        contentValues.put("idUser", idUser);
+        contentValues.put("idPost", idPost);
+        db.insert("comment", null, contentValues);
+
+    }
+    // lấy tên người dùng ra theo id
+    public String getName(int IdUser){
+        SQLiteDatabase db = this.getWritableDatabase();
+       Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
+     //   Cursor cursor = db.query("user", null, null, null, null, null, null);
+        String name = "";
+        while (cursor.moveToNext()){
+             name = cursor.getString(1);
+        }
+
+        return name;
+
+    }
+
 
     public void UpdateDataEditInfo(User user, String name, String des) {
 
@@ -197,6 +226,7 @@ public class DB extends SQLiteOpenHelper {
     //Kiểm tra Email , Password trong SQLite?
     public Boolean CheckEmailPassword(String email, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
+
         Cursor cursor = MyDB.rawQuery("Select * from account where email = ? and password = ?", new String[]{email, password});
         if (cursor.getCount() > 0)
             return true;
@@ -245,30 +275,6 @@ public class DB extends SQLiteOpenHelper {
     }
 
 
-    public List<Post> getPost(String avatar, String userName, String name) {
-        String[] column = {"content", "image", "comment_count", "datetime"};
-        List<Post> posts = new ArrayList<Post>();
-        SQLiteDatabase myDB = this.getWritableDatabase();
-
-        Cursor cursor = myDB.query("post", null, null, null, null, null, null);
-
-        //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
-
-        while (cursor.moveToNext()) {
-            int iduser = cursor.getInt(1);
-            String content = cursor.getString(2);
-            String img = cursor.getString(3);
-            int count_like = cursor.getInt(4);
-            int count_comment = cursor.getInt(5);
-            int count_share = cursor.getInt(6);
-            String time = cursor.getString(7);
-
-            posts.add(new Post(avatar, img, userName, name, String.valueOf(count_like), content, time));
-
-        }
-        return posts;
-    }
-
     public List<String> getListName() {
         String[] column = {"name"};
 
@@ -293,9 +299,9 @@ public class DB extends SQLiteOpenHelper {
 
         SQLiteDatabase mydb = this.getReadableDatabase();
 
-        Cursor cursor = mydb.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser" , null);
+        Cursor cursor = mydb.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
 
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
 
             String name = cursor.getString(1);
 

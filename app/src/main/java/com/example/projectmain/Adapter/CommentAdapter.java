@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.projectmain.Model.Comment;
 import com.example.projectmain.R;
 
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
@@ -52,6 +53,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         else
             tvLikes.setText(String.valueOf(comment.getLikes()));
     }
+
 
     @Override
     public int getItemCount() {

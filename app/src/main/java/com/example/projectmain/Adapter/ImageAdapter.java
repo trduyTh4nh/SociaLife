@@ -48,6 +48,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("ImgRes", imagePost.getResource());
+
                 i.putExtras(bundle);
                 context.startActivity(i);
             }
@@ -64,6 +65,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public ViewHolder(@NonNull View v){
             super(v);
             image = v.findViewById(R.id.ivImage);
+
             v.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener listener){
