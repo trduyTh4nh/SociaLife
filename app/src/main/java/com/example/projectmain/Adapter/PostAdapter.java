@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.example.projectmain.Class.Post;
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.PostInfoActivity;
 import com.example.projectmain.R;
+import com.example.projectmain.UserActivity;
 
 import java.util.List;
 
@@ -173,6 +175,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 context.startActivity(intent);
             }
         });
+        holder.llUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, UserActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+                Bundle b = new Bundle();
+                b.putString("Username", post.getUsername());
+                b.putString("Name", post.getName());
+                b.putInt("Img", post.getImgPost());
+                i.putExtras(b);
+            }
+        });
     }
 
     @Override
@@ -187,8 +202,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private ImageView avatar, imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost, tvParagraph;
         private ImageButton btnComment;
+        LinearLayout llUser;
         public PostViewHolder(@NonNull View view) {
             super(view);
+            llUser = view.findViewById(R.id.llUser);
             avatar = (ImageView) view.findViewById(R.id.ivPfp);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.tvPName);

@@ -90,7 +90,7 @@ public class UserFragment extends Fragment {
             }
         };
         r.setLayoutManager(g);
-        fmTvPostCount = getView().findViewById(R.id.tvPostCount);
+        fmTvPostCount = getView().findViewById(R.id.tvPostCount);        fmTvPostCount = getView().findViewById(R.id.tvPostCount);
         fmTvPostCount.setText(String.valueOf(adapter.getItemCount()));
 
 //        mbtnLogout.setOnClickListener(new View.OnClickListener() {

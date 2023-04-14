@@ -28,7 +28,7 @@ import java.util.Random;
  * Use the {@link NotifyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NotifyFragment extends Fragment implements View.OnClickListener{
+public class    NotifyFragment extends Fragment implements View.OnClickListener{
 
     private String Username;
 
