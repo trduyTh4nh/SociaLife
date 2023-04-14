@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +34,11 @@ import java.util.Random;
 
 public class PostDetailActitivty extends AppCompatActivity {
 
+    private static final String KEY_IMAGE_LINK = "linkImage";
 
     EditText edtComment;
-    TextView tvname, tvUsername;
+    TextView tvname, tvUsername, tvContent;
+    View postView;
     ImageView ivPfp, ivImg;
     ImageButton btnExit;
     Post post;
@@ -45,7 +48,7 @@ public class PostDetailActitivty extends AppCompatActivity {
     DB db;
     User user;
     SharedPreferences sharedPreferences;
-
+    LinearLayout llPostContain;
     private static final String SHARED_PREF_NAME = "mypref";
 
     private static final String KEY_EMAIL = "email";
@@ -58,27 +61,55 @@ public class PostDetailActitivty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail_actitivty);
         // init
-        initView();
         // handle
         db = new DB(this);
         Intent i = getIntent();
         Bundle b = i.getExtras();
 
+        int viewType = b.getInt("ViewType");
+        /*
+         * Các kiểu view:
+         * 0: Post có hình nhưng ko caption
+         * 1: Post có caption ngắn
+         * 2: Post có caption dài
+         * 3: Post vừa có hình, vừa có caption
+         *
+         */
+        if(viewType == 0){
+            //Né tránh nullPointerException cho Type 0: Chỉ setImageResource cho hình
+            postView = getLayoutInflater().inflate(R.layout.post_img_notext, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
+            initView();
+            ivImg.setImageURI(Uri.parse(b.getString("Img")));
+
+        } else if(viewType == 1){
+            //Né tránh nullPointerException cho Type 1: Chỉ setText cho chữ
+            postView = getLayoutInflater().inflate(R.layout.post_small_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
+            initView();
+            tvContent.setText(b.getString("Content"));
+        } else if(viewType == 3){
+            //Né tránh nullPointerException cho Type 3: Không có nullPointerException, set hình và text bình thường
+            postView = getLayoutInflater().inflate(R.layout.post, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
+            initView();
+            tvContent.setText(b.getString("Content"));
+            tvContent.setText(b.getString("Content"));
+            ivImg.setImageURI(Uri.parse(b.getString("Img")));
+        } else if(viewType == 2){
+            //Né tránh nullPointerException cho Type 2: Chỉ setText cho chữ
+            postView = getLayoutInflater().inflate(R.layout.post_large_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
+            initView();
+            tvContent.setText(b.getString("Content"));
+        }
+        llPostContain.addView(postView); //Lưu ý hàm này: thêm View vừa mới chuẩn bị vào LinearLayout
 
         tvname.setText(b.getString("Name"));
         tvUsername.setText(b.getString("Username"));
-        ivPfp.setImageURI(Uri.parse(b.getString("Img")));
-        ivImg.setImageURI(Uri.parse(b.getString("Img")));
         String userName = b.getString("Username");
-
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
+        ivPfp.setImageURI(Uri.parse(sharedPreferences.getString(KEY_IMAGE_LINK, null)));
         int idUser = db.getIduser(name);
-
         int idPost = b.getInt("idPost");
-
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,13 +121,10 @@ public class PostDetailActitivty extends AppCompatActivity {
             edtComment.requestFocus();
         }
         cmtList = (ArrayList<Comment>) getCmt(idPost);
-
         rcvComment = findViewById(R.id.rcvComments);
         CommentAdapter cmtAdap = new CommentAdapter(cmtList, getApplicationContext());
-
         rcvComment.setAdapter(cmtAdap);
         cmtAdap.notifyItemInserted(0);
-
         rcvComment.setLayoutManager(new LinearLayoutManager(getApplicationContext()) {
             @Override
             public boolean canScrollVertically() {
@@ -130,10 +158,19 @@ public class PostDetailActitivty extends AppCompatActivity {
     }
 
     void initView() {
-        tvname = findViewById(R.id.tvPName);
+       /* tvname = findViewById(R.id.tvPName);
         tvUsername = findViewById(R.id.tvUsername);
         ivPfp = findViewById(R.id.ivPfp);
         ivImg = findViewById(R.id.img_post);
+        btnExit = findViewById(R.id.btnExit);
+        edtComment = findViewById(R.id.edtComment);
+        btnUpcmt = findViewById(R.id.btnUploadComment);*/
+        llPostContain = findViewById(R.id.llPostContainer);
+        tvname = postView.findViewById(R.id.name); //LƯU Ý: post.findViewById là lấy từ id của post vừa mới chuẩn bị khi nãy (các thao tác chuẩn bị ở dòng 53, 59, 64, 71)
+        tvUsername = postView.findViewById(R.id.nameu_user);
+        ivPfp = postView.findViewById(R.id.avatar);
+        ivImg = postView.findViewById(R.id.img_post);
+        tvContent = postView.findViewById(R.id.content_post);
         btnExit = findViewById(R.id.btnExit);
         edtComment = findViewById(R.id.edtComment);
         btnUpcmt = findViewById(R.id.btnUploadComment);
