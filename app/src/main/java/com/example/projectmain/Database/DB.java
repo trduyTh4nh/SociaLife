@@ -174,24 +174,37 @@ public class DB extends SQLiteOpenHelper {
     // lấy tên người dùng ra theo id
     public String getName(int IdUser){
         SQLiteDatabase db = this.getWritableDatabase();
+
+
        Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
      //   Cursor cursor = db.query("user", null, null, null, null, null, null);
         String name = "";
         while (cursor.moveToNext()){
              name = cursor.getString(1);
         }
-
         return name;
 
     }
+    public String getImgAvata(int IdUser){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //  Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
+          Cursor cursor = db.query("user", null, "id = ?", new String[]{String.valueOf(IdUser)}, null, null, null);
+        String link = "";
+        while (cursor.moveToNext()){
+            link = cursor.getString(2);
+        }
+        return String.valueOf(link);
+    }
 
 
-    public void UpdateDataEditInfo(User user, String name, String des) {
+    public void UpdateDataEditInfo(User user, String name, String des, String Image) {
 
         SQLiteDatabase myDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("description", des);
+        contentValues.put("image", Image);
+
         myDB.update("user", contentValues, "id = ?", new String[]{String.valueOf(user.getId())});
         myDB.close();
     }

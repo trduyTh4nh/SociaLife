@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,12 +45,17 @@ public class ImageActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         Bundle b = i.getExtras();
-        ivPicture.setImageResource(b.getInt("ImgRes"));
+
+        ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
+
+
+
 
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (clicked) {
+                    Log.d("ADebugTag", "Value: " + b.getInt("ImgRes"));
                     tbActionbar.setVisibility(View.VISIBLE);
                     tbBottom.setVisibility(View.VISIBLE);
                     clicked = false;

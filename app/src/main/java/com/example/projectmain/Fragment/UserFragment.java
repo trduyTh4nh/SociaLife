@@ -107,14 +107,14 @@ public class UserFragment extends Fragment {
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link;
         user = db.getUser(email);
-        if(linkImage == null){
+        if (linkImage == null) {
             link = null;
         } else
             link = Uri.parse(linkImage);
 
 
         if (name != null) {
-            if(link == null){
+            if (link == null) {
                 avatarMain.setImageResource(R.drawable.def);
             } else
                 avatarMain.setImageURI(link);
@@ -130,7 +130,7 @@ public class UserFragment extends Fragment {
         RecyclerView r = getView().findViewById(R.id.rcvImages);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
-        GridLayoutManager g = new GridLayoutManager(getActivity().getApplicationContext(), 3, GridLayoutManager.VERTICAL, false){
+        GridLayoutManager g = new GridLayoutManager(getActivity().getApplicationContext(), 3, GridLayoutManager.VERTICAL, false) {
             @Override
             public boolean canScrollVertically() {
                 return true;

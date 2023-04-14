@@ -83,28 +83,40 @@
                         android:orientation="horizontal"
                         android:paddingEnd="10dp">
 
+                        <TextView
+                            android:id="@+id/tvFollowed"
+                            android:layout_width="99dp"
+                            android:layout_height="50dp"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
+                            android:text="Đã theo dõi"
+                            android:textColor="#5381F8"
+                            android:textStyle="bold"
+                            android:visibility="gone">
+
+                        </TextView>
+
                         <Button
-                            android:id="@+id/button2"
+                            android:id="@+id/btnFlolow"
                             style="@style/FollowBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="99dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:layout_weight="0"
-                            android:background="@null"
-                            android:backgroundTint="@color/secondary"
+                            android:layout_marginEnd="10dp"
+                            android:backgroundTint="#5381F8"
+                            android:gravity="center"
                             android:text="Theo dõi"
+                            android:textAlignment="center"
                             android:textAllCaps="false"
-                            app:cornerRadius="@dimen/slight_round" />
+                            android:visibility="visible" />
 
                         <ImageButton
-                            android:id="@+id/imageButton2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="0"
+                            android:id="@+id/btnOptions"
+                            android:layout_width="35dp"
+                            android:layout_height="50dp"
                             android:background="@drawable/transparent_ripple"
-                            android:padding="10dp"
-                            app:srcCompat="@drawable/more_line" />
+                            android:paddingLeft="15dp"
+                            android:src="@drawable/ellipsis_v_solid" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -162,40 +174,30 @@
                         android:paddingStart="24dp">
 
                         <LinearLayout
-                            android:paddingLeft="-10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp">
+                            android:layout_marginBottom="8dp"
+                            android:paddingLeft="-10dp">
 
                             <CheckBox
-                                android:stateListAnimator="@anim/anim_btnlike"
                                 android:id="@+id/btn_like"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:button="@null"
+                                android:layout_margin="18dp"
                                 android:background="@drawable/favorite_svgrepo_com"
+                                android:button="@null"
                                 android:checked="true"
-                                android:layout_margin="18dp">
-                            </CheckBox>
+                                android:stateListAnimator="@anim/anim_btnlike"></CheckBox>
 
 
                             <ImageButton
                                 android:id="@+id/btn_Pcomment"
-                                android:src="@drawable/comment_svgrepo_com__1_"
-                                android:background="@drawable/transparent_ripple"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="12dp">
-                            </ImageButton>
-
-                            <ImageButton
-                                android:paddingLeft="15dp"
-                                android:id="@+id/btnOptions"
+                                android:layout_margin="12dp"
                                 android:background="@drawable/transparent_ripple"
-                                android:src="@drawable/ellipsis_v_solid"
-                                android:layout_width="35dp"
-                                android:layout_height="50dp"
-                                />
+                                android:src="@drawable/comment_svgrepo_com__1_"></ImageButton>
+
 
                         </LinearLayout>
 

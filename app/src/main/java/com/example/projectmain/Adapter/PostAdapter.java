@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -251,6 +252,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
 
+        holder.flo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.flo.setVisibility(v.GONE);
+                holder.tvFollowed.setVisibility(v.VISIBLE);
+            }
+        });
+
+        holder.tvFollowed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.flo.setVisibility(v.VISIBLE);
+                holder.tvFollowed.setVisibility(v.GONE);
+            }
+        });
+
     }
 
 
@@ -264,6 +281,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
         private ImageButton btnOpenMenu;
+
+        private TextView tvFollowed;
+
+        private Button flo;
         private CheckBox btnLike;
         private ImageButton btnComment;
         private ShapeableImageView avatar;
@@ -277,13 +298,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.name);
             userName = (TextView) view.findViewById(R.id.nameu_user);
-            nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
+           // nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
             numberLike = (TextView) view.findViewById(R.id.number_like);
             content = (TextView) view.findViewById(R.id.content_post);
             time = (TextView) view.findViewById(R.id.time_post);
             btnComment = (ImageButton) view.findViewById(R.id.btn_Pcomment);
             btnOpenMenu = (ImageButton) view.findViewById(R.id.btnOptions);
             btnLike = (CheckBox) view.findViewById(R.id.btn_like);
+            tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
+            flo = (Button) view.findViewById(R.id.btnFlolow);
         }
 
 

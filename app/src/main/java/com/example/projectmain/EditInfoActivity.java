@@ -112,14 +112,7 @@ public class EditInfoActivity extends AppCompatActivity {
                 String confirmPass = edtConfirmPass.getText().toString();
 
 
-                if (password.equals(pass)) {
-                    if (!password.equals("") && !confirmPass.equals("") && password.equals(confirmPass)) {
-                        db.UpdateDataEditInfo(user, userName, story);
-                        Toast.makeText(EditInfoActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(EditInfoActivity.this, "Nhập mật khẩu để xác nhận!", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(EditInfoActivity.this, "Sai mật khẩu :(", Toast.LENGTH_SHORT).show();
+
 
 
                 SQLiteDatabase myDB = db.getWritableDatabase();
@@ -130,7 +123,14 @@ public class EditInfoActivity extends AppCompatActivity {
                 SharedPreferences.Editor saveImage = sharedPreferences.edit();
 
                 saveImage.putString(KEY_IMAGE_LINK, linkImage);
-
+                if (password.equals(pass)) {
+                    if (!password.equals("") && !confirmPass.equals("") && password.equals(confirmPass)) {
+                        db.UpdateDataEditInfo(user, userName, story, linkImage);
+                        Toast.makeText(EditInfoActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(EditInfoActivity.this, "Nhập mật khẩu để xác nhận!", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(EditInfoActivity.this, "Sai mật khẩu :(", Toast.LENGTH_SHORT).show();
                 saveImage.commit();
 
 

@@ -85,18 +85,32 @@
                         android:orientation="horizontal"
                         android:paddingEnd="10dp">
 
+                        <TextView
+                            android:visibility="gone"
+                            android:textColor="#5381F8"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="10dp"
+                            android:id="@+id/tvFollowed"
+                            android:text="Đã theo dõi"
+                            android:layout_width="99dp"
+                            android:layout_height="50dp">
+
+                        </TextView>
+
                         <Button
-                            android:id="@+id/button2"
+                            android:visibility="visible"
+                            android:id="@+id/btnFlolow"
                             style="@style/FollowBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:backgroundTint="#5381F8"
+                            android:layout_width="99dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:layout_weight="0"
-                            android:background="@null"
-                            android:backgroundTint="@color/secondary"
+                            android:layout_marginEnd="10dp"
+                            android:gravity="center"
                             android:text="Theo dõi"
-                            android:textAllCaps="false"
-                            app:cornerRadius="@dimen/slight_round" />
+                            android:textAlignment="center"
+                            android:textAllCaps="false" />
 
                         <ImageButton
                             android:paddingLeft="15dp"
@@ -121,9 +135,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@color/foreground"
                         android:padding="10dp"
-                        android:text="Cứng ngắt" />
+                        android:text="Caption" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -137,11 +150,7 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="30dp"
-                    android:background="#AFAFAF" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -239,6 +248,12 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="30dp"
+                    android:background="#AFAFAF" />
             </LinearLayout>
 
         </LinearLayout>

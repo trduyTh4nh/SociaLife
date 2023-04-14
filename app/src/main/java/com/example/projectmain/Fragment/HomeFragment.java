@@ -1,5 +1,6 @@
 package com.example.projectmain.Fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -58,6 +59,8 @@ public class HomeFragment extends Fragment {
     DB db;
 
     User user;
+
+    List<Post> posts = null;
     SharedPreferences sharedPreferences;
 
     private static final String SHARED_PREF_NAME = "mypref";
@@ -90,6 +93,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @SuppressLint({"SuspiciousIndentation", "NotifyDataSetChanged"})
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -110,30 +114,33 @@ public class HomeFragment extends Fragment {
 
         SQLiteDatabase database = db.getReadableDatabase();
 
-//        Cursor cursorGetUser = database.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
-//        List<Integer> list = new ArrayList<Integer>();
-//
-//        List<Post> posts = null;
-//        while (cursorGetUser.moveToNext()) {
-//
-//            int idfit = cursorGetUser.getInt(0);
-//            list.add(idfit);
-//            String userName = cursorGetUser.getString(1);
-//
-//
-//            //  Log.d("value is", listName.get(idfit));
-//            // if(idfit == db.getIdUserPost(user.getId())){
-//
-//            //   }
-//
-//            //Index: 11, Size: 7
-//        }
-        List<Post> posts = null;
-        for (int i = 0; i < listName.size(); i++) {
-            posts = getPost("file:///data/user/0/com.example.projectmain/cache/cropped1112244420.jpg", listName.get(i), "cứng");
+        Cursor cursorGetUser = database.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+        List<Integer> list = new ArrayList<Integer>();
+
+        Post p = new Post();
+        while (cursorGetUser.moveToNext()) {
+            int idfit = cursorGetUser.getInt(0);
+
+            list.add(idfit);
+            int idUser = cursorGetUser.getInt(0);
+
+            String userName = cursorGetUser.getString(1);
+
 
         }
+
+
+
+
+
+         //   Log.d("LinkImage: ", db.getImgAvata(3));
+
+
+        //   Log.d("ID: ",  db.getName(list.get(i)));
+        posts = getPost();
         adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        adapter.notifyDataSetChanged();
+
 
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);
@@ -146,7 +153,17 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public List<Post> getPost(String avatar, String userName, String name) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(posts != null)
+            posts.clear();
+        posts.addAll(getPost());
+
+        adapter.notifyDataSetChanged();
+    }
+
+    public List<Post> getPost() {
         String[] column = {"content", "image", "comment_count", "datetime"};
         List<Post> posts = new ArrayList<Post>();
         SQLiteDatabase myDB = db.getWritableDatabase();
@@ -164,16 +181,10 @@ public class HomeFragment extends Fragment {
             int count_share = cursor.getInt(6);
             String time = cursor.getString(7);
 
-            posts.add(new Post(iduser, avatar, img, userName, name, String.valueOf(count_like), content, time));
+            posts.add(new Post(iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, time));
 
         }
         return posts;
     }
 
-
-//    public List<Post> listPost() {
-//        List<Post> posts = new ArrayList<>();
-//        posts.add(new Post(R.drawable.avatarvau, R.drawable.img_denvau, "@den:", "Đen Vâu", "1.1k", "nhạc anh bao cháy dìa dia", "1 ngày trước"));
-//        return posts;
-//    }
 }

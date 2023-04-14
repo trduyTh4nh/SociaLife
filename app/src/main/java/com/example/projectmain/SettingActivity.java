@@ -45,7 +45,6 @@ public class SettingActivity extends AppCompatActivity {
 
         btnLogoff = findViewById(R.id.btnLogoff);
         btnExit = findViewById(R.id.btn_exit);
-//        btnLogout = findViewById(R.id.btnLogout);
         tvName = findViewById(R.id.setting_userName);
         tvEmail = findViewById(R.id.setting_email);
         ivAvatar = findViewById(R.id.ivAvatar);
@@ -93,6 +92,25 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String name = sharedPreferences.getString(KEY_NAME, null);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+        Uri link = null;
+        if(imgUrl != null){
+            link = Uri.parse(imgUrl);
+        }
+        if(name != null) {
+            if (link == null) {
+                ivAvatar.setImageResource(R.drawable.def);
+            } else {
+                ivAvatar.setImageURI(link);
+            }
+        }
     }
 
     @Override
