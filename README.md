@@ -1,5 +1,5 @@
 # Branch của QUANG
-Ứng dụng mạng xã hội lỏ.
+Giao diện để merge vào branch THANH
 # Lưu ý cần merge cái gì
 `post.xml`: Một phần\
 `post_img_notext.xml`: Cả phần\
@@ -25,4 +25,4 @@ Java
 ## API
 Android SDK. Phiên bản API: 26.
 ## Activites
-6 activities.
+9 activities.
