@@ -1,8 +1,8 @@
 # SocialNetworkApplication
 Đồ án ứng dụng MXH
 # Tiến độ
-![](https://geps.dev/progress/45)\
-45% - Bước đầu hoàn thành giao diện, các tình năng thêm vào db, bắt đầu hiển thị db lên giao diện
+![](https://geps.dev/progress/70)\
+70% - Hoàn thành chức năng cơ bản (hiển thị post, bình luận, đăng post, chỉnh sửa profile)
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
