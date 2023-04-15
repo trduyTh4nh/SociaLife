@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.provider.MediaStore;
@@ -35,9 +36,11 @@ import com.squareup.picasso.Picasso;
 public class AddActivity extends AppCompatActivity {
 
     EditText medtNoidung;
-    TextView mtvName;
+    TextView mtvName, tvFullName;
+    ImageView ivPfp;
     Button mbtnDangBai;
     ImageView mimgDangBai;
+    ImageButton btnExit;
     DB db;
     User user;
     SharedPreferences sharedPreferences;
@@ -56,6 +59,7 @@ public class AddActivity extends AppCompatActivity {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
 
+    private static final String KEY_IMAGE_LINK = "linkImage";
 
 
     @Override
@@ -73,9 +77,16 @@ public class AddActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
-
+        String imgUri = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         mtvName.setText(name);
-
+        tvFullName.setText(name);
+        ivPfp.setImageURI(Uri.parse(imgUri));
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mbtnDangBai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +107,7 @@ public class AddActivity extends AppCompatActivity {
                     long result = myDB.insert("post", null, contentValues);
                     if(result > 0){
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(AddActivity.this, HomeActivity.class);
-                        startActivity(i);
+                        finish();
                     }
                     else {
                         Toast.makeText(AddActivity.this, "Đăng bài thất bại", Toast.LENGTH_SHORT).show();
@@ -270,5 +280,8 @@ public class AddActivity extends AppCompatActivity {
         medtNoidung = findViewById(R.id.qwe);
         mbtnDangBai = findViewById(R.id.zxc);
         mimgDangBai = findViewById(R.id.asd);
+        tvFullName = findViewById(R.id.tvName);
+        ivPfp = findViewById(R.id.ivPfp);
+        btnExit = findViewById(R.id.btn_exit);
     }
 }

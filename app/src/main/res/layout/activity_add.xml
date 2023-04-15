@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,29 +7,70 @@
     android:orientation="vertical"
     tools:context=".AddActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbActionbar"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:background="@color/background"
+        android:elevation="20dp"
+        android:minHeight="?attr/actionBarSize"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="5dp">
+
+            <TextView
+                style="@style/ParagraphTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đăng bài" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btn_exit"
+                    style="@android:style/Widget.DeviceDefault.ImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/exitbtn"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/close_line"
+                    app:tint="@color/icon" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
         android:paddingRight="20dp"
         android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tbActionbar">
 
-        <TextView
-            style="@style/HeaderTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Đăng bài"
-            android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/button"
             android:padding="10dp"
             app:cardBackgroundColor="@color/foreground"
@@ -54,7 +95,7 @@
                         app:cardCornerRadius="@dimen/bubble_round">
 
                         <ImageView
-                            android:id="@+id/imageView3"
+                            android:id="@+id/ivPfp"
                             android:layout_width="64dp"
                             android:layout_height="64dp"
                             android:scaleType="centerCrop"
@@ -71,7 +112,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textView2"
+                            android:id="@+id/tvName"
                             style="@style/NameFull"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -85,20 +126,6 @@
                             android:layout_height="wrap_content"
                             android:text="\@wuang96" />
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/button"
-                        style="@style/GenericBTN"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="0"
-                        android:backgroundTint="@color/button"
-                        android:drawableLeft="@drawable/global_line"
-                        android:drawablePadding="10dp"
-                        android:text="Công khai"
-                        android:textColor="@color/text"
-                        app:rippleColor="@color/primary" />
 
                 </LinearLayout>
 
@@ -116,21 +143,23 @@
                     android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:textCursorDrawable="@null" />
+
                 <ImageView
-                    android:scaleType="center"
-                    android:src="@drawable/camera_solid"
-                    android:layout_marginTop="20dp"
                     android:id="@+id/asd"
                     style="@style/GenericBTN"
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:background="@drawable/btn_generic"/>
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_generic"
+                    android:scaleType="center"
+                    android:src="@drawable/camera_solid" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -157,4 +186,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

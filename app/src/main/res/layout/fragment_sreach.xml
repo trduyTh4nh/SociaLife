@@ -5,19 +5,28 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".Fragment.SreachFragment">
+
     <LinearLayout
-        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center_horizontal"
+        android:padding="10dp">
 
         <AutoCompleteTextView
-            android:drawableLeft="@drawable/ic_search"
             android:id="@+id/searchView"
-            android:paddingLeft="10dp"
-            android:background="@drawable/search_background"
             android:layout_width="350dp"
-            android:layout_height="70dp">
-        </AutoCompleteTextView>
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_background"
+            android:clipToOutline="false"
+            android:drawableLeft="@drawable/search_2_line"
+            android:drawablePadding="10dp"
+            android:elevation="20dp"
+            android:hint="Tìm kiếm người dùng"
+            android:padding="10dp"
+            android:textCursorDrawable="@null"
+            android:textSize="15dp" />
     </LinearLayout>
 </FrameLayout>

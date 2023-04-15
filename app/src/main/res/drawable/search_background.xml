@@ -2,24 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" >
 
-    <item>
-        <shape>
-            <!-- set the shadow color here -->
-            <stroke
-                android:width="5dp"
-                android:color="#774C4C4C" />
 
-            <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
-
-            <padding
-                android:bottom="6dp"
-                android:left="3dp"
-                android:right="1dp"
-                android:top="1dp" />
-
-            <corners android:radius="30dp" />
-        </shape>
-    </item>
 
     <!-- Background -->
 
