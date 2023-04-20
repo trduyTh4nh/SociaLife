@@ -3,5 +3,4 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:icon="@drawable/edit_solid" android:id="@+id/edit_post" android:title="Sửa bài viết"></item>
     <item android:icon="@drawable/trash_solid" android:id="@+id/remove_post" android:title="Xóa bài viết"></item>
-    <item android:icon="@drawable/minus_square_solid" android:id="@+id/hide_post" android:title="Ẩn bài viết"></item>
 </menu>

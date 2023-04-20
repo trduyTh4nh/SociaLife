@@ -48,14 +48,11 @@ public class ImageActivity extends AppCompatActivity {
 
         ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
 
-
-
-
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (clicked) {
-                    Log.d("ADebugTag", "Value: " + b.getInt("ImgRes"));
+                    Log.d("ADebugTag", "Value: " + b.getString("ImgRes"));
                     tbActionbar.setVisibility(View.VISIBLE);
                     tbBottom.setVisibility(View.VISIBLE);
                     clicked = false;

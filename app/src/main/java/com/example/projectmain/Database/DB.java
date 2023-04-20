@@ -93,7 +93,7 @@ public class DB extends SQLiteOpenHelper {
                 "content Text, " +
                 "datetime Datetime, " +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
-                " idlike Integer REFERENCES likes(id) NOT NULL," +
+                "idlike Integer REFERENCES likes(id) NOT NULL," +
                 " idcomment Integer REFERENCES comment(id) NOT NULL, " +
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
@@ -171,32 +171,35 @@ public class DB extends SQLiteOpenHelper {
         db.insert("comment", null, contentValues);
 
     }
+
     // lấy tên người dùng ra theo id
-    public String getName(int IdUser){
+    public String getName(int IdUser) {
         SQLiteDatabase db = this.getWritableDatabase();
 
 
-       Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
-     //   Cursor cursor = db.query("user", null, null, null, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
+        //   Cursor cursor = db.query("user", null, null, null, null, null, null);
         String name = "";
-        while (cursor.moveToNext()){
-             name = cursor.getString(1);
+        while (cursor.moveToNext()) {
+            name = cursor.getString(1);
         }
         return name;
 
     }
-    public String getImgAvata(int IdUser){
+
+    public String getImgAvata(int IdUser) {
         SQLiteDatabase db = this.getWritableDatabase();
         //  Cursor cursor = db.rawQuery("SELECT u.* FROM user u  WHERE u.id = ?", new String[]{String.valueOf(IdUser)});
-          Cursor cursor = db.query("user", null, "id = ?", new String[]{String.valueOf(IdUser)}, null, null, null);
+        Cursor cursor = db.query("user", null, "id = ?", new String[]{String.valueOf(IdUser)}, null, null, null);
         String link = "";
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             link = cursor.getString(2);
         }
         return String.valueOf(link);
     }
 
 
+    // cập nhật dữ liệu người dùng
     public void UpdateDataEditInfo(User user, String name, String des, String Image) {
 
         SQLiteDatabase myDB = this.getWritableDatabase();
@@ -236,6 +239,16 @@ public class DB extends SQLiteOpenHelper {
             return false;
     }
 
+    // kiểm tra người đã follow
+    public Boolean CheckNameinFollower(int IDuserFollowing) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor cursor = MyDB.rawQuery("Select * from follower where idfollowing = ?", new String[]{String.valueOf(IDuserFollowing)});
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
     //Kiểm tra Email , Password trong SQLite?
     public Boolean CheckEmailPassword(String email, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -247,7 +260,7 @@ public class DB extends SQLiteOpenHelper {
             return false;
     }
 
-    // post
+    // insert post
 
     public boolean insertPost(int iduser, String content) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -264,6 +277,15 @@ public class DB extends SQLiteOpenHelper {
         else
             return true;
     }
+
+    // remove post
+
+    public void removePost(int idPost) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.delete("post", "id = ?", new String[]{String.valueOf(idPost)});
+    }
+
 
     //
     @SuppressLint("Range")
@@ -322,5 +344,35 @@ public class DB extends SQLiteOpenHelper {
         }
         return listName;
     }
+
+    // Follow
+
+    public boolean insertDataFollow(int idUser, int idUserFollow) {
+        String[] cot = {"iduser", "idfollowing"};
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("iduser", idUser);
+        contentValues.put("idfollowing", idUserFollow);
+
+        long insertData = db.insert("follower", null, contentValues);
+
+        return insertData != -1;
+    }
+
+    // unfollower
+    public void UnFollower(int idFollowing) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        if (idFollowing >= 0)
+            database.delete("follower", "idfollowing = ?", new String[]{String.valueOf(idFollowing)});
+    }
+
+    // remove notify
+
+    public void RemoveNotify(int idNotify) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        if (idNotify >= 0)
+            database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
+    }
+
 
 }

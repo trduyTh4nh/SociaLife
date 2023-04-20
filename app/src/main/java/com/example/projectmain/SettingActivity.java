@@ -21,10 +21,13 @@ import com.example.projectmain.Database.DB;
 public class SettingActivity extends AppCompatActivity {
     ImageButton btnExit;
     ImageButton btnLogout;
+
     LinearLayout btnUpdate;
     ImageView ivAvatar;
     TextView tvName, tvEmail;
     LinearLayout btnLogoff;
+
+    LinearLayout btnListFollow;
     private static final String SHARED_PREF_NAME = "mypref";
 
     private static final String KEY_IMAGE_LINK = "linkImage";
@@ -48,7 +51,19 @@ public class SettingActivity extends AppCompatActivity {
         tvName = findViewById(R.id.setting_userName);
         tvEmail = findViewById(R.id.setting_email);
         ivAvatar = findViewById(R.id.ivAvatar);
+        btnListFollow = findViewById(R.id.btnFlolow);
+
+        btnListFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SettingActivity.this, FollowerActivity.class);
+                startActivity(i);
+            }
+        });
+
+
         db = new DB(getApplicationContext());
+
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);

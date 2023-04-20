@@ -130,17 +130,14 @@ public class HomeFragment extends Fragment {
         }
 
 
-
-
-
-         //   Log.d("LinkImage: ", db.getImgAvata(3));
+        //   Log.d("LinkImage: ", db.getImgAvata(3));
 
 
         //   Log.d("ID: ",  db.getName(list.get(i)));
         posts = getPost();
         adapter = new PostAdapter(getContext().getApplicationContext(), posts);
-        adapter.notifyDataSetChanged();
 
+        adapter.notifyDataSetChanged();
 
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);
@@ -148,15 +145,37 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-
+//        if (posts == null) {
+//            posts = new ArrayList<Post>();
+//        } else {
+//            posts.clear();
+//        }
+//
+//        SQLiteDatabase database1 = db.getReadableDatabase();
+//        @SuppressLint("Recycle")
+//        Cursor cursor = database1.query("post", null, null, null, null, null, null);
+//        if (cursor != null) {
+//            while (cursor.moveToNext()) {
+//                int iduser = cursor.getInt(1);
+//                String content = cursor.getString(2);
+//                String img = cursor.getString(3);
+//                int count_like = cursor.getInt(4);
+//                int count_comment = cursor.getInt(5);
+//                int count_share = cursor.getInt(6);
+//                String time = cursor.getString(7);
+//
+//                posts.add(new Post(iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, time));
+//            }
+//        }
         recyclerView.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
-        if(posts != null)
+        if (posts != null)
             posts.clear();
         posts.addAll(getPost());
 

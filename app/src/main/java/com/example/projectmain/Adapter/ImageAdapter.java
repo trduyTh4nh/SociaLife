@@ -1,8 +1,15 @@
 package com.example.projectmain.Adapter;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,18 +25,24 @@ import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Image;
 import com.example.projectmain.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    ImageView image;
-    private ArrayList<Image> imageList;
-    Context context;
-    public ImageAdapter(ArrayList<Image> i, Context context) {
-        super();
-        imageList = i;
+    public ImageAdapter(List<String> imageList, Context context) {
+        this.imageList = imageList;
         this.context = context;
     }
+
+    private List<String> imageList;
+
+    Context context;
+
 
     @NonNull
     @Override
@@ -40,8 +53,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Image imagePost = imageList.get(position);
-        image.setImageResource(imagePost.getResource());
+        String imagePost = imageList.get(position);
+        Log.d("Value Image: " , imagePost);
+        Uri imgPost = Uri.parse(imagePost);
+        // méo hiểu
+        holder.image.setImageURI(imgPost);
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int pos, boolean b) {
@@ -49,12 +65,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 Bundle bundle = new Bundle();
-                bundle.putInt("ImgRes", imagePost.getResource());
+                bundle.putString("ImgRes", imagePost);
                 i.putExtras(bundle);
                 context.startActivity(i);
             }
         });
     }
+
+    
     @Override
     public int getItemCount() {
         return imageList.size();
@@ -62,6 +80,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        private ImageView image;
         private ItemClickListener i;
         public ViewHolder(@NonNull View v){
             super(v);

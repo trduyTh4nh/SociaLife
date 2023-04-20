@@ -1,10 +1,16 @@
 package com.example.projectmain.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,20 +24,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Fragment.HomeFragment;
+import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.SettingActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
+
 
     public PostAdapter(Context context, List<Post> posts) {
         this.posts = posts;
@@ -44,6 +57,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     List<String> listName;
     DB db;
     CheckBox btnLike;
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_IMAGE_LINK = "linkImage";
+
+    private static final String KEY_EMAIL = "email";
 
     /*
      * Lấy kiểu view
@@ -58,6 +76,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public int getItemViewType(int position) {
         String postContent = posts.get(position).getContent();
+
         String img = posts.get(position).getImgPost();
 
         if (postContent == null && !img.equals("null")) {
@@ -97,16 +116,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     @SuppressLint("SuspiciousIndentation")
     @Override
-    public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        db = new DB(context.getApplicationContext());
+
         Post post = posts.get(position);
+
         //   User user = users.get(position);
         int type = getItemViewType(position);
 
 
         if (post == null)
             return;
-        db = new DB(context.getApplicationContext());
-
 
 
         holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
@@ -136,7 +157,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             /*
              * Hình ko caption, chỉ cần setImage và setOnClick cho imgPost, không cần set cho tvContent thứ khác (sẽ gây nullPointerException)
              */
-            holder.imgPost.setImageResource(Integer.parseInt(post.getImgPost()));
+            //  holder.imgPost.setImageResource(Integer.parseInt(post.getImgPost()));
+
+
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -163,6 +186,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
              */
             holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
+            sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_IMAGE_LINK, post.getImgPost());
+            editor.apply();
             holder.content.setText(post.getContent());
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -178,6 +205,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     context.startActivity(i);
                 }
             });
+        }
+
+
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        User user = db.getUser(email);
+
+
+        int idUserFollow = posts.get(position).getIduser();
+        int idUser = user.getId();
+        Log.d("IDFollower: ", String.valueOf(position));
+
+        if (db.CheckNameinFollower(idUserFollow)) {
+            if (idUser > 0) {
+                holder.flo.setVisibility(View.GONE);
+                holder.tvFollowed.setVisibility(View.VISIBLE);
+            } else
+                Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
+        } else {
+            holder.flo.setVisibility(View.VISIBLE);
+            holder.tvFollowed.setVisibility(View.GONE);
         }
 
 
@@ -221,27 +268,40 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         // menu
+        Log.d("IDFollower: ", String.valueOf(position));
+
+        if (idUserFollow != idUser) {
+            if (idUser > 0)
+
+                holder.btnOpenMenu.setVisibility(View.GONE);
+
+        } else
+        {
+            holder.btnOpenMenu.setVisibility(View.VISIBLE);
+            holder.flo.setVisibility(View.GONE);
+            holder.tvFollowed.setVisibility(View.GONE);
+        }
+
+
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context.getApplicationContext(), v);
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
+                        switch (item.getItemId()){
                             case R.id.edit_post:
                                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.remove_post:
-                                Toast.makeText(context, "Remove", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.hide_post:
-                                Toast.makeText(context, "Hide", Toast.LENGTH_SHORT).show();
+                                db.removePost(position + 1);
+
                                 break;
                             default:
                                 break;
-
                         }
                         return true;
                     }
@@ -255,8 +315,26 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.flo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 holder.flo.setVisibility(v.GONE);
                 holder.tvFollowed.setVisibility(v.VISIBLE);
+
+
+                User user = db.getUser(email);
+                int idUser = user.getId();
+                String UserName = db.getName(user.getId());
+                int idUserFollow = followUser(post.getUsername());
+                String UserNameFollow = db.getName(idUserFollow);
+
+                if (!db.CheckNameinFollower(idUserFollow)) {
+                    if (idUser > 0) {
+                        db.insertDataFollow(idUser, idUserFollow);
+                        Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -265,9 +343,59 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             public void onClick(View v) {
                 holder.flo.setVisibility(v.VISIBLE);
                 holder.tvFollowed.setVisibility(v.GONE);
+
+                User user = db.getUser(email);
+                int idUser = user.getId();
+                String UserName = db.getName(user.getId());
+                int idUserFollow = followUser(post.getUsername());
+                String UserNameFollow = db.getName(idUserFollow);
+
+                if (db.CheckNameinFollower(idUserFollow)) {
+                    if (idUser > 0) {
+                        db.UnFollower(idUserFollow);
+                        Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
+
+        holder.avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, SettingActivity.class);
+            }
+        });
+
+
+    }
+
+    public int followUser(String name) {
+        SQLiteDatabase mydb = db.getWritableDatabase();
+        Cursor cursor = mydb.rawQuery("SELECT * FROM post p JOIN user u on u.id = p.iduser WHERE u.name = ?", new String[]{name});
+        List<Integer> list = null;
+        while (cursor.moveToNext()) {
+            if (list == null)
+                list = new ArrayList<>();
+            list.add(cursor.getInt(1));
+        }
+        assert list != null;
+        return list.get(0);
+    }
+
+    public ArrayList<Integer> ListFollowUserID(int idCurrentUser) {
+        SQLiteDatabase mydb = db.getWritableDatabase();
+        Cursor cursor = mydb.rawQuery("SELECT * FROM follower WHERE iduser = ?", new String[]{String.valueOf(idCurrentUser)});
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        while (cursor.moveToNext()) {
+            list.add(cursor.getInt(2));
+        }
+
+        return list;
     }
 
 
@@ -298,7 +426,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.name);
             userName = (TextView) view.findViewById(R.id.nameu_user);
-           // nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
+            // nameUserPost = (TextView) view.findViewById(R.id.nameuser_post);
             numberLike = (TextView) view.findViewById(R.id.number_like);
             content = (TextView) view.findViewById(R.id.content_post);
             time = (TextView) view.findViewById(R.id.time_post);

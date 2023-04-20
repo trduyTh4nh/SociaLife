@@ -4,12 +4,12 @@ public class NotifClass {
     private String name;
     private String message;
     private int hour;
-    private int img;
-    public NotifClass(String n, int i){
+    private String img;
+    public NotifClass(String n, String i){
         name = n;
         img = i;
     }
-    public NotifClass(String n, String m, int h, int i){
+    public NotifClass(String n, String m, int h, String i){
         name = n;
         message = m;
         hour = h;
@@ -24,11 +24,11 @@ public class NotifClass {
         this.hour = hour;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 

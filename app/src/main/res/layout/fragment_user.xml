@@ -55,7 +55,7 @@
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Placeholder để tránh bản quyền"
+                    android:text="Name"
                     android:textColor="@color/black"
                     android:textSize="30dp"
                     android:textStyle="bold">

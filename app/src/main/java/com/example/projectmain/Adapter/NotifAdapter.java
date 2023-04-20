@@ -1,6 +1,7 @@
 package com.example.projectmain.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,6 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
     public NotifAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View v;
         v = LayoutInflater.from(context).inflate(R.layout.notif_box, parent, false);
-
-
         return new NotifAdapter.ViewHolder(v);
     }
 
@@ -68,7 +67,7 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
         } else {
             adTvT.setText(day + " ngày trước");
         }
-        adIvAv.setImageResource(n.getImg());
+        adIvAv.setImageURI(Uri.parse(n.getImg()));
     }
 
     @Override

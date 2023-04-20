@@ -2,6 +2,8 @@ package com.example.projectmain.Fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,9 +32,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.annotation.SuppressLint;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class UserFragment extends Fragment {
@@ -62,19 +67,18 @@ public class UserFragment extends Fragment {
     DB db;
     User user;
     ImageView avatarMain;
-    int[] imageRes = {R.drawable.imgquang, R.drawable.meo, R.drawable.imgcrew, R.drawable.imgpc};
-    private ArrayList<Image> list = new ArrayList<Image>();
+//    int[] imageRes = {R.drawable.imgquang, R.drawable.meo, R.drawable.imgcrew, R.drawable.imgpc};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        for (int r : imageRes) {
-            list.add(new Image(r));
-        }
+//        for (int r : imageRes) {
+//            list.add(new Image(r));
+//        }
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,7 +116,6 @@ public class UserFragment extends Fragment {
         } else
             link = Uri.parse(linkImage);
 
-
         if (name != null) {
             if (link == null) {
                 avatarMain.setImageResource(R.drawable.def);
@@ -120,13 +123,23 @@ public class UserFragment extends Fragment {
                 avatarMain.setImageURI(link);
             mtvUsername.setText(user.getName());
             mtvDes.setText(user.getDescription());
-            mtvPostCount.setText(String.valueOf(user.getPost_count()));
+            mtvPostCount.setText(String.valueOf(CountPost(db.getIduser(name))));
             mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
             mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
         }
+        List<String> imageList = ListImgPost(db.getIduser(name));
+     //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
+        mtvPostCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i =0; i < imageList.size(); i++){
+                    Log.d("Images: ", imageList.get(i));
+                }
+            }
 
+        });
 
-        ImageAdapter adapter = new ImageAdapter(list, getContext().getApplicationContext());
+        ImageAdapter adapter = new ImageAdapter(imageList, getContext().getApplicationContext());
         RecyclerView r = getView().findViewById(R.id.rcvImages);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
@@ -138,6 +151,33 @@ public class UserFragment extends Fragment {
         };
         r.setLayoutManager(g);
 
+
+
+    }
+    public int CountPost(int idUser){
+        SQLiteDatabase database = db.getReadableDatabase();
+
+        Cursor cursorCount = database.query("post", null, "idUser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
+        int count = 0;
+        while (cursorCount.moveToNext()){
+            count++;
+        }
+
+        return count;
+    }
+
+    @SuppressLint("Range")
+    public List<String> ListImgPost(int idUser){
+        String[] column = {"image"};
+        List<String> listImg = new ArrayList<String>();
+        SQLiteDatabase database = db.getReadableDatabase();
+
+        Cursor cursor = database.query("post", null, "idUser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
+        while (cursor.moveToNext()){
+            listImg.add(cursor.getString(3));
+        }
+
+        return Collections.singletonList(String.valueOf(listImg));
     }
 
 }

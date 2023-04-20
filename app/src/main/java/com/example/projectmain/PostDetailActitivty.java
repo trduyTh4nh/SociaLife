@@ -34,7 +34,6 @@ import java.util.Random;
 
 public class PostDetailActitivty extends AppCompatActivity {
 
-    private static final String KEY_IMAGE_LINK = "linkImage";
 
     EditText edtComment;
     TextView tvname, tvUsername, tvContent;
@@ -52,6 +51,7 @@ public class PostDetailActitivty extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
 
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_IMAGE_LINK = "linkImage";
 
     private static final String KEY_NAME = "name";
 
@@ -107,7 +107,10 @@ public class PostDetailActitivty extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
-        ivPfp.setImageURI(Uri.parse(sharedPreferences.getString(KEY_IMAGE_LINK, null)));
+
+        String test = b.getString("Img");
+        String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+        ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
         btnExit.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +158,7 @@ public class PostDetailActitivty extends AppCompatActivity {
 
 
 
+
     }
 
     void initView() {
@@ -176,14 +180,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         btnUpcmt = findViewById(R.id.btnUploadComment);
     }
 
-    //    void DataAdapter() {
-//        String[] names = {"@elonmusk", "@denvau", "@wuang", "@sugar", "@31.03", "@khangZata"};
-//        String[] comment = {"Hello hello hi hi", "ok!", "bài đăng hay", "tao random", "ứng dụng rác, vứt đi"};
-//        Random r = new Random();
-//
-//        cmtList.add(new Comment(names[r.nextInt(names.length)], comment[r.nextInt(comment.length)], r.nextInt(2000), r.nextInt(3000)));
-//
-//    }
+
     public List<Comment> getCmt(int idPost) {
         String[] column = {"content", "image", "comment_count", "datetime"};
         List<Comment> cmt = new ArrayList<Comment>();
