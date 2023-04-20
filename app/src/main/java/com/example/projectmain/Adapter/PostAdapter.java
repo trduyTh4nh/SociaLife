@@ -45,6 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public int getItemViewType(int position) {
         String postContent = posts.get(position).getContent();
         int img = posts.get(position).getImgPost();
+        Post childPost = posts.get(position).getSharedPost();
         if(postContent == null && img != -1){
             return 0;
         }
@@ -56,6 +57,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
         if(postContent != null && img != -1){
             return 3;
+        }
+        if(postContent != null && childPost != null){
+            return 5;
         }
         return 4;
     }
@@ -79,10 +83,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_small_paragraph, parent, false);
         } else if(viewType == 2){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_large_paragraph, parent, false);
-        } else if(viewType == 3){
+        } else if(viewType == 3) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post, parent, false);
-        } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.error, parent, false);
+        } else{
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shared_post, parent, false);
         }
         return new PostViewHolder(view);
     }
@@ -146,6 +150,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     context.startActivity(i);
                 }
             });
+        } else if(type == 5){
+            Post childPost = post.getSharedPost();
+            holder.tvSharedOwner.setText("@" + childPost.getUsername());
+            holder.tvTime.setText(childPost.getTime());
+            holder.tvSharedCaption.setText(childPost.getContent());
+            holder.tvSharedLikeCount.setText(childPost.getNumber_like());
+            holder.ivSharedImage.setImageResource(childPost.getImgPost());
+            holder.content.setText(post.getContent());
+            holder.ivSharedImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context, ImageActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle bd = new Bundle();
+                    bd.putInt("ImgRes", childPost.getImgPost());
+                    bd.putString("ImgPoster", childPost.getName());
+                    bd.putString("ImgUsername", childPost.getUsername());
+                    bd.putInt("ImgPfp", childPost.getAvatar());
+                    i.putExtras(bd);
+                    context.startActivity(i);
+                }
+            });
         }
         holder.avatar.setImageResource(post.getAvatar());
         holder.name.setText(post.getName());
@@ -199,8 +225,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView avatar, imgPost;
-        private TextView name, userName, numberLike, content, time, nameUserPost, tvParagraph;
+        private ImageView avatar, imgPost, ivSharedImage;
+        private TextView name, userName, numberLike, content, time, nameUserPost, tvParagraph, tvSharedOwner, tvTime, tvSharedCaption, tvSharedLikeCount;
         private ImageButton btnComment;
         LinearLayout llUser;
         public PostViewHolder(@NonNull View view) {
@@ -215,6 +241,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             content = (TextView) view.findViewById(R.id.tvContent);
             time = (TextView) view.findViewById(R.id.time_post);
             btnComment = view.findViewById(R.id.btnComment);
+            ivSharedImage = view.findViewById(R.id.ivSharedImage);
+            tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
+            tvSharedOwner = view.findViewById(R.id.tvSharedOwner);
+            tvTime = view.findViewById(R.id.tvTime);
+            tvSharedCaption = view.findViewById(R.id.tvSharedCaption);
+            tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
         }
     }
 }

@@ -111,6 +111,7 @@ public class HomeFragment extends Fragment {
 
     public List<Post> listPost(){
         List<Post> posts = new ArrayList<>();
+        posts.add(new Post(R.drawable.avatarquang, new Post(R.drawable.avatarduong, R.drawable.imgquang, "sugar", "Gia Đường", "2000", "Test", "10 ngày trước", null), "quang", "Trí Quang", "20", "Hello", "2 ngày trước"));
         posts.add(new Post(R.drawable.avatarquang, R.drawable.imgquang, "@wuang:", "Trí Quang", "1.1m", "đặc cầu tulen", "30 phút trước", null));
         posts.add(new Post(R.drawable.avatarduong, R.drawable.imgduong, "@Sugar:", "Gia Đường", "1.8m", "hello hi hi", "vài phút trước", null));
         posts.add(new Post(R.drawable.avatarvau, R.drawable.imgden, "@den:", "Đen Vâu", "1.1k", null, "1 ngày trước", null));
