@@ -162,38 +162,22 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp"
+    <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
+        android:layout_height="wrap_content">
+        <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#575757"></TextView>
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:text="254 bài viết"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold"></TextView>
-    </LinearLayout>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvImages"
+            android:text="Hỉnh ảnh"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Văn bản"/>
+    </com.google.android.material.tabs.TabLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpPosts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="50dp" />
+        android:layout_height="match_parent"/>
 
     <ScrollView
         android:layout_width="match_parent"

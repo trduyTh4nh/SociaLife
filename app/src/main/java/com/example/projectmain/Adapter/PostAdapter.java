@@ -339,7 +339,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 user = db.getUser(email);
                 int idUser = user.getId();
                 String UserName = db.getName(user.getId());
-                int idUserFollow = followUser(post.getUsername());
+                int idUserFollow = post.getIduser();
                 String UserNameFollow = db.getName(idUserFollow);
 
                 if (!db.CheckNameinFollower(idUserFollow)) {

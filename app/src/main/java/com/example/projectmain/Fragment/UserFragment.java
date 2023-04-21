@@ -12,6 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -24,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.projectmain.Adapter.ImageAdapter;
+import com.example.projectmain.Adapter.PostAdapter;
+import com.example.projectmain.Adapter.UserPostAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.Post;
@@ -138,19 +142,10 @@ public class UserFragment extends Fragment {
 
         //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
 
-        ImageAdapter adapter = new ImageAdapter(posts, getContext().getApplicationContext());
-        RecyclerView r = getView().findViewById(R.id.rcvImages);
+        UserPostAdapter adapter = new UserPostAdapter(getActivity().getApplicationContext(), posts);
+        ViewPager2 r = getView().findViewById(R.id.vpPosts);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
-        GridLayoutManager g = new GridLayoutManager(getActivity().getApplicationContext(), 3, GridLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return true;
-            }
-        };
-        r.setLayoutManager(g);
-
-
     }
 
     @Override
