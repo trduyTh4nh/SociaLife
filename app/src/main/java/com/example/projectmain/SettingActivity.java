@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,13 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Model.User;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class SettingActivity extends AppCompatActivity {
     ImageButton btnExit;
     ImageButton btnLogout;
 
     LinearLayout btnUpdate;
-    ImageView ivAvatar;
+    ShapeableImageView ivAvatar;
     TextView tvName, tvEmail;
     LinearLayout btnLogoff;
 
@@ -39,6 +42,8 @@ public class SettingActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
 
     DB db;
+
+    User user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -69,15 +74,20 @@ public class SettingActivity extends AppCompatActivity {
         String email = sharedPreferences.getString(KEY_EMAIL, null);
         String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link = null;
-        if(imgUrl != null){
-            link = Uri.parse(imgUrl);
-        }
-        if(name != null){
-            if(link == null){
-                ivAvatar.setImageResource(R.drawable.def);
-            }else {
-                ivAvatar.setImageURI(link);
-            }
+        user = db.getUser(email);
+        String strImageAvatar = db.getImagefor(user.getId());
+        link = Uri.parse(strImageAvatar);
+
+
+        Log.d("IMG: ", String.valueOf(link));
+
+        ivAvatar.setImageURI(link);
+
+//            ivAvatar.setImageResource(R.drawable.def);
+
+
+        if (name != null) {
+
             tvName.setText(name);
             tvEmail.setText(email);
         }
@@ -112,14 +122,16 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        String strImageAvatar = db.getImagefor(user.getId());
+
         String name = sharedPreferences.getString(KEY_NAME, null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
-        String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+      //  String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link = null;
-        if(imgUrl != null){
-            link = Uri.parse(imgUrl);
+        if (strImageAvatar != null) {
+            link = Uri.parse(strImageAvatar);
         }
-        if(name != null) {
+        if (name != null) {
             if (link == null) {
                 ivAvatar.setImageResource(R.drawable.def);
             } else {

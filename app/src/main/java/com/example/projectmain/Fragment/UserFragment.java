@@ -111,16 +111,18 @@ public class UserFragment extends Fragment {
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link;
         user = db.getUser(email);
-        if (linkImage == null) {
-            link = null;
-        } else
-            link = Uri.parse(linkImage);
+        String strImageAvatar = db.getImagefor(user.getId());
+//        if (linkImage == null) {
+//            link = null;
+//        } else
+        link = Uri.parse(strImageAvatar);
 
         if (name != null) {
             if (link == null) {
                 avatarMain.setImageResource(R.drawable.def);
             } else
                 avatarMain.setImageURI(link);
+
             mtvUsername.setText(user.getName());
             mtvDes.setText(user.getDescription());
             mtvPostCount.setText(String.valueOf(CountPost(db.getIduser(name))));
@@ -128,11 +130,11 @@ public class UserFragment extends Fragment {
             mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
         }
         List<String> imageList = ListImgPost(db.getIduser(name));
-     //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
+        //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
         mtvPostCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i =0; i < imageList.size(); i++){
+                for (int i = 0; i < imageList.size(); i++) {
                     Log.d("Images: ", imageList.get(i));
                 }
             }
@@ -152,14 +154,25 @@ public class UserFragment extends Fragment {
         r.setLayoutManager(g);
 
 
-
     }
-    public int CountPost(int idUser){
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String strImageAvatar = db.getImagefor(user.getId());
+//        if (linkImage == null) {
+//            link = null;
+//        } else
+       Uri link = Uri.parse(strImageAvatar);
+        avatarMain.setImageURI(link);
+    }
+
+    public int CountPost(int idUser) {
         SQLiteDatabase database = db.getReadableDatabase();
 
         Cursor cursorCount = database.query("post", null, "idUser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
         int count = 0;
-        while (cursorCount.moveToNext()){
+        while (cursorCount.moveToNext()) {
             count++;
         }
 
@@ -167,17 +180,18 @@ public class UserFragment extends Fragment {
     }
 
     @SuppressLint("Range")
-    public List<String> ListImgPost(int idUser){
+    public List<String> ListImgPost(int idUser) {
         String[] column = {"image"};
         List<String> listImg = new ArrayList<String>();
         SQLiteDatabase database = db.getReadableDatabase();
 
         Cursor cursor = database.query("post", null, "idUser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             listImg.add(cursor.getString(3));
         }
 
         return Collections.singletonList(String.valueOf(listImg));
     }
+
 
 }

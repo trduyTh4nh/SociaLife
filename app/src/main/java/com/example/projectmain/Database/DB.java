@@ -374,5 +374,26 @@ public class DB extends SQLiteOpenHelper {
             database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
     }
 
+    public String getImagefor(int idUser){
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Cursor cursor = database.query("user", null,"id=?", new String[]{String.valueOf(idUser)}, null, null, null);
+        String avartar = null;
+        while (cursor.moveToNext()){
+             avartar = cursor.getString(2);
+        }
+
+        return avartar;
+    }
+
+//     myDB.execSQL("create Table user(" +
+//             "id Integer PRIMARY KEY NOT NULL UNIQUE," +
+//             "name Text," +
+//             "image Blob," +
+//             "post_count Integer NOT NULL DEFAULT (0)," +
+//             "follower_count Integer NOT NULL DEFAULT (0)," +
+//             "following_count Integer NOT NULL DEFAULT (0)," +
+//             "description  TEXT)");
+
 
 }

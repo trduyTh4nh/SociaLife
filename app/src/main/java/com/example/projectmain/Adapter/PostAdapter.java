@@ -51,6 +51,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.context = context;
     }
 
+    User user;
     Context context;
     List<Post> posts;
     List<User> users;
@@ -128,6 +129,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         if (post == null)
             return;
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_IMAGE_LINK, post.getImgPost());
+        editor.apply();
+
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        user = db.getUser(email);
 
 
         holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
@@ -186,10 +194,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
              */
             holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
-            sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(KEY_IMAGE_LINK, post.getImgPost());
-            editor.apply();
+
+
             holder.content.setText(post.getContent());
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -208,13 +214,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        User user = db.getUser(email);
-
-
         int idUserFollow = posts.get(position).getIduser();
         int idUser = user.getId();
-        Log.d("IDFollower: ", String.valueOf(position));
 
         if (db.CheckNameinFollower(idUserFollow)) {
             if (idUser > 0) {
@@ -268,15 +269,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         // menu
-        Log.d("IDFollower: ", String.valueOf(position));
+
 
         if (idUserFollow != idUser) {
-            if (idUser > 0)
-
                 holder.btnOpenMenu.setVisibility(View.GONE);
 
-        } else
-        {
+        } else {
             holder.btnOpenMenu.setVisibility(View.VISIBLE);
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
@@ -292,7 +290,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.edit_post:
                                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
@@ -320,7 +318,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
 
-                User user = db.getUser(email);
+                user = db.getUser(email);
                 int idUser = user.getId();
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());
@@ -344,7 +342,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.flo.setVisibility(v.VISIBLE);
                 holder.tvFollowed.setVisibility(v.GONE);
 
-                User user = db.getUser(email);
+                user = db.getUser(email);
                 int idUser = user.getId();
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());

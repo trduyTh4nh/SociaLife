@@ -110,7 +110,11 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
         int idUser = u.getId();
 
 
+
         listImage = listNotify(idUser);
+//        for (int i = 0; i < listImage.size(); i++){
+//            Log.d("Value", listImage.get(i).getName());
+//        }
         adapter = new NotifAdapter(getActivity().getApplicationContext(), listImage);
         re.setAdapter(adapter);
         re.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()) {
@@ -129,10 +133,12 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
                 int pos = viewHolder.getAdapterPosition();
-                listImage.remove(pos);
-                db.removePost(pos);
+
+                db.removePost(i);
+                Log.d("index: ", String.valueOf(i));
                 adapter.notifyItemRemoved(pos);
-                Snackbar.make(getView().findViewById(R.id.rcvNotif), "Đã xóa thông báo", Snackbar.LENGTH_LONG).show();
+                listImage.remove(pos);
+                Snackbar.make(view.findViewById(R.id.rcvNotif), "Đã xóa thông báo", Snackbar.LENGTH_LONG).show();
 
             }
         };

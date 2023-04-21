@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Model.Follower;
 import com.example.projectmain.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
     }
 
     public class FollowerHolder extends RecyclerView.ViewHolder {
-        private ImageView img;
+        private ShapeableImageView img;
         private TextView name, userName;
         private CheckBox stateFollow;
 
