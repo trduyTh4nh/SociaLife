@@ -5,7 +5,10 @@ import static android.app.PendingIntent.getActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -50,7 +53,7 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        DB db = new DB(this);
         btnLogoff = findViewById(R.id.btnLogoff);
         btnExit = findViewById(R.id.btn_exit);
         tvName = findViewById(R.id.setting_userName);
@@ -100,12 +103,28 @@ public class SettingActivity extends AppCompatActivity {
         btnLogoff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-                finish();
-                Intent i = new Intent(SettingActivity.this, LoginActivity.class);
-                startActivity(i);
+                AlertDialog.Builder d = new AlertDialog.Builder(SettingActivity.this);
+                d.setTitle("Đăng xuất");
+                d.setMessage("Bạn có chắc là muốn đăng xuất không?");
+                d.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
+                        finish();
+                        Intent j = new Intent(SettingActivity.this, LoginActivity.class);
+                        startActivity(j);
+                    }
+                });
+                d.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                AlertDialog a = d.create();
+                a.show();
             }
         });
 
@@ -122,6 +141,7 @@ public class SettingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        db = new DB(SettingActivity.this);
         String strImageAvatar = db.getImagefor(user.getId());
 
         String name = sharedPreferences.getString(KEY_NAME, null);

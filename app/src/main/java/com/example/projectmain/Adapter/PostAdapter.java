@@ -3,7 +3,9 @@ package com.example.projectmain.Adapter;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -32,6 +34,7 @@ import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.ImageActivity;
+import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.PostDetailActitivty;
@@ -51,7 +54,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         this.context = context;
     }
 
-    User user;
     Context context;
     List<Post> posts;
     List<User> users;
@@ -129,16 +131,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         if (post == null)
             return;
-        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_IMAGE_LINK, post.getImgPost());
-        editor.apply();
 
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        user = db.getUser(email);
-
-
-        holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
+        String ava = post.getAvatar();
+        holder.avatar.setImageURI(Uri.parse(ava));
         //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
@@ -177,7 +172,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bd.putString("ImgRes", post.getImgPost());
                     bd.putString("ImgPoster", post.getName());
                     bd.putString("ImgUsername", post.getUsername());
-                    bd.putString("ImgPfp", post.getAvatar());
+                    bd.putString("ImgPfp", ava);
                     i.putExtras(bd);
                     context.startActivity(i);
                 }
@@ -194,8 +189,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
              */
             holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
-
-
+            sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(KEY_IMAGE_LINK, post.getImgPost());
+            editor.apply();
             holder.content.setText(post.getContent());
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -206,16 +203,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bd.putString("ImgRes", post.getImgPost());
                     bd.putString("ImgPoster", post.getName());
                     bd.putString("ImgUsername", post.getUsername());
-                    bd.putString("ImgPfp", post.getAvatar());
+                    bd.putString("ImgPfp", ava);
                     i.putExtras(bd);
                     context.startActivity(i);
                 }
             });
         }
 
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        User user = db.getUser(email);
+
 
         int idUserFollow = posts.get(position).getIduser();
         int idUser = user.getId();
+        Log.d("IDFollower: ", String.valueOf(position));
 
         if (db.CheckNameinFollower(idUserFollow)) {
             if (idUser > 0) {
@@ -246,7 +247,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 bn.putInt("idPost", position);
                 bn.putString("Username", post.getUsername());
                 bn.putInt("idUser", post.getIduser());
-                bn.putString("Pfp", post.getAvatar());
+                bn.putString("Pfp", ava);
                 bn.putString("Name", post.getName());
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("ViewType", type);
@@ -269,12 +270,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         });
         // menu
-
+        Log.d("IDFollower: ", String.valueOf(position));
 
         if (idUserFollow != idUser) {
+            if (idUser > 0)
+
                 holder.btnOpenMenu.setVisibility(View.GONE);
 
-        } else {
+        } else
+        {
             holder.btnOpenMenu.setVisibility(View.VISIBLE);
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
@@ -290,13 +294,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
+                        switch (item.getItemId()){
                             case R.id.edit_post:
                                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.remove_post:
-                                db.removePost(position + 1);
-
+                                AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
+                                b.setTitle("Xóa bài viết")
+                                                .setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
+                                b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        db.removePost(position + 1);
+                                        posts.remove(position);
+                                        notifyItemRemoved(position);
+                                    }
+                                });
+                                b.setNegativeButton("Hủy, đừng xóa nó", null);
+                                AlertDialog a = b.create();
+                                a.show();
                                 break;
                             default:
                                 break;
@@ -311,6 +327,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
         holder.flo.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
 
@@ -318,7 +335,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
 
-                user = db.getUser(email);
+                User user = db.getUser(email);
                 int idUser = user.getId();
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());
@@ -339,25 +356,36 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.tvFollowed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.flo.setVisibility(v.VISIBLE);
-                holder.tvFollowed.setVisibility(v.GONE);
+                AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
+                b.setTitle("Hủy theo dõi");
+                b.setMessage("Bạn có muốn hủy theo dõi người dùng " + post.getName() + "? Bạn sẽ không thể thấy thông báo khi họ đăng bài.");
+                b.setPositiveButton("Hủy theo dõi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        holder.flo.setVisibility(v.VISIBLE);
+                        holder.tvFollowed.setVisibility(v.GONE);
 
-                user = db.getUser(email);
-                int idUser = user.getId();
-                String UserName = db.getName(user.getId());
-                int idUserFollow = followUser(post.getUsername());
-                String UserNameFollow = db.getName(idUserFollow);
+                        User user = db.getUser(email);
+                        int idUser = user.getId();
+                        String UserName = db.getName(user.getId());
+                        int idUserFollow = followUser(post.getUsername());
+                        String UserNameFollow = db.getName(idUserFollow);
 
-                if (db.CheckNameinFollower(idUserFollow)) {
-                    if (idUser > 0) {
-                        db.UnFollower(idUserFollow);
-                        Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
-                }
+                        if (db.CheckNameinFollower(idUserFollow)) {
+                            if (idUser > 0) {
+                                db.UnFollower(idUserFollow);
+                                Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
 
+                            } else
+                                Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                b.setNegativeButton("Hủy", null);
+                AlertDialog a = b.create();
+                a.show();
             }
         });
 

@@ -373,7 +373,11 @@ public class DB extends SQLiteOpenHelper {
         if (idNotify >= 0)
             database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
     }
-
+    public Cursor getDataFromID(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        String[] Image = {"image"};
+        return db.query("user", Image, "id = ?", new String[] {String.valueOf(id)}, null, null, null);
+    }
     public String getImagefor(int idUser){
         SQLiteDatabase database = this.getWritableDatabase();
 

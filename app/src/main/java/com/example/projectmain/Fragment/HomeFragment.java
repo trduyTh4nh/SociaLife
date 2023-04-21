@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment {
 
         //   Log.d("ID: ",  db.getName(list.get(i)));
         posts = getPost();
-        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        adapter = new PostAdapter(getActivity(), posts);
 
         adapter.notifyDataSetChanged();
 
@@ -178,7 +178,8 @@ public class HomeFragment extends Fragment {
         if (posts != null)
             posts.clear();
         posts.addAll(getPost());
-
+        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 

@@ -109,7 +109,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         String name = sharedPreferences.getString(KEY_NAME, null);
 
         String test = b.getString("Img");
-        String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+        String linkImage = b.getString("Pfp");
         ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
