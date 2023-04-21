@@ -389,7 +389,10 @@ public class DB extends SQLiteOpenHelper {
 
         return avartar;
     }
-
+    public Cursor getPostsFromUser(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query("post", null, "iduser =?", new String[]{String.valueOf(id)}, null, null, null);
+    }
 //     myDB.execSQL("create Table user(" +
 //             "id Integer PRIMARY KEY NOT NULL UNIQUE," +
 //             "name Text," +

@@ -197,7 +197,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
              */
             holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
-
+            Log.d("d", post.getImgPost());
             holder.content.setText(post.getContent());
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override

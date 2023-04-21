@@ -149,19 +149,6 @@
                             android:textStyle="bold"></TextView>
                     </LinearLayout>
 
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
                     <LinearLayout
                         android:id="@+id/btnFlolow"
                         android:layout_width="match_parent"
@@ -175,9 +162,9 @@
                         android:paddingLeft="30dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_communicate"></ImageView>
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/star_line"></ImageView>
 
                         <TextView
                             android:layout_width="wrap_content"
