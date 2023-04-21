@@ -60,11 +60,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     List<String> listName;
     DB db;
     CheckBox btnLike;
+    User user;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_IMAGE_LINK = "linkImage";
 
     private static final String KEY_EMAIL = "email";
+    String email = null;
 
     /*
      * Lấy kiểu view
@@ -127,7 +129,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         //   User user = users.get(position);
         int type = getItemViewType(position);
+        sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_IMAGE_LINK, post.getImgPost());
+        email = sharedPreferences.getString(KEY_EMAIL, null);
 
+        user = db.getUser(email);
+        editor.apply();
 
         if (post == null)
             return;
@@ -189,10 +197,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Post có cả 2 caption và hình, setImageResource và setText cho imgPost và content bình tường
              */
             holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
-            sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(KEY_IMAGE_LINK, post.getImgPost());
-            editor.apply();
+
             holder.content.setText(post.getContent());
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -210,13 +215,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             });
         }
 
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        User user = db.getUser(email);
-
 
         int idUserFollow = posts.get(position).getIduser();
         int idUser = user.getId();
-        Log.d("IDFollower: ", String.valueOf(position));
+        //Log.d("IDFollower: ", email);
 
         if (db.CheckNameinFollower(idUserFollow)) {
             if (idUser > 0) {
@@ -277,8 +279,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
                 holder.btnOpenMenu.setVisibility(View.GONE);
 
-        } else
-        {
+        } else {
             holder.btnOpenMenu.setVisibility(View.VISIBLE);
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
@@ -294,14 +295,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.edit_post:
                                 Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.remove_post:
                                 AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
                                 b.setTitle("Xóa bài viết")
-                                                .setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
+                                        .setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -335,7 +336,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
 
-                User user = db.getUser(email);
+                user = db.getUser(email);
                 int idUser = user.getId();
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());
@@ -365,7 +366,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         holder.flo.setVisibility(v.VISIBLE);
                         holder.tvFollowed.setVisibility(v.GONE);
 
-                        User user = db.getUser(email);
+                        user = db.getUser(email);
                         int idUser = user.getId();
                         String UserName = db.getName(user.getId());
                         int idUserFollow = followUser(post.getUsername());

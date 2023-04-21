@@ -109,20 +109,22 @@ public class UserFragment extends Fragment {
         String email = sharedPreferences.getString(KEY_EMAIL, null);
 
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
-        Uri link;
+        Uri link = null;
         user = db.getUser(email);
         String strImageAvatar = db.getImagefor(user.getId());
 //        if (linkImage == null) {
 //            link = null;
 //        } else
-        link = Uri.parse(strImageAvatar);
+        
 
         if (name != null) {
-            if (link == null) {
-                avatarMain.setImageResource(R.drawable.def);
-            } else
-                avatarMain.setImageURI(link);
 
+            if (strImageAvatar == null) {
+                avatarMain.setImageResource(R.drawable.def);
+            } else{
+                link = Uri.parse(strImageAvatar);
+                avatarMain.setImageURI(link);
+            }
             mtvUsername.setText(user.getName());
             mtvDes.setText(user.getDescription());
             mtvPostCount.setText(String.valueOf(CountPost(db.getIduser(name))));
@@ -163,8 +165,13 @@ public class UserFragment extends Fragment {
 //        if (linkImage == null) {
 //            link = null;
 //        } else
-       Uri link = Uri.parse(strImageAvatar);
-        avatarMain.setImageURI(link);
+        Uri link = null;
+        if (strImageAvatar == null) {
+            avatarMain.setImageResource(R.drawable.def);
+        } else{
+            link = Uri.parse(strImageAvatar);
+            avatarMain.setImageURI(link);
+        }
     }
 
     public int CountPost(int idUser) {

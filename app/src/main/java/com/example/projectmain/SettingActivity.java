@@ -79,18 +79,18 @@ public class SettingActivity extends AppCompatActivity {
         Uri link = null;
         user = db.getUser(email);
         String strImageAvatar = db.getImagefor(user.getId());
-        link = Uri.parse(strImageAvatar);
 
 
         Log.d("IMG: ", String.valueOf(link));
 
-        ivAvatar.setImageURI(link);
-
 //            ivAvatar.setImageResource(R.drawable.def);
-
-
         if (name != null) {
-
+            if (strImageAvatar != null) {
+                link = Uri.parse(strImageAvatar);
+                ivAvatar.setImageURI(link);
+            } else {
+                ivAvatar.setImageResource(R.drawable.def);
+            }
             tvName.setText(name);
             tvEmail.setText(email);
         }
@@ -146,7 +146,7 @@ public class SettingActivity extends AppCompatActivity {
 
         String name = sharedPreferences.getString(KEY_NAME, null);
         String email = sharedPreferences.getString(KEY_EMAIL, null);
-      //  String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+        //  String imgUrl = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link = null;
         if (strImageAvatar != null) {
             link = Uri.parse(strImageAvatar);

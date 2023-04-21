@@ -47,6 +47,7 @@ public class AddActivity extends AppCompatActivity {
 
     Uri imageUri;
 
+
     public static  final int CAMERA_REQUEST = 100;
     public static final int STORAGE_REQUEST = 101;
     public static final int IMAGE_PICK_GALLERY = 102;
@@ -78,9 +79,19 @@ public class AddActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
         String imgUri = sharedPreferences.getString(KEY_IMAGE_LINK, null);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        Uri link = null;
+        user = db.getUser(email);
+        String strImageAvatar = db.getImagefor(user.getId());
+
+        if(strImageAvatar != null){
+            ivPfp.setImageURI(Uri.parse(strImageAvatar));
+        }
+        else
+            ivPfp.setImageResource(R.drawable.def);
+
         mtvName.setText(name);
         tvFullName.setText(name);
-        ivPfp.setImageURI(Uri.parse(imgUri));
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
