@@ -163,18 +163,13 @@
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tlPostType"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hỉnh ảnh"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Văn bản"/>
+        android:layout_height="wrap_content"
+        app:tabIndicatorFullWidth="false">
     </com.google.android.material.tabs.TabLayout>
     <androidx.viewpager2.widget.ViewPager2
+        android:layout_marginTop="20dp"
         android:id="@+id/vpPosts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

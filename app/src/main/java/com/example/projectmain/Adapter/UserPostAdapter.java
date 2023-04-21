@@ -17,8 +17,20 @@ import com.example.projectmain.R;
 import java.util.ArrayList;
 
 public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostViewHolder> {
+
     Context c;
     ArrayList<Post> Posts;
+    ArrayList<Post> PostText;
+    ArrayList<Post> PostImg;
+    private void SplitList(){
+        PostText = new ArrayList<Post>();
+        PostImg = new ArrayList<Post>();
+        for (Post p : Posts) {
+            if(p.getImgPost().equals("null")){
+                PostText.add(p);
+            } else PostImg.add(p);
+        }
+    }
     public UserPostAdapter(Context c, ArrayList<Post> posts){
         this.c = c;
         Posts = posts;
@@ -41,13 +53,14 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
+        SplitList();
         if(position == 0){
-            ImageAdapter adapter = new ImageAdapter(Posts, c);
+            ImageAdapter adapter = new ImageAdapter(PostImg, c);
             holder.rcvPosts.setAdapter(adapter);
             GridLayoutManager g = new GridLayoutManager(c,3);
             holder.rcvPosts.setLayoutManager(g);
         } else if(position == 1){
-            TextPostAdapter adapter = new TextPostAdapter(c, Posts);
+            TextPostAdapter adapter = new TextPostAdapter(c, PostText);
             LinearLayoutManager l = new LinearLayoutManager(c);
             holder.rcvPosts.setAdapter(adapter);
             holder.rcvPosts.setLayoutManager(l);
@@ -65,14 +78,5 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
             super(itemView);
             rcvPosts = itemView.findViewById(R.id.rcvPosts);
         }
-    }
-    public int CheckText(){
-        int e = 0;
-        for (Post p : Posts) {
-            if(!p.getContent().equals("null")){
-                e++;
-            }
-        }
-        return e;
     }
 }

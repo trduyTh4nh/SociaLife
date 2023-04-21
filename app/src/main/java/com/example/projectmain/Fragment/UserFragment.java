@@ -35,6 +35,8 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import android.annotation.SuppressLint;
 import android.widget.TimePicker;
@@ -75,7 +77,7 @@ public class UserFragment extends Fragment {
     ArrayList<Post> posts;
 //    int[] imageRes = {R.drawable.imgquang, R.drawable.meo, R.drawable.imgcrew, R.drawable.imgpc};
     String name;
-
+    TabLayout tlPostType;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +100,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tlPostType = view.findViewById(R.id.tlPostType);
         avatarMain = view.findViewById(R.id.avatar_main);
         mtvUsername = view.findViewById(R.id.tvName);
         mtvFollowingCount = view.findViewById(R.id.tvFollowing);
@@ -146,6 +149,13 @@ public class UserFragment extends Fragment {
         ViewPager2 r = getView().findViewById(R.id.vpPosts);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
+        new TabLayoutMediator(tlPostType, r, ((tab, position) -> {
+            if(position == 0){
+                tab.setIcon(R.drawable.landscape_line);
+            } else {
+                tab.setIcon(R.drawable.text);
+            }
+        })).attach();
     }
 
     @Override
