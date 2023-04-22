@@ -63,16 +63,6 @@
                 </TextView>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="\@placeholder"
-                    android:textSize="16dp"
-                    android:textStyle="bold">
-
-                </TextView>
-
-                <TextView
                     android:id="@+id/tvDes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.projectmain.Adapter.FollowerAdapter;
 import com.example.projectmain.Database.DB;
@@ -21,6 +25,7 @@ public class FollowerActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FollowerAdapter adapter;
+    ImageButton exitBTN;
 
     SharedPreferences sharedPreferences;
     private static final String SHARE_PRE_NAME = "mypref";
@@ -28,11 +33,18 @@ public class FollowerActivity extends AppCompatActivity {
 
     DB db;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower);
-
+        exitBTN = findViewById(R.id.btn_exit);
+        exitBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         sharedPreferences = getSharedPreferences(SHARE_PRE_NAME, MODE_PRIVATE);
         String email = sharedPreferences.getString(KEY_MAIL, null);
 

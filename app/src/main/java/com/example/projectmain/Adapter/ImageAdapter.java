@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Image;
+import com.example.projectmain.Model.Post;
 import com.example.projectmain.R;
 
 import java.io.IOException;
@@ -34,12 +35,12 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    public ImageAdapter(List<String> imageList, Context context) {
+    public ImageAdapter(List<Post> imageList, Context context) {
         this.imageList = imageList;
         this.context = context;
     }
 
-    private List<String> imageList;
+    private List<Post> imageList;
 
     Context context;
 
@@ -53,9 +54,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String imagePost = imageList.get(position);
-        Log.d("Value Image: " , imagePost);
-        Uri imgPost = Uri.parse(imagePost);
+        Post imagePost = imageList.get(position);
+        Uri imgPost = Uri.parse(imagePost.getImgPost());
+        Log.d("d", imagePost.getImgPost());
         // méo hiểu
         holder.image.setImageURI(imgPost);
         holder.setItemClickListener(new ItemClickListener() {
@@ -65,7 +66,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("ImgRes", imagePost);
+                bundle.putString("ImgRes", imagePost.getImgPost());
                 i.putExtras(bundle);
                 context.startActivity(i);
             }
