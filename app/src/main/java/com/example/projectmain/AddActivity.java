@@ -114,7 +114,6 @@ public class AddActivity extends AppCompatActivity {
                     contentValues.put("content", content);
                     contentValues.put("image",String.valueOf(imageUri));
 
-
                     long result = myDB.insert("post", null, contentValues);
                     if(result > 0){
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
