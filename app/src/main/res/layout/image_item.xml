@@ -13,7 +13,7 @@
         android:layout_marginBottom="2dp"
         android:background="@drawable/btn_generic"
         app:cardBackgroundColor="@color/buttonfollow"
-        app:cardCornerRadius="@dimen/slight_round">
+        app:cardCornerRadius="0dp">
 
         <ImageView
             android:id="@+id/ivImage"

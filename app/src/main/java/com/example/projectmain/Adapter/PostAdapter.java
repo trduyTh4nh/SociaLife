@@ -150,17 +150,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         Time now = new Time(position);
 
-        int timer = now.getHours() / 24;
-
-        if (timer < 1) {
-            holder.time.setText(timer + " giờ trước");
-        } else if (timer > 14) {
-            holder.time.setText(timer / 7 + " tuần trước");
-        } else if (timer / 7 > 5) {
-            holder.time.setText(timer / 30 + " tháng trước");
-        } else {
-            holder.time.setText(timer + " ngày trước");
-        }
+        holder.time.setText(post.getTime());
 
 
         if (type == 0) {
@@ -306,7 +296,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        db.removePost(position + 1);
+                                        db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
                                     }

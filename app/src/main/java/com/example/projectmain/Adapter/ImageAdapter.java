@@ -64,7 +64,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             public void onClick(View v, int pos, boolean b) {
                 Intent i= new Intent(context, ImageActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 Bundle bundle = new Bundle();
                 bundle.putString("ImgRes", imagePost.getImgPost());
                 i.putExtras(bundle);

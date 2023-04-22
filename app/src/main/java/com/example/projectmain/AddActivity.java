@@ -33,6 +33,9 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class AddActivity extends AppCompatActivity {
 
     EditText medtNoidung;
@@ -113,8 +116,9 @@ public class AddActivity extends AppCompatActivity {
                     contentValues.put("iduser", iduser);
                     contentValues.put("content", content);
                     contentValues.put("image",String.valueOf(imageUri));
-
-
+                    Calendar c = Calendar.getInstance();
+                    long t = c.getTimeInMillis();
+                    contentValues.put("datetime", String.valueOf(t));
                     long result = myDB.insert("post", null, contentValues);
                     if(result > 0){
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
@@ -252,7 +256,6 @@ public class AddActivity extends AppCompatActivity {
                 //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1,1)
                         .start(this);
             }
             else if (requestCode == IMAGE_PICK_CAMERA){
