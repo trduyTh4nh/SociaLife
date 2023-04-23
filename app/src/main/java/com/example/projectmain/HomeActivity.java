@@ -11,11 +11,13 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.projectmain.Fragment.AddFragment;
 import com.example.projectmain.Fragment.HomeFragment;
@@ -26,7 +28,14 @@ import com.example.projectmain.Fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class HomeActivity extends AppCompatActivity {
+    @Override //ngăn việc quy lại trang đăng nhập
+    public void onBackPressed() {
+    }
+
     BottomNavigationView navigationView;
     FloatingActionButton btnAdd;
     TextView test;

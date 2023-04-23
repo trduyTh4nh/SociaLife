@@ -90,6 +90,9 @@ public class EditInfoActivity extends AppCompatActivity {
         //
         edtUserName.setText(name);
         user = db.getUser(email);
+        imageUri = Uri.parse(db.getImagefor(user.getId()));
+        imgCurrent.setImageURI(imageUri);
+        edtStory.setText(user.getDescription());
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +133,7 @@ public class EditInfoActivity extends AppCompatActivity {
                     } else
                         Toast.makeText(EditInfoActivity.this, "Nhập mật khẩu để xác nhận!", Toast.LENGTH_SHORT).show();
                 } else
-                    Toast.makeText(EditInfoActivity.this, "Sai mật khẩu :(", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditInfoActivity.this, "Sai mật khẩu.", Toast.LENGTH_SHORT).show();
                 saveImage.commit();
 
 
