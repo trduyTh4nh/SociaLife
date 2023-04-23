@@ -210,12 +210,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         int idUser = user.getId();
         //Log.d("IDFollower: ", email);
 
-        if (db.CheckNameinFollower(idUserFollow)) {
-            if (idUser > 0) {
+        if (db.CheckNameinFollowing(idUserFollow, idUser)) {
+            if (idUser >= 0) {
                 holder.flo.setVisibility(View.GONE);
                 holder.tvFollowed.setVisibility(View.VISIBLE);
-            } else
-                Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
+            }
         } else {
             holder.flo.setVisibility(View.VISIBLE);
             holder.tvFollowed.setVisibility(View.GONE);
@@ -261,12 +260,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
 
         });
+
+
         // menu
-        Log.d("IDFollower: ", String.valueOf(position));
+
 
         if (idUserFollow != idUser) {
             if (idUser > 0)
-
                 holder.btnOpenMenu.setVisibility(View.GONE);
 
         } else {
@@ -274,7 +274,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
-
 
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -325,22 +324,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 holder.flo.setVisibility(v.GONE);
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
-
-                user = db.getUser(email);
-                int idUser = user.getId();
                 String UserName = db.getName(user.getId());
-                int idUserFollow = post.getIduser();
+                int idUserFollow = followUser(post.getUsername());
                 String UserNameFollow = db.getName(idUserFollow);
 
-                if (!db.CheckNameinFollower(idUserFollow)) {
-                    if (idUser > 0) {
-                        db.insertDataFollow(idUser, idUserFollow);
-                        Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
+                //if (!db.CheckNameinFollower(idUserFollow)) {
+                db.insertDataFollow(idUser, idUserFollow);
+                ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+                for (int i = 0; i < listUserFollowed.size(); i++) {
+                    Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
+                    if (idUserFollow == listUserFollowed.get(i)) {
+                            holder.flo.setVisibility(View.GONE);
+                            holder.tvFollowed.setVisibility(View.VISIBLE);
 
+                    } else {
+                        holder.flo.setVisibility(View.VISIBLE);
+                        holder.tvFollowed.setVisibility(View.GONE);
+                    }
+
+                    refreshView(listUserFollowed.get(i));
+
+                }
+
+                Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+                //   } else
+                //Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -365,6 +373,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         if (db.CheckNameinFollower(idUserFollow)) {
                             if (idUser > 0) {
                                 db.UnFollower(idUserFollow);
+                                ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+                                for (int j = 0; j < listUserFollowed.size(); j++) {
+                                    Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(j)));
+                                    if (idUserFollow == listUserFollowed.get(j)) {
+                                        holder.flo.setVisibility(View.GONE);
+                                        holder.tvFollowed.setVisibility(View.VISIBLE);
+
+                                    } else {
+                                        holder.flo.setVisibility(View.VISIBLE);
+                                        holder.tvFollowed.setVisibility(View.GONE);
+                                    }
+
+                                    refreshView(listUserFollowed.get(j));
+
+                                }
                                 Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
 
                             } else
@@ -384,7 +407,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, SettingActivity.class);
+                //Intent i = new Intent(context, SettingActivity.class);
             }
         });
 
@@ -455,6 +478,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
+    }
+    public void refreshView(int position) {
+        notifyItemChanged(position);
     }
 
 }

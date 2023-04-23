@@ -110,11 +110,10 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
         int idUser = u.getId();
 
 
-
         listImage = listNotify(idUser);
-//        for (int i = 0; i < listImage.size(); i++){
-//            Log.d("Value", listImage.get(i).getName());
-//        }
+        for (int i = 0; i < listImage.size(); i++) {
+            Log.d("Value", listImage.get(i).getName());
+        }
         adapter = new NotifAdapter(getActivity().getApplicationContext(), listImage);
         re.setAdapter(adapter);
         re.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()) {
@@ -132,14 +131,14 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
                 int pos = viewHolder.getAdapterPosition();
 
                 db.removePost(i);
-                Log.d("index: ", String.valueOf(i));
+                Log.d("index: ", String.valueOf(pos));
                 adapter.notifyItemRemoved(pos);
                 listImage.remove(pos);
                 Snackbar.make(view.findViewById(R.id.rcvNotif), "Đã xóa thông báo", Snackbar.LENGTH_LONG).show();
-
             }
         };
         ItemTouchHelper touchHelper = new ItemTouchHelper(callBack);
@@ -155,6 +154,41 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+
+        u = db.getUser(email);
+        int idUser = u.getId();
+        ArrayList<NotifClass> list = new ArrayList<NotifClass>();
+        SQLiteDatabase database = db.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM post p JOIN follower f on p.iduser = f.idfollowing WHERE f.iduser = ?", new String[]{String.valueOf(idUser)});
+
+        while (cursor.moveToNext()) {
+            String userName = db.getName(cursor.getInt(1));
+            int idUserFollower = db.getIduser(userName);
+
+            String message = userName + " đã đăng một bài viết";
+            int time = cursor.getInt(7);
+            String avatar = cursor.getString(3);
+            int idPost = db.getIDPostOf(idUserFollower);
+            // chưa có chức năng share nên set id mặt định bằng 0;
+            // chưa có chức năng like nên set id mặt định bằng 0;
+
+
+            int idShare = 0;
+            int idLike = 0;
+            int idComment = db.getIDCommentOf(idPost, idUserFollower);
+            //int idFollower =
+            db.insertNotify(idUser, message, String.valueOf(time), idPost, idLike, idComment, idShare, idUserFollower);
+        }
+    }
+    // làm lại hàm insert sao đó lưu list trong table notify và render ra giao diện
+    // nó sẽ insert vào cái mà mình lấy bằng hàm bên database đem qua rồi insert vào table notify chứ k duyệt và insert bằng table post
+    // muốn lấy avatar thì dùng hàm get Avatar bên database
+    // sau đó nghĩ cách viết hàm lấy các id còn lại, và user name + message, id comment
+    // lưu ý idshare, idlike, time = 0, vì chưa có chức năng
     public ArrayList<NotifClass> listNotify(int idCurrentUser) {
         ArrayList<NotifClass> list = new ArrayList<NotifClass>();
         SQLiteDatabase database = db.getWritableDatabase();
@@ -162,13 +196,25 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
 
         while (cursor.moveToNext()) {
             String userName = db.getName(cursor.getInt(1));
+            int idUserFollower = db.getIduser(userName);
+
             String message = userName + " đã đăng một bài viết";
             int time = cursor.getInt(7);
             String avatar = cursor.getString(3);
-
-            list.add(new NotifClass(userName, message, time, avatar));
+            int idPost = db.getIDPostOf(idUserFollower);
+            // chưa có chức năng share nên set id mặt định bằng 0;
+            // chưa có chức năng like nên set id mặt định bằng 0;
+            int idUserCrrent = idCurrentUser;
+            int idShare = 0;
+            int idLike = 0;
+            int idComment = db.getIDCommentOf(idPost, idUserFollower);
+            //int idFollower =
+            db.insertNotify(idUserCrrent, message, String.valueOf(time) ,idPost, idLike, idComment, idShare, idUserFollower);
+            //list.add(new NotifClass(userName, message, time, avatar));
         }
 
         return list;
     }
+
+
 }
