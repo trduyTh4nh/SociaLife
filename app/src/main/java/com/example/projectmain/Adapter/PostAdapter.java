@@ -44,6 +44,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -103,7 +104,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
+        visited = new Boolean[posts.size()];
 
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
@@ -122,7 +123,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
         db = new DB(context.getApplicationContext());
 
         Post post = posts.get(position);
@@ -320,7 +320,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             @Override
             public void onClick(View v) {
-
+                visited = new Boolean[posts.size()];
                 holder.flo.setVisibility(v.GONE);
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
@@ -331,6 +331,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 //if (!db.CheckNameinFollower(idUserFollow)) {
                 db.insertDataFollow(idUser, idUserFollow);
                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+                int index;
                 for (int i = 0; i < listUserFollowed.size(); i++) {
                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
                     if (idUserFollow == listUserFollowed.get(i)) {
@@ -341,9 +342,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         holder.flo.setVisibility(View.VISIBLE);
                         holder.tvFollowed.setVisibility(View.GONE);
                     }
-
-                    refreshView(listUserFollowed.get(i));
-
+                    for(int j = 0; j < getItemCount(); j++){
+                        if(posts.get(j).getIduser() == listUserFollowed.get(i)){
+                            refreshView(j);
+                        }
+                    }
                 }
 
                 Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
@@ -385,7 +388,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         holder.tvFollowed.setVisibility(View.GONE);
                                     }
 
-                                    refreshView(listUserFollowed.get(j));
+                                    for(int k = 0; k < getItemCount(); k++){
+                                        if(posts.get(k).getIduser() == listUserFollowed.get(j)){
+                                            refreshView(k);
+                                        }
+                                    }
 
                                 }
                                 Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
@@ -482,5 +489,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void refreshView(int position) {
         notifyItemChanged(position);
     }
-
+    Boolean[] visited;
+    public int getIndexOfPost(int idFollower){
+        Arrays.fill(visited, false);
+        int index = -1;
+        for (int i = 0; i < getItemCount(); i++) {
+            if(posts.get(i).getIduser() == idFollower){
+                if(visited[i]){
+                    continue;
+                }
+                Log.d("indexFollower", String.valueOf(i));
+                visited[i] = true;
+                return i;
+            }
+        }
+        visited = new Boolean[posts.size()];
+        return index;
+    }
 }

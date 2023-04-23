@@ -243,10 +243,7 @@ public class DB extends SQLiteOpenHelper {
     public Boolean CheckNameinFollower(int IDuserFollowing) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from follower where idfollowing = ?", new String[]{String.valueOf(IDuserFollowing)});
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        return cursor.getCount() > 0;
     }
 
     //Kiểm tra Email , Password trong SQLite?
@@ -308,7 +305,15 @@ public class DB extends SQLiteOpenHelper {
 //        myDB.close();
         return user;
     }
+    @SuppressLint("Range")
+    public Cursor getUserFromSearch(String keyword) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
 
+        //        Cursor cursor = myDB.rawQuery("SELECT * FROM user INNER JOIN account on account.id = user.userid WHERE account.email = ?", new String[]{email});
+//        cursor.close();
+//        myDB.close();
+        return myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.name LIKE '%" + keyword + "%'", null);
+    }
 
     public List<String> getListName() {
         String[] column = {"name"};

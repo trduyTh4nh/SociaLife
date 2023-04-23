@@ -10,6 +10,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,11 +19,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.User;
@@ -33,11 +38,13 @@ import java.util.List;
 public class SreachFragment extends Fragment {
 
 
-    DB db;
+    public static DB db;
     AutoCompleteTextView sview;
 
     ArrayList<User> arrUser = new ArrayList<User>();
     ArrayAdapter<String> a;
+    RecyclerView r;
+    TextView tvSearch;
     public SreachFragment() {
 
     }
@@ -69,33 +76,65 @@ public class SreachFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        r = view.findViewById(R.id.rcvSearch);
         db = new DB(getContext().getApplicationContext());
-
+        tvSearch = view.findViewById(R.id.tvResultCount);
         sview = (AutoCompleteTextView) view.findViewById(R.id.searchView);
 
         List<String> listName = db.getListName();
 
         String[] names = new String[listName.size()];
+
         for (int i =0 ;i < names.length;i++){
             names[i] = listName.get(i);
         }
         a = new ArrayAdapter<String>(getContext(), R.layout.item_list_searchview, listName);
         sview.setAdapter(a);
         a.notifyDataSetChanged();
+
+        UserSearchAdapter adap = new UserSearchAdapter(view.getContext(), arrUser);
+        LinearLayoutManager g = new LinearLayoutManager(view.getContext());
+        r.setLayoutManager(g);
+        r.setAdapter(adap);
+        a.notifyDataSetChanged();
         sview.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 //tvRead.setText(autoCl.getText().toString());
+
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(sview.getText().toString().equals("")){
+                    tvSearch.setText("Vui lòng nhập từ khóa.");
+                    arrUser.clear();
+                    adap.notifyDataSetChanged();
+                    return;
+                }
+                updateData(sview.getText().toString());
+                adap.notifyDataSetChanged();
+                tvSearch.setText("Đang hiển thị " + arrUser.size() + " kết quả khớp với từ khóa \"" + sview.getText().toString() + "\"");
             }
             @Override
             public void afterTextChanged(Editable s) {
             }
         });
 
+    }
+    @SuppressLint("Range")
+    void updateData(String k){
+
+        if(arrUser != null){
+            arrUser.clear();
+        } else {
+            arrUser = new ArrayList<User>();
+        }
+        Cursor c = db.getUserFromSearch(k);
+
+        while(c.moveToNext()){
+            arrUser.add(new User(c.getInt(c.getColumnIndex("id")), c.getString(c.getColumnIndex("name")), c.getString(c.getColumnIndex("description"))));
+        }
+        Log.d("Length", String.valueOf(arrUser.size()));
     }
 
 
