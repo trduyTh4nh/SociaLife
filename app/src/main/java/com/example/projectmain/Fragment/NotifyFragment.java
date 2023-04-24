@@ -229,13 +229,21 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
             cursor = database.rawQuery("SELECT * FROM notification n  JOIN follower f  on n.iduser = f.idfollowing and f.iduser = ?", new String[]{String.valueOf(myID)});
             while (cursor.moveToNext()) {
                 String name = db.getName(cursor.getInt(1));
-                String curTime = cursor.getString(3);
+                String curTime = "0 0 0 0";
+                try {
+                    curTime = cursor.getString(3);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    curTime = "E R R O R !";
+                }
                 String content = cursor.getString(2);
                 String avatar = db.getImagefor(cursor.getInt(1));
                 String[] times = curTime.split(" ");
-                String CuTime = times[0] + " " + times[1] + " " + times[2] + " " + times[3];
-                notifClasses.add(new NotifClass(name, content, CuTime, avatar));
 
+                String CuTime = "ERROR!";
+                if(times.length == 4){
+                    CuTime = times[0] + " " + times[1] + " " + times[2] + " " + times[3];
+                }
+                notifClasses.add(new NotifClass(name, content, CuTime, avatar));
                 Log.d("Time", CuTime);
 
             }
