@@ -22,16 +22,20 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
     ArrayList<Post> Posts;
     ArrayList<Post> PostText;
     ArrayList<Post> PostImg;
-    private void SplitList(){
+
+    private void SplitList() {
+
         PostText = new ArrayList<Post>();
+
         PostImg = new ArrayList<Post>();
         for (Post p : Posts) {
-            if(p.getImgPost().equals("null")){
+            if (p.getImgPost().equals("null")) {
                 PostText.add(p);
             } else PostImg.add(p);
         }
     }
-    public UserPostAdapter(Context c, ArrayList<Post> posts){
+
+    public UserPostAdapter(Context c, ArrayList<Post> posts) {
         this.c = c;
         Posts = posts;
     }
@@ -44,8 +48,12 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
         if(Posts.get(position).getImgPost().equals("null") || Posts == null){
             return 0;
         }
-        return 1;
+        if (Posts.get(position).getImgPost().equals("null")) {
+            return 0;
         }
+        return 1;
+    }
+
 
     @NonNull
     @Override
@@ -57,12 +65,12 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         SplitList();
-        if(position == 0){
+        if (position == 0) {
             ImageAdapter adapter = new ImageAdapter(PostImg, c);
             holder.rcvPosts.setAdapter(adapter);
-            GridLayoutManager g = new GridLayoutManager(c,3);
+            GridLayoutManager g = new GridLayoutManager(c, 3);
             holder.rcvPosts.setLayoutManager(g);
-        } else if(position == 1){
+        } else if (position == 1) {
             TextPostAdapter adapter = new TextPostAdapter(c, PostText);
             LinearLayoutManager l = new LinearLayoutManager(c);
             holder.rcvPosts.setAdapter(adapter);
@@ -75,8 +83,9 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
         return 2;
     }
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder{
+    public static class PostViewHolder extends RecyclerView.ViewHolder {
         RecyclerView rcvPosts;
+
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
             rcvPosts = itemView.findViewById(R.id.rcvPosts);

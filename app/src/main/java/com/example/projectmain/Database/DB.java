@@ -72,6 +72,8 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
                 "datetime Datetime)");
+
+
         //comment
         myDB.execSQL("create Table comment(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -102,6 +104,7 @@ public class DB extends SQLiteOpenHelper {
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -303,6 +306,7 @@ public class DB extends SQLiteOpenHelper {
 //        myDB.close();
         return user;
     }
+
     @SuppressLint("Range")
     public User getUser(int id) {
         SQLiteDatabase myDB = this.getWritableDatabase();
@@ -391,7 +395,6 @@ public class DB extends SQLiteOpenHelper {
     }
 
 
-
     public Cursor getDataFromID(int id) {
         SQLiteDatabase db = getReadableDatabase();
         String[] Image = {"image"};
@@ -475,10 +478,9 @@ public class DB extends SQLiteOpenHelper {
 
     // remove notify
 
-    public void RemoveNotify(int idNotify, int idUser) {
+    public void RemoveNotify(int idNotify) {
         SQLiteDatabase database = this.getWritableDatabase();
-        if (idNotify >= 0)
-            database.delete("notification", "id = ? and iduser = ?" , new String[]{String.valueOf(idNotify), String.valueOf(idUser)});
+        database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
     }
 
     public Cursor getPostsFromUser(int id) {
@@ -491,7 +493,7 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query("post", null, "iduser = ? ", new String[]{String.valueOf(idUser)}, null, null, null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             listPost.add(cursor.getInt(0));
         }
 
@@ -532,6 +534,40 @@ public class DB extends SQLiteOpenHelper {
         cv.put("datetime", p.getTime());
         return db.update("post", cv, "id = ?", new String[]{String.valueOf(p.getId())});
     }
+
+    public ArrayList<Integer> getIDofPostWhenClickFollow(int idUser) {
+        ArrayList<Integer> listPost = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM post p JOIN follower f WHERE p.iduser = f.idfollowing and f.iduser = ?", new String[]{String.valueOf(idUser)});
+
+        while (cursor.moveToNext()) {
+            listPost.add(cursor.getInt(0));
+        }
+
+        return listPost;
+    }
+
+    public int CountFollowing(int idUser) {
+        int count = 0;
+        Cursor cursor = sqLiteDatabase.query("follower", null, "iduser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
+        while (cursor.moveToNext()) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public int CountMyFollower(int myID) {
+        int count =0;
+        Cursor cursor = sqLiteDatabase.query("follower", null, "idfollowing = ?" , new String[]{String.valueOf(myID)}, null, null, null);
+
+        while (cursor.moveToNext()){
+            count++;
+        }
+
+        return count;
+    }
+
 //     myDB.execSQL("create Table user(" +
 //             "id Integer PRIMARY KEY NOT NULL UNIQUE," +
 //             "name Text," +
