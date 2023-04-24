@@ -80,7 +80,10 @@ public class UserActivity extends AppCompatActivity {
         if(user.getDescription().length() != 0){
             mtvDes.setText(user.getDescription());
         }
-        avatarMain.setImageURI(Uri.parse(db.getImagefor(id)));
+        if(db.getImagefor(id).equals("null")){
+            avatarMain.setImageResource(R.drawable.def);
+        } else
+            avatarMain.setImageURI(Uri.parse(db.getImagefor(id)));
         mtvFollowingCount.setText(String.valueOf(listFollowers(id)));
         mtvFollowerCount.setText(String.valueOf(listFollow(id)));
         posts = new ArrayList<Post>();

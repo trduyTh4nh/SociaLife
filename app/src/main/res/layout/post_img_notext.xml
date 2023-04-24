@@ -177,7 +177,7 @@
                             android:layout_marginBottom="8dp">
 
                             <CheckBox
-                                android:stateListAnimator="@anim/anim_btnlike"
+                                android:stateListAnimator="@animator/anim_btnlike"
                                 android:id="@+id/btn_like"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

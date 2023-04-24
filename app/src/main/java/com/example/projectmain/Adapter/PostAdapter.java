@@ -153,7 +153,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
-        holder.numberLike.setText(post.getNumber_like());
+        holder.numberLike.setText(String.valueOf(db.getLike(post.getId()).getCount()));
         holder.content.setText(post.getContent());
 
         Time now = new Time(position);
@@ -262,6 +262,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 bn.putInt("ViewType", type);
                 bn.putInt("idUser", post.getIduser());
                 bn.putString("Time", holder.time.getText().toString());
+                bn.putString("Like", String.valueOf(db.getLike(post.getId()).getCount()));
                 intent.putExtras(bn);
                 context.startActivity(intent);
             }
@@ -271,7 +272,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         int iduser = db.getIduser(name);
         int idpost = post.getId();
 
-        if (db.CheckLike(iduser, idpost) == false) {
+        if (!db.CheckLike(iduser, idpost)) {
             holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
         }
         else {
@@ -286,12 +287,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     if (insertLike == true && holder.btnLike.isChecked()){
                         holder.btnLike.setChecked(false);
                         holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
                         notifyItemChanged(position);
                     }
                 }
                 else {
                     db.Unlike(iduser,idpost);
                     holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                    holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
                     notifyItemChanged(position);
                 }
 

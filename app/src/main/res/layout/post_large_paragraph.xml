@@ -187,8 +187,8 @@
                                 android:layout_margin="18dp"
                                 android:background="@drawable/favorite_svgrepo_com"
                                 android:button="@null"
-                                android:checked="false"
-                                android:stateListAnimator="@anim/anim_btnlike"></CheckBox>
+                                android:checked="true"
+                                android:stateListAnimator="@animator/anim_btnlike"></CheckBox>
 
 
                             <ImageButton
