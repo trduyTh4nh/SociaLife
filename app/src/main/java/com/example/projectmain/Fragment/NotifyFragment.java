@@ -136,12 +136,10 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
 
                 int pos = viewHolder.getAdapterPosition();
                 int idUser = u.getId();
-                db.RemoveNotify(pos, idUser);
-                Log.d("index: ", String.valueOf(pos));
-
+                db.RemoveNotify(listImage.get(pos).getID());
                 adapter.notifyItemRemoved(pos);
                 listImage.remove(pos);
-                Snackbar.make(view.findViewById(R.id.rcvNotif), "Đã xóa thông báo", Snackbar.LENGTH_LONG).show();
+                Toast.makeText(getContext().getApplicationContext(), "Đã xóa thông báo", Toast.LENGTH_SHORT).show();
             }
         };
         ItemTouchHelper touchHelper = new ItemTouchHelper(callBack);
@@ -170,54 +168,9 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
 
         u = db.getUser(email);
         int idUser = u.getId();
-//        ArrayList<NotifClass> list = new ArrayList<NotifClass>();
-//        SQLiteDatabase database = db.getWritableDatabase();
-//        Cursor cursor = database.rawQuery("SELECT * FROM post p JOIN follower f on p.iduser = f.idfollowing WHERE f.iduser = ?", new String[]{String.valueOf(idUser)});
-//
-//        while (cursor.moveToNext()) {
-//            String userName = db.getName(cursor.getInt(1));
-//            int idUserFollower = db.getIduser(userName);
-//
-//            String message = userName + " đã đăng một bài viết";
-//            int time = cursor.getInt(7);
-//            String avatar = cursor.getString(3);
-//            int idPost = db.getIDPostOf(idUserFollower);
-//            // chưa có chức năng share nên set id mặt định bằng 0;
-//            // chưa có chức năng like nên set id mặt định bằng 0;
-//
-//
-//            int idShare = 0;
-//            int idLike = 0;
-//            int idComment = db.getIDCommentOf(idPost, idUserFollower);
-//            //int idFollower =
-//            db.insertNotify(idUser, message, String.valueOf(time), idPost, idLike, idComment, idShare, idUserFollower);
+
     }
 
-
-    // làm lại hàm insert sao đó lưu list trong table notify và render ra giao diện
-// nó sẽ insert vào cái mà mình lấy bằng hàm bên database đem qua rồi insert vào table notify chứ k duyệt và insert bằng table post
-// muốn lấy avatar thì dùng hàm get Avatar bên database
-// sau đó nghĩ cách viết hàm lấy các id còn lại, và user name + message, id comment
-// lưu ý idshare, idlike, time = 0, vì chưa có chức năng
-//    public ArrayList<NotifClass> listNotify(int idCurrentUser) {
-//        ArrayList<NotifClass> list = new ArrayList<NotifClass>();
-//        SQLiteDatabase database = db.getWritableDatabase();
-//        Cursor cursor = database.rawQuery("SELECT * FROM post p JOIN follower f on p.iduser = f.idfollowing WHERE f.iduser = ?", new String[]{String.valueOf(idCurrentUser)});
-//
-//        while (cursor.moveToNext()) {
-//            String userName = db.getName(cursor.getInt(1));
-//            int idUserFollower = db.getIduser(userName);
-//            String message = userName + " đã đăng một bài viết";
-//            int time = cursor.getInt(7);
-//            String avatar = cursor.getString(3);
-//            list.add(new NotifClass(userName, message, time, avatar));
-//
-//
-//        }
-//
-//
-//        return list;
-//    }
 
     public ArrayList<NotifClass> getNotifyList(int myID) {
         ArrayList<NotifClass> notifClasses = new ArrayList<>();
@@ -235,16 +188,17 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
                 } catch (ArrayIndexOutOfBoundsException e) {
                     curTime = "E R R O R !";
                 }
-                String content = cursor.getString(2);
-                String avatar = db.getImagefor(cursor.getInt(1));
+
                 String[] times = curTime.split(" ");
 
                 String CuTime = "ERROR!";
-                if(times.length == 4){
+                if (times.length >= 4) {
                     CuTime = times[0] + " " + times[1] + " " + times[2] + " " + times[3];
                 }
-                notifClasses.add(new NotifClass(name, content, CuTime, avatar));
-                Log.d("Time", CuTime);
+                String content = cursor.getString(2);
+                String avatar = db.getImgAvata(cursor.getInt(1));
+                notifClasses.add(new NotifClass(cursor.getInt(0), name, content, avatar, CuTime));
+                Log.d("Time", avatar);
 
             }
         } finally {

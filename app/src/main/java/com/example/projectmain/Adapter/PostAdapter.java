@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.nfc.cardemulation.HostNfcFService;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -334,7 +335,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 int index;
                 for (int i = 0; i < listUserFollowed.size(); i++) {
                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
-                    Log.d("idUser: ", String.valueOf(idUserFollow));
                     db = new DB(context);
                     if (idUserFollow == listUserFollowed.get(i)) {
                         holder.flo.setVisibility(View.GONE);
@@ -343,27 +343,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         holder.flo.setVisibility(View.VISIBLE);
                         holder.tvFollowed.setVisibility(View.GONE);
                     }
-                    ArrayList<Integer> listPostOf = db.getListIDPost(listUserFollowed.get(i));
-
-                    for (int j = 0; j < listPostOf.size(); j++) {
-                        Log.d("Post of: ", String.valueOf(listPostOf.get(j)));
-                        refreshView((listPostOf.get(j)));
-
+                    //  refreshView(listUserFollowed.get(i));
+                    for (int k = 0; k < 100; k++) {
+                        refreshView(k);
                     }
-                    for (int j = listPostOf.size() - 1; j >= 0 ; j--) {
-                        Log.d("Post of: ", String.valueOf(listPostOf.get(j)));
-                        refreshView((listPostOf.get(j)));
-
+                    for (int k = 100; k > 0; k--) {
+                        refreshView(k);
                     }
-
-                    refreshView(listUserFollowed.get(i));
-
-                    //  }
                 }
-
-
                 Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -389,6 +377,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             if (idUser > 0) {
                                 db.UnFollower(idUserFollow);
                                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+
                                 for (int j = 0; j < listUserFollowed.size(); j++) {
                                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(j)));
                                     if (idUserFollow == listUserFollowed.get(j)) {
@@ -399,28 +388,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         holder.flo.setVisibility(View.VISIBLE);
                                         holder.tvFollowed.setVisibility(View.GONE);
                                     }
-                                    ArrayList<Integer> listPostOf = db.getListIDPost(listUserFollowed.get(j));
-                                    for (int k = 0; k < listPostOf.size(); k++) {
-                                        Log.d("Post of: ", String.valueOf(listPostOf.get(k)));
-                                        refreshView((listPostOf.get(k)));
-
-                                    }
-                                    for (int k = listPostOf.size() - 1; k >= 0 ; k--) {
-                                        Log.d("Post of: ", String.valueOf(listPostOf.get(k)));
-                                        refreshView((listPostOf.get(k)));
-                                        refreshView(0);
-                                    }
-                                    View view = HomeFragment.recyclerView;
-                                    RecyclerView r = view.findViewById(R.id.render);
-
-                                    for(int k = 0; k < getItemCount(); k++){
-                                        if(posts.get(k).getIduser() == listUserFollowed.get(j)){
-                                            refreshView(k);
-                                        }
-                                    }
-
+                                    //refreshView(j);
                                 }
+                                for (int k = 0; k < 100; k++) {
+                                    refreshView(k);
+                                }
+                                for (int k = 100; k > 0; k--) {
+                                    refreshView(k);
+                                }
+
                                 Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
+
 
                             } else
                                 Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
@@ -464,7 +442,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Cursor cursor = mydb.rawQuery("SELECT * FROM follower WHERE iduser = ?", new String[]{String.valueOf(idCurrentUser)});
         ArrayList<Integer> list = new ArrayList<Integer>();
         while (cursor.moveToNext()) {
-            list.add(cursor.getInt(2));
+            list.add(cursor.getInt(0));
+        }
+
+        return list;
+    }
+
+    public ArrayList<Integer> ListPostID() {
+        SQLiteDatabase mydb = db.getWritableDatabase();
+        Cursor cursor = mydb.rawQuery("SELECT * FROM post ", null);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        while (cursor.moveToNext()) {
+            list.add(cursor.getInt(0));
         }
 
         return list;
@@ -515,13 +504,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void refreshView(int position) {
         notifyItemChanged(position);
     }
+
     Boolean[] visited;
-    public int getIndexOfPost(int idFollower){
+
+    public int getIndexOfPost(int idFollower) {
         Arrays.fill(visited, false);
         int index = -1;
         for (int i = 0; i < getItemCount(); i++) {
-            if(posts.get(i).getIduser() == idFollower){
-                if(visited[i]){
+            if (posts.get(i).getIduser() == idFollower) {
+                if (visited[i]) {
                     continue;
                 }
                 Log.d("indexFollower", String.valueOf(i));
