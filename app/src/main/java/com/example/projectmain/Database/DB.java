@@ -25,7 +25,11 @@ import com.example.projectmain.Model.User;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -300,6 +304,27 @@ public class DB extends SQLiteOpenHelper {
         return user;
     }
     @SuppressLint("Range")
+    public User getUser(int id) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        Cursor cursor = myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.id = ?", new String[]{String.valueOf(id)});
+//        Cursor cursor = myDB.rawQuery("SELECT * FROM user INNER JOIN account on account.id = user.userid WHERE account.email = ?", new String[]{email});
+        User user = new User();
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            user.setName(cursor.getString(cursor.getColumnIndex("name")));
+            user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
+            user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
+            user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
+            user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
+            user.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+        }
+//        cursor.close();
+//        myDB.close();
+        return user;
+    }
+
+    @SuppressLint("Range")
     public Cursor getUserFromSearch(String keyword) {
         SQLiteDatabase myDB = this.getWritableDatabase();
 
@@ -471,6 +496,41 @@ public class DB extends SQLiteOpenHelper {
         }
 
         return listPost;
+    }
+    public Post getPostFromID(int id, String nameUser){
+        int idUser = getIduser(nameUser);
+        User u = getUser(idUser);
+        Post post;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("post", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
+        if(c.moveToFirst()){
+            post = new Post();
+            post.setImgPost(c.getString(3));
+            post.setContent(c.getString(2));
+            post.setId(c.getInt(0));
+            post.setIduser(idUser);
+            post.setAvatar(getImagefor(idUser));
+            post.setUsername(u.getName());
+            post.setName(u.getName());
+            post.setNumber_like("0");
+            Calendar calendar = Calendar.getInstance();
+            long time = calendar.getTimeInMillis();
+            post.setTime(String.valueOf(time));
+            return post;
+        }
+        return null;
+    }
+    public long UpdatePost(Post p){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("iduser", p.getIduser());
+        cv.put("content", p.getContent());
+        cv.put("image", p.getImgPost());
+        cv.put("like_count", "0");
+        cv.put("comment_count", "0");
+        cv.put("share_count", "0");
+        cv.put("datetime", p.getTime());
+        return db.update("post", cv, "id = ?", new String[]{String.valueOf(p.getId())});
     }
 //     myDB.execSQL("create Table user(" +
 //             "id Integer PRIMARY KEY NOT NULL UNIQUE," +

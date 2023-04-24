@@ -240,7 +240,7 @@ public class NotifyFragment extends Fragment implements View.OnClickListener {
                 String[] times = curTime.split(" ");
 
                 String CuTime = "ERROR!";
-                if(times.length == 4){
+                if(times.length >= 4){
                     CuTime = times[0] + " " + times[1] + " " + times[2] + " " + times[3];
                 }
                 notifClasses.add(new NotifClass(name, content, CuTime, avatar));

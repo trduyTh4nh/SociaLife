@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.EditPostActivity;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.ImageActivity;
@@ -41,6 +43,7 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.example.projectmain.SettingActivity;
+import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.sql.Time;
@@ -153,7 +156,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         holder.time.setText(post.getTime());
 
-
+        holder.btnShowProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, UserActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt("idUser", post.getIduser());
+                i.putExtras(b);
+                context.startActivity(i);
+            }
+        });
         if (type == 0) {
             //View 0: Hình ko caption
             /*
@@ -243,6 +256,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 bn.putString("Name", post.getName());
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("ViewType", type);
+                bn.putInt("idUser", post.getIduser());
+                bn.putString("Time", holder.time.getText().toString());
                 intent.putExtras(bn);
                 context.startActivity(intent);
             }
@@ -287,7 +302,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_post:
-                                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(context, EditPostActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Bundle bd = new Bundle();
+                                bd.putInt("idPost", post.getId());
+                                i.putExtras(bd);
+                                context.startActivity(i);
                                 break;
                             case R.id.remove_post:
                                 AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
@@ -490,7 +510,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private ShapeableImageView avatar;
         private ImageView imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost;
-
+        private LinearLayout btnShowProfile;
         public PostViewHolder(@NonNull View view) {
             super(view);
 
@@ -507,6 +527,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnLike = (CheckBox) view.findViewById(R.id.btn_like);
             tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
             flo = (Button) view.findViewById(R.id.btnFlolow);
+            btnShowProfile = view.findViewById(R.id.btnShowProfile);
         }
 
 

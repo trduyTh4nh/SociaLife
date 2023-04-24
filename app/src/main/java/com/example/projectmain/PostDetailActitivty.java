@@ -36,18 +36,20 @@ public class PostDetailActitivty extends AppCompatActivity {
 
 
     EditText edtComment;
-    TextView tvname, tvUsername, tvContent;
+    TextView tvname, tvUsername, tvContent, tvTime;
     View postView;
     ImageView ivPfp, ivImg;
     ImageButton btnExit;
     Post post;
-    Button btnUpcmt;
+    Button btnUpcmt, btnFollow;
     ArrayList<Comment> cmtList;
+    ImageButton btnMore;
     RecyclerView rcvComment;
     DB db;
     User user;
     SharedPreferences sharedPreferences;
-    LinearLayout llPostContain;
+    LinearLayout llPostContain, btnUser;
+    int id;
     private static final String SHARED_PREF_NAME = "mypref";
 
     private static final String KEY_EMAIL = "email";
@@ -65,7 +67,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         db = new DB(this);
         Intent i = getIntent();
         Bundle b = i.getExtras();
-
+        id = b.getInt("idUser");
         int viewType = b.getInt("ViewType");
         /*
          * Các kiểu view:
@@ -110,6 +112,8 @@ public class PostDetailActitivty extends AppCompatActivity {
 
         String test = b.getString("Img");
         String linkImage = b.getString("Pfp");
+        String time = b.getString("Time");
+        tvTime.setText(time);
         ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
@@ -154,8 +158,18 @@ public class PostDetailActitivty extends AppCompatActivity {
                 cmtAdap.notifyDataSetChanged();
             }
         });
-
-
+        btnFollow.setVisibility(View.GONE);
+        btnMore.setVisibility(View.GONE);
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PostDetailActitivty.this, UserActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("idUser", id);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
 
 
 
@@ -174,10 +188,14 @@ public class PostDetailActitivty extends AppCompatActivity {
         tvUsername = postView.findViewById(R.id.nameu_user);
         ivPfp = postView.findViewById(R.id.avatar);
         ivImg = postView.findViewById(R.id.img_post);
+        btnFollow = postView.findViewById(R.id.btnFlolow);
+        btnMore = postView.findViewById(R.id.btnOptions);
         tvContent = postView.findViewById(R.id.content_post);
+        btnUser = postView.findViewById(R.id.btnShowProfile);
         btnExit = findViewById(R.id.btnExit);
         edtComment = findViewById(R.id.edtComment);
         btnUpcmt = findViewById(R.id.btnUploadComment);
+        tvTime = postView.findViewById(R.id.time_post);
     }
 
 
