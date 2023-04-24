@@ -77,10 +77,10 @@ public class UserActivity extends AppCompatActivity {
             btnFollow.setVisibility(View.GONE);
             btnUnfollow.setVisibility(View.VISIBLE);
         }
-        if(user.getDescription().length() != 0){
+        if(user.getDescription() != null){
             mtvDes.setText(user.getDescription());
         }
-        if(db.getImagefor(id).equals("null")){
+        if(db.getImagefor(id) == null){
             avatarMain.setImageResource(R.drawable.def);
         } else
             avatarMain.setImageURI(Uri.parse(db.getImagefor(id)));
