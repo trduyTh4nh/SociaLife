@@ -47,7 +47,6 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
             adTvMsg = itemView.findViewById(R.id.tvMsg);
             adTvT = itemView.findViewById(R.id.tvTime);
             adIvAv = itemView.findViewById(R.id.ivAvt);
-
         }
     }
 
@@ -55,19 +54,11 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull NotifAdapter.ViewHolder holder, int position) {
         NotifClass n = notifList.get(position);
 
-        int day = n.getHour() / 24;
-        adTvName.setText(n.getName());
-        adTvMsg.setText(n.getMessage());
-        if (day < 1) {
-            adTvT.setText(n.getHour() + " giờ trước");
-        } else if (day > 14) {
-            adTvT.setText(day / 7 + " tuần trước");
-        } else if (day / 7 > 5) {
-            adTvT.setText(day / 30 + " tháng trước");
-        } else {
-            adTvT.setText(day + " ngày trước");
-        }
-        adIvAv.setImageURI(Uri.parse(n.getImg()));
+
+        adTvName.setText(notifList.get(position).getName());
+        adTvMsg.setText(String.valueOf(notifList.get(position).getMessage()));
+        adIvAv.setImageURI(Uri.parse(notifList.get(position).getImg()));
+        adTvT.setText(notifList.get(position).getCurTime());
     }
 
     @Override

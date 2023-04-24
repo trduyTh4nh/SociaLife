@@ -58,7 +58,7 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
-    RecyclerView recyclerView;
+    public static RecyclerView recyclerView;
     PostAdapter adapter;
 
     DB db;

@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.nfc.cardemulation.HostNfcFService;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -279,7 +280,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context.getApplicationContext(), v);
-
+                refreshView(position);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
@@ -315,7 +316,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-
         holder.flo.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -328,30 +328,42 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 int idUserFollow = followUser(post.getUsername());
                 String UserNameFollow = db.getName(idUserFollow);
 
-                //if (!db.CheckNameinFollower(idUserFollow)) {
+//                if (!db.CheckNameinFollower(idUserFollow)) {
                 db.insertDataFollow(idUser, idUserFollow);
                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
                 int index;
                 for (int i = 0; i < listUserFollowed.size(); i++) {
                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
+                    Log.d("idUser: ", String.valueOf(idUserFollow));
+                    db = new DB(context);
                     if (idUserFollow == listUserFollowed.get(i)) {
-                            holder.flo.setVisibility(View.GONE);
-                            holder.tvFollowed.setVisibility(View.VISIBLE);
-
+                        holder.flo.setVisibility(View.GONE);
+                        holder.tvFollowed.setVisibility(View.VISIBLE);
                     } else {
                         holder.flo.setVisibility(View.VISIBLE);
                         holder.tvFollowed.setVisibility(View.GONE);
                     }
-                    for(int j = 0; j < getItemCount(); j++){
-                        if(posts.get(j).getIduser() == listUserFollowed.get(i)){
-                            refreshView(j);
-                        }
+                    ArrayList<Integer> listPostOf = db.getListIDPost(listUserFollowed.get(i));
+
+                    for (int j = 0; j < listPostOf.size(); j++) {
+                        Log.d("Post of: ", String.valueOf(listPostOf.get(j)));
+                        refreshView((listPostOf.get(j)));
+
                     }
+                    for (int j = listPostOf.size() - 1; j >= 0 ; j--) {
+                        Log.d("Post of: ", String.valueOf(listPostOf.get(j)));
+                        refreshView((listPostOf.get(j)));
+
+                    }
+
+                    refreshView(listUserFollowed.get(i));
+
+                    //  }
                 }
 
+
                 Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
-                //   } else
-                //Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -364,8 +376,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 b.setPositiveButton("Hủy theo dõi", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.flo.setVisibility(v.VISIBLE);
-                        holder.tvFollowed.setVisibility(v.GONE);
+                        holder.flo.setVisibility(View.VISIBLE);
+                        holder.tvFollowed.setVisibility(View.GONE);
 
                         user = db.getUser(email);
                         int idUser = user.getId();
@@ -387,6 +399,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         holder.flo.setVisibility(View.VISIBLE);
                                         holder.tvFollowed.setVisibility(View.GONE);
                                     }
+                                    ArrayList<Integer> listPostOf = db.getListIDPost(listUserFollowed.get(j));
+                                    for (int k = 0; k < listPostOf.size(); k++) {
+                                        Log.d("Post of: ", String.valueOf(listPostOf.get(k)));
+                                        refreshView((listPostOf.get(k)));
+
+                                    }
+                                    for (int k = listPostOf.size() - 1; k >= 0 ; k--) {
+                                        Log.d("Post of: ", String.valueOf(listPostOf.get(k)));
+                                        refreshView((listPostOf.get(k)));
+                                        refreshView(0);
+                                    }
+                                    View view = HomeFragment.recyclerView;
+                                    RecyclerView r = view.findViewById(R.id.render);
 
                                     for(int k = 0; k < getItemCount(); k++){
                                         if(posts.get(k).getIduser() == listUserFollowed.get(j)){
@@ -486,6 +511,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
 
     }
+
     public void refreshView(int position) {
         notifyItemChanged(position);
     }
