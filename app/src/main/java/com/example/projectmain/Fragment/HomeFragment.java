@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment {
         List<Post> posts = new ArrayList<Post>();
         SQLiteDatabase myDB = db.getWritableDatabase();
 
-        Cursor cursor = myDB.query("post", null, null, null, null, null, null);
+        Cursor cursor = myDB.query("post", null, null, null, "id", null, "id desc");
 
         //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
 

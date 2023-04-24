@@ -485,7 +485,7 @@ public class DB extends SQLiteOpenHelper {
 
     public Cursor getPostsFromUser(int id) {
         SQLiteDatabase db = getReadableDatabase();
-        return db.query("post", null, "iduser =?", new String[]{String.valueOf(id)}, null, null, null);
+        return db.query("post", null, "iduser =?", new String[]{String.valueOf(id)}, "id", null, "id desc");
     }
 
     public ArrayList<Integer> getListIDPost(int idUser) {

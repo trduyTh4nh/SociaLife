@@ -50,6 +50,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -112,7 +113,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         visited = new Boolean[posts.size()];
-
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
         } else if (viewType == 1) {
@@ -149,7 +149,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             return;
 
         String ava = post.getAvatar();
-        holder.avatar.setImageURI(Uri.parse(ava));
+        if(ava.equals("null")){
+            holder.avatar.setImageResource(R.drawable.def);
+        } else
+            holder.avatar.setImageURI(Uri.parse(ava));
         //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
