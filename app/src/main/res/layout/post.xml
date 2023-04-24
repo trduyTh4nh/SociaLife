@@ -120,12 +120,11 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:fitsSystemWindows="true"
-                        android:scaleType="centerCrop"
-                        android:adjustViewBounds="true"
+
                         android:id="@+id/img_post"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:src="@drawable/img_denvau" />
@@ -160,7 +159,7 @@
                             android:id="@+id/content_post"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tulen đặc cầu, đùi bầu,.."
+                            android:text="Cứng"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>

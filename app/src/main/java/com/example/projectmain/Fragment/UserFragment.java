@@ -12,6 +12,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -24,6 +26,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.projectmain.Adapter.ImageAdapter;
+import com.example.projectmain.Adapter.PostAdapter;
+import com.example.projectmain.Adapter.UserPostAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.Post;
@@ -31,6 +35,8 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import android.annotation.SuppressLint;
 import android.widget.TimePicker;
@@ -71,7 +77,7 @@ public class UserFragment extends Fragment {
     ArrayList<Post> posts;
 //    int[] imageRes = {R.drawable.imgquang, R.drawable.meo, R.drawable.imgcrew, R.drawable.imgpc};
     String name;
-
+    TabLayout tlPostType;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +100,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tlPostType = view.findViewById(R.id.tlPostType);
         avatarMain = view.findViewById(R.id.avatar_main);
         mtvUsername = view.findViewById(R.id.tvName);
         mtvFollowingCount = view.findViewById(R.id.tvFollowing);
@@ -138,19 +145,17 @@ public class UserFragment extends Fragment {
 
         //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
 
-        ImageAdapter adapter = new ImageAdapter(posts, getContext().getApplicationContext());
-        RecyclerView r = getView().findViewById(R.id.rcvImages);
+        UserPostAdapter adapter = new UserPostAdapter(getActivity().getApplicationContext(), posts);
+        ViewPager2 r = getView().findViewById(R.id.vpPosts);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
-        GridLayoutManager g = new GridLayoutManager(getActivity().getApplicationContext(), 3, GridLayoutManager.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                return true;
+        new TabLayoutMediator(tlPostType, r, ((tab, position) -> {
+            if(position == 0){
+                tab.setIcon(R.drawable.landscape_line);
+            } else {
+                tab.setIcon(R.drawable.text);
             }
-        };
-        r.setLayoutManager(g);
-
-
+        })).attach();
     }
 
     @Override

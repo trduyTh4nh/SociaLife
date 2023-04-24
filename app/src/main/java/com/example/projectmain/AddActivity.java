@@ -116,6 +116,10 @@ public class AddActivity extends AppCompatActivity {
 
                     contentValues.put("iduser", iduser);
                     contentValues.put("content", content);
+                    contentValues.put("image",String.valueOf(imageUri));
+                    Calendar c = Calendar.getInstance();
+                    long t = c.getTimeInMillis();
+                    contentValues.put("datetime", String.valueOf(t));
                     contentValues.put("image", String.valueOf(imageUri));
                     int idPost = db.getIDPostOf(iduser);
                     // like share chưa có chức năng
@@ -260,7 +264,6 @@ public class AddActivity extends AppCompatActivity {
                 //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1, 1)
                         .start(this);
             } else if (requestCode == IMAGE_PICK_CAMERA) {
                 //Được trả từ Camera

@@ -45,6 +45,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -104,7 +105,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
+        visited = new Boolean[posts.size()];
 
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
@@ -123,7 +124,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
         db = new DB(context.getApplicationContext());
 
         Post post = posts.get(position);
@@ -151,17 +151,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         Time now = new Time(position);
 
-        int timer = now.getHours() / 24;
-
-        if (timer < 1) {
-            holder.time.setText(timer + " giờ trước");
-        } else if (timer > 14) {
-            holder.time.setText(timer / 7 + " tuần trước");
-        } else if (timer / 7 > 5) {
-            holder.time.setText(timer / 30 + " tháng trước");
-        } else {
-            holder.time.setText(timer + " ngày trước");
-        }
+        holder.time.setText(post.getTime());
 
 
         if (type == 0) {
@@ -306,7 +296,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        db.removePost(position + 1);
+                                        db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
                                     }
@@ -330,18 +320,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
             @Override
             public void onClick(View v) {
-
+                visited = new Boolean[posts.size()];
                 holder.flo.setVisibility(v.GONE);
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());
-
                 String UserNameFollow = db.getName(idUserFollow);
 
 //                if (!db.CheckNameinFollower(idUserFollow)) {
                 db.insertDataFollow(idUser, idUserFollow);
                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+                int index;
                 for (int i = 0; i < listUserFollowed.size(); i++) {
                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
                     Log.d("idUser: ", String.valueOf(idUserFollow));
@@ -423,7 +413,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     View view = HomeFragment.recyclerView;
                                     RecyclerView r = view.findViewById(R.id.render);
 
-                                    refreshView(listUserFollowed.get(j));
+                                    for(int k = 0; k < getItemCount(); k++){
+                                        if(posts.get(k).getIduser() == listUserFollowed.get(j)){
+                                            refreshView(k);
+                                        }
+                                    }
 
                                 }
                                 Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
@@ -521,5 +515,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void refreshView(int position) {
         notifyItemChanged(position);
     }
-
+    Boolean[] visited;
+    public int getIndexOfPost(int idFollower){
+        Arrays.fill(visited, false);
+        int index = -1;
+        for (int i = 0; i < getItemCount(); i++) {
+            if(posts.get(i).getIduser() == idFollower){
+                if(visited[i]){
+                    continue;
+                }
+                Log.d("indexFollower", String.valueOf(i));
+                visited[i] = true;
+                return i;
+            }
+        }
+        visited = new Boolean[posts.size()];
+        return index;
+    }
 }
