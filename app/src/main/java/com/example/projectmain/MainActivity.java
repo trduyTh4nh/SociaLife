@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_search:
                         Toast.makeText(MainActivity.this, "Search user", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.action_add:
-                        Toast.makeText(MainActivity.this, "Add post", Toast.LENGTH_SHORT).show();
-                        break;
+//                    case R.id.action_add:
+//                        Toast.makeText(MainActivity.this, "Add post", Toast.LENGTH_SHORT).show();
+//                        break;
                     case R.id.action_notify:
                         Toast.makeText(MainActivity.this, "Notification layout", Toast.LENGTH_SHORT).show();
                         break;

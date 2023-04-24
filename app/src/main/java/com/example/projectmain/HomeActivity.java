@@ -76,30 +76,39 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
-
+                Boolean isAdd = false;
 
                 switch (item.getItemId()) {
                     case R.id.nav_home:
+                        isAdd = false;
                         fragment = new HomeFragment();
                         break;
                     case R.id.nav_search:
+                        isAdd = false;
                         fragment = new SreachFragment();
                         break;
-
+                    case R.id.nav_add:
+                        isAdd = true;
+                        Intent intent = new Intent(HomeActivity.this, AddActivity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.nav_notify:
+                        isAdd = false;
                         fragment = new NotifyFragment();
                         break;
                     case R.id.nav_user:
+                        isAdd = false;
                         fragment = new UserFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.body_container, fragment).commit();
+                if(!isAdd){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.body_container, fragment).commit();
+                }
                 return true;
             }
         });
 
     }
-
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,10 +127,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.nav_search:
                 fragment = new SreachFragment();
                 break;
-            case R.id.nav_add:
-
-                fragment = new AddFragment();
-                break;
+//            case R.id.nav_add:
+//                fragment = new AddFragment();
+//                break;
             case R.id.nav_notify:
                 fragment = new NotifyFragment();
                 break;

@@ -5,16 +5,28 @@ public class NotifClass {
     private String message;
     private int hour;
     private String img;
-    public NotifClass(String n, String i){
-        name = n;
-        img = i;
+
+    public String getCurTime() {
+        return curTime;
     }
-    public NotifClass(String n, String m, int h, String i){
-        name = n;
-        message = m;
-        hour = h;
-        img = i;
+
+    public void setCurTime(String curTime) {
+        this.curTime = curTime;
     }
+
+    private String curTime;
+    public NotifClass(String n, String i, String curTime, String avatar){
+        name = n;
+        message = i;
+        this.curTime = curTime;
+        this.img = avatar;
+    }
+//    public NotifClass(String n, String m, int h, String i){
+//        name = n;
+//        message = m;
+//        hour = h;
+//        img = i;
+//    }
 
     public int getHour() {
         return hour;
