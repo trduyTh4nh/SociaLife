@@ -253,7 +253,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bn.putString("Content", post.getContent());
                     bn.putString("Img", post.getImgPost());
                 }
-                bn.putInt("idPost", position);
+                bn.putInt("idPost", post.getId());
                 bn.putString("Username", post.getUsername());
                 bn.putInt("idUser", post.getIduser());
                 bn.putString("Pfp", ava);

@@ -105,7 +105,7 @@ public class PostDetailActitivty extends AppCompatActivity {
             initView();
             tvContent.setText(b.getString("Content"));
         }
-        numberLike.setText(b.getString("Like"));
+
         llPostContain.addView(postView); //Lưu ý hàm này: thêm View vừa mới chuẩn bị vào LinearLayout
 
         tvname.setText(b.getString("Name"));
@@ -120,9 +120,9 @@ public class PostDetailActitivty extends AppCompatActivity {
         tvTime.setText(time);
         ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
-
         int idPost = b.getInt("idPost");
-        if (!db.CheckLike(idUser, id)) {
+        numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
+        if (!db.CheckLike(idUser, idPost)) {
             btnLike.setChecked(false);
             btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
         } else {
@@ -190,12 +190,12 @@ public class PostDetailActitivty extends AppCompatActivity {
                     Boolean insertLike = db.insertLikes(idUser, id);
                     if (insertLike && b) {
                         btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
-                        numberLike.setText(String.valueOf(db.getLike(id).getCount()));
+                        numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
                     }
                 } else {
                     db.Unlike(idUser, id);
                     btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
-                    numberLike.setText(String.valueOf(db.getLike(id).getCount()));
+                    numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
                 }
             }
         });
