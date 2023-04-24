@@ -577,5 +577,35 @@ public class DB extends SQLiteOpenHelper {
 //             "following_count Integer NOT NULL DEFAULT (0)," +
 //             "description  TEXT)");
 
+    //check like
+
+    public Boolean CheckLike(int idUser, int idPost) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    //insertLike
+    public Boolean insertLikes(int iduser, int idpost) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("iduser", iduser);
+        contentValues.put("idpost", idpost);
+        long result = MyDB.insert("likes", null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+
+    // unlike
+    public void Unlike(int iduser,int idpost) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete("likes", "iduser = ? and idpost = ?" , new String[]{String.valueOf(iduser), String.valueOf(idpost)});
+    }
 
 }

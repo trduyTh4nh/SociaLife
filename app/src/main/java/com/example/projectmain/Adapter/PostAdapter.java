@@ -72,7 +72,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private static final String KEY_IMAGE_LINK = "linkImage";
 
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_NAME = "name";
     String email = null;
+    String name = null;
 
     /*
      * Lấy kiểu view
@@ -138,6 +140,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_IMAGE_LINK, post.getImgPost());
         email = sharedPreferences.getString(KEY_EMAIL, null);
+        name = sharedPreferences.getString(KEY_NAME,null);
 
         user = db.getUser(email);
         editor.apply();
@@ -265,15 +268,33 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         });
 
 
+        int iduser = db.getIduser(name);
+        int idpost = post.getId();
+
+        if (db.CheckLike(iduser, idpost) == false) {
+            holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+        }
+        else {
+            holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+        }
+
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnLike = v.findViewById(R.id.btn_like);
-                if (btnLike.isChecked()) {
-                    btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
-                } else {
-                    btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                if(db.CheckLike(iduser,idpost) == false){
+                    Boolean insertLike = db.insertLikes(iduser,idpost);
+                    if (insertLike == true && holder.btnLike.isChecked()){
+                        holder.btnLike.setChecked(false);
+                        holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        notifyItemChanged(position);
+                    }
                 }
+                else {
+                    db.Unlike(iduser,idpost);
+                    holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                    notifyItemChanged(position);
+                }
+
             }
 
         });

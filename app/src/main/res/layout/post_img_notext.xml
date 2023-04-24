@@ -183,7 +183,7 @@
                                 android:layout_height="wrap_content"
                                 android:button="@null"
                                 android:background="@drawable/favorite_svgrepo_com"
-                                android:checked="true"
+                                android:checked="false"
                                 android:layout_margin="18dp">
                             </CheckBox>
 
