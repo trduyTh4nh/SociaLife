@@ -42,7 +42,10 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
 
     @Override
     public int getItemViewType(int position) {
-        if (Posts.size() == 0 || Posts.size() == 1) {
+        if(Posts.size() == 0 || Posts.size() == 1){
+            return 0;
+        }
+        if(Posts.get(position).getImgPost().equals("null") || Posts == null){
             return 0;
         }
         if (Posts.get(position).getImgPost().equals("null")) {
