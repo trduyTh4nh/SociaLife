@@ -10,6 +10,7 @@
     android:backgroundTint="@color/foreground"
     android:layout_marginBottom="5dp">
     <LinearLayout
+        android:id="@+id/clickto"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

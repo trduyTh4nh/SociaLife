@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
 
 
         //   Log.d("ID: ",  db.getName(list.get(i)));
-        posts = getPost();
+        posts = getPostVip(user.getId());
         adapter = new PostAdapter(getActivity(), posts);
 
         adapter.notifyDataSetChanged();
@@ -149,6 +149,8 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.render);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+
+
 
 //        if (posts == null) {
 //            posts = new ArrayList<Post>();
@@ -182,7 +184,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         if (posts != null)
             posts.clear();
-        posts.addAll(getPost());
+        posts.addAll(getPostVip(user.getId()));
         adapter = new PostAdapter(getContext().getApplicationContext(), posts);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -242,6 +244,62 @@ public class HomeFragment extends Fragment {
         return posts;
     }
 
+    public List<Post> getPostVip(int myID) {
+        String[] column = {"content", "image", "comment_count", "datetime"};
+        List<Post> posts = new ArrayList<Post>();
+        SQLiteDatabase myDB = db.getWritableDatabase();
+
+        //Cursor cursor = myDB.query("post", null, null, null, "id", null, "id desc");
+
+        Cursor cursor = myDB.rawQuery("SELECT * FROM post p join follower f WHERE p.iduser = f.idfollowing and f.iduser = ? GROUP BY p.id ORDER BY p.id DESC ",new String[]{String.valueOf(myID)} );
 
 
+        //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
+
+        while (cursor.moveToNext()) {
+            int idPost = cursor.getInt(0);
+            int iduser = cursor.getInt(1);
+            String content = cursor.getString(2);
+            String img = cursor.getString(3);
+            int count_like = cursor.getInt(4);
+            int count_comment = cursor.getInt(5);
+            int count_share = cursor.getInt(6);
+            String time = cursor.getString(7);
+            Calendar c = Calendar.getInstance();
+            if (time == null) {
+                time = "0";
+            }
+            long t = c.getTimeInMillis() - Long.parseLong(time);
+            long hr = (t / (1000 * 60 * 60));
+            long min = (t / (1000 * 60));
+
+            String timedifference;
+
+            if (hr >= 24 * 365) {
+                timedifference = String.valueOf(hr / 24 / 365) + " Năm trước";
+            } else if (hr >= 24 * 30) {
+                timedifference = String.valueOf(hr / 24 / 30) + " Tháng trước";
+            } else if (hr >= 24 * 7) {
+                timedifference = String.valueOf(hr / 24 / 7) + " Tuần trước";
+            } else if (hr >= 24) {
+                timedifference = String.valueOf(hr / 24) + " Ngày trước";
+            } else {
+                timedifference = String.valueOf(hr) + " Giờ trước";
+            }
+            if (hr <= 1) {
+                timedifference = String.valueOf(min) + " Phút trước";
+            } else if (min <= 1) {
+                timedifference = String.valueOf(t / (1000) + " Giây trước");
+            }
+            DateFormat d = SimpleDateFormat.getDateInstance();
+            d.setCalendar(c);
+            String test = d.format(new Date(Long.parseLong(time)));
+            timedifference += " (Đăng ngày " + test + ")";
+            posts.add(new Post(idPost, iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, timedifference));
+
+        }
+        return posts;
+
+
+    }
 }

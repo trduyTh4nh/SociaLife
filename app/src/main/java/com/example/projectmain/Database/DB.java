@@ -607,6 +607,8 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         database.delete("likes", "iduser = ? and idpost = ?" , new String[]{String.valueOf(iduser), String.valueOf(idpost)});
     }
+
+    // getlike
     public Cursor getLike(int idPost){
         SQLiteDatabase db = getWritableDatabase();
         return db.query("likes", null,"idpost = ?", new String[] {String.valueOf(idPost)}, null, null, null);

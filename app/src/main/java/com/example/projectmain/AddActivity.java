@@ -129,7 +129,7 @@ public class AddActivity extends AppCompatActivity {
                     int idComment = 0;
                     Date currentTime = Calendar.getInstance().getTime();
                     Log.d("Time: ", String.valueOf(currentTime));
-                    db.insertNotify(user.getId(), user.getName() + "đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
+                    db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
 
                     long result = myDB.insert("post", null, contentValues);
                     if (result > 0) {
