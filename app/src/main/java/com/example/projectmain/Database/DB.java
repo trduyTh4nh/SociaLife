@@ -613,5 +613,9 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         return db.query("likes", null,"idpost = ?", new String[] {String.valueOf(idPost)}, null, null, null);
     }
+    public Cursor getLikeUser(int idPost){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.rawQuery("SELECT u.* FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
+    }
 
 }

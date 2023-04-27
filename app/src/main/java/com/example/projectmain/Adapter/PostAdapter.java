@@ -38,6 +38,7 @@ import com.example.projectmain.EditPostActivity;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.ImageActivity;
+import com.example.projectmain.LikeActivity;
 import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
@@ -467,7 +468,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 //Intent i = new Intent(context, SettingActivity.class);
             }
         });
-
+        holder.likeWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, LikeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt("idPost", posts.get(position).getId());
+                i.putExtras(b);
+                context.startActivity(i);
+            }
+        });
 
     }
 
@@ -526,10 +537,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private ShapeableImageView avatar;
         private ImageView imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost;
-        private LinearLayout btnShowProfile;
+        private LinearLayout btnShowProfile, likeWrapper;
         public PostViewHolder(@NonNull View view) {
             super(view);
-
+            likeWrapper = view.findViewById(R.id.likeWrapper);
             avatar = (ShapeableImageView) view.findViewById(R.id.avatar);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.name);
