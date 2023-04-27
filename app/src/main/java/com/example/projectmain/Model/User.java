@@ -9,6 +9,12 @@ public class User {
     private int follower_count;
     private String description;
 
+    public User(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
     public User() {
         this.id = id;
         this.name = name;

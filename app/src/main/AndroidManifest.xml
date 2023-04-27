@@ -19,6 +19,15 @@
         android:theme="@style/Theme.ProjectMain"
         tools:targetApi="31">
         <activity
+            android:name=".LikeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".FollowerActivity"
             android:exported="true" />
         <activity
@@ -29,9 +38,7 @@
             android:exported="true" />
         <activity
             android:name=".RelationActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".EditInfoActivity"
             android:exported="true" />
@@ -43,9 +50,7 @@
             android:exported="true" />
         <activity
             android:name=".SignupActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">

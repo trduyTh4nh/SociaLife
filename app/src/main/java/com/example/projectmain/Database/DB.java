@@ -25,7 +25,11 @@ import com.example.projectmain.Model.User;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -68,6 +72,8 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
                 "datetime Datetime)");
+
+
         //comment
         myDB.execSQL("create Table comment(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -98,6 +104,7 @@ public class DB extends SQLiteOpenHelper {
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
     }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -209,7 +216,7 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put("image", Image);
 
         myDB.update("user", contentValues, "id = ?", new String[]{String.valueOf(user.getId())});
-      //  myDB.close();
+        //  myDB.close();
     }
 
 
@@ -243,21 +250,15 @@ public class DB extends SQLiteOpenHelper {
     public Boolean CheckNameinFollower(int IDuserFollowing) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from follower where idfollowing = ?", new String[]{String.valueOf(IDuserFollowing)});
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        return cursor.getCount() > 0;
     }
 
     //Kiểm tra Email , Password trong SQLite?
     public Boolean CheckEmailPassword(String email, String password) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
-        Cursor cursor = MyDB.rawQuery("Select * from account where email = ? and password = ?", new String[]{email, password});
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        @SuppressLint("Recycle") Cursor cursor = MyDB.rawQuery("Select * from account where email = ? and password = ?", new String[]{email, password});
+        return cursor.getCount() > 0;
     }
 
     // insert post
@@ -272,10 +273,7 @@ public class DB extends SQLiteOpenHelper {
 
         long result = MyDB.insert("post", null, contentValues);
 
-        if (result == -1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     // remove post
@@ -309,6 +307,36 @@ public class DB extends SQLiteOpenHelper {
         return user;
     }
 
+    @SuppressLint("Range")
+    public User getUser(int id) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        Cursor cursor = myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.id = ?", new String[]{String.valueOf(id)});
+//        Cursor cursor = myDB.rawQuery("SELECT * FROM user INNER JOIN account on account.id = user.userid WHERE account.email = ?", new String[]{email});
+        User user = new User();
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
+            user.setName(cursor.getString(cursor.getColumnIndex("name")));
+            user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
+            user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
+            user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
+            user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
+            user.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+        }
+//        cursor.close();
+//        myDB.close();
+        return user;
+    }
+
+    @SuppressLint("Range")
+    public Cursor getUserFromSearch(String keyword) {
+        SQLiteDatabase myDB = this.getWritableDatabase();
+
+        //        Cursor cursor = myDB.rawQuery("SELECT * FROM user INNER JOIN account on account.id = user.userid WHERE account.email = ?", new String[]{email});
+//        cursor.close();
+//        myDB.close();
+        return myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.name LIKE '%" + keyword + "%'", null);
+    }
 
     public List<String> getListName() {
         String[] column = {"name"};
@@ -366,38 +394,32 @@ public class DB extends SQLiteOpenHelper {
             database.delete("follower", "idfollowing = ?", new String[]{String.valueOf(idFollowing)});
     }
 
-    // remove notify
 
-    public void RemoveNotify(int idNotify) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        if (idNotify >= 0)
-            database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
-    }
-    public Cursor getDataFromID(int id){
+    public Cursor getDataFromID(int id) {
         SQLiteDatabase db = getReadableDatabase();
         String[] Image = {"image"};
-        return db.query("user", Image, "id = ?", new String[] {String.valueOf(id)}, null, null, null);
+        return db.query("user", Image, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
     }
-    public String getImagefor(int idUser){
+
+    public String getImagefor(int idUser) {
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Cursor cursor = database.query("user", null,"id=?", new String[]{String.valueOf(idUser)}, null, null, null);
+        Cursor cursor = database.query("user", null, "id=?", new String[]{String.valueOf(idUser)}, null, null, null);
         String avartar = null;
-        while (cursor.moveToNext()){
-             avartar = cursor.getString(2);
+        while (cursor.moveToNext()) {
+            avartar = cursor.getString(2);
         }
 
         return avartar;
     }
+
     public ArrayList<Integer> listIdUserOf(int idUser) {
         ArrayList<Integer> listUser = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
         Cursor cursor = database.query("follower", null, "iduser =?", new String[]{String.valueOf(idUser)}, null, null, null, null);
-
         while (cursor.moveToNext()) {
             listUser.add(cursor.getInt(2));
         }
-
         return listUser;
 
     }
@@ -428,6 +450,7 @@ public class DB extends SQLiteOpenHelper {
 
         return idComment;
     }
+
     public Boolean CheckNameinFollowing(int IDuserFollowing, int idCurrentUser) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         Cursor cursor = MyDB.rawQuery("Select * from follower where idfollowing = ? and iduser = ?", new String[]{String.valueOf(IDuserFollowing), String.valueOf(idCurrentUser)});
@@ -436,6 +459,8 @@ public class DB extends SQLiteOpenHelper {
         else
             return false;
     }
+
+    // insert notify
     public void insertNotify(int idUser, String content, String datime, int idPost, int idLike, int idcomment, int idShare, int idFollower) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -450,10 +475,99 @@ public class DB extends SQLiteOpenHelper {
 
         database.insert("notification", null, contentValues);
     }
-    public Cursor getPostsFromUser(int id){
-        SQLiteDatabase db = getReadableDatabase();
-        return db.query("post", null, "iduser =?", new String[]{String.valueOf(id)}, null, null, null);
+
+    // remove notify
+
+    public void RemoveNotify(int idNotify) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete("notification", "id = ?", new String[]{String.valueOf(idNotify)});
     }
+
+    public Cursor getPostsFromUser(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query("post", null, "iduser =?", new String[]{String.valueOf(id)}, "id", null, "id desc");
+    }
+
+    public ArrayList<Integer> getListIDPost(int idUser) {
+        ArrayList<Integer> listPost = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("post", null, "iduser = ? ", new String[]{String.valueOf(idUser)}, null, null, null);
+
+        while (cursor.moveToNext()) {
+            listPost.add(cursor.getInt(0));
+        }
+
+        return listPost;
+    }
+    public Post getPostFromID(int id, String nameUser){
+        int idUser = getIduser(nameUser);
+        User u = getUser(idUser);
+        Post post;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("post", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
+        if(c.moveToFirst()){
+            post = new Post();
+            post.setImgPost(c.getString(3));
+            post.setContent(c.getString(2));
+            post.setId(c.getInt(0));
+            post.setIduser(idUser);
+            post.setAvatar(getImagefor(idUser));
+            post.setUsername(u.getName());
+            post.setName(u.getName());
+            post.setNumber_like("0");
+            Calendar calendar = Calendar.getInstance();
+            long time = calendar.getTimeInMillis();
+            post.setTime(String.valueOf(time));
+            return post;
+        }
+        return null;
+    }
+    public long UpdatePost(Post p){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("iduser", p.getIduser());
+        cv.put("content", p.getContent());
+        cv.put("image", p.getImgPost());
+        cv.put("like_count", "0");
+        cv.put("comment_count", "0");
+        cv.put("share_count", "0");
+        cv.put("datetime", p.getTime());
+        return db.update("post", cv, "id = ?", new String[]{String.valueOf(p.getId())});
+    }
+
+    public ArrayList<Integer> getIDofPostWhenClickFollow(int idUser) {
+        ArrayList<Integer> listPost = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM post p JOIN follower f WHERE p.iduser = f.idfollowing and f.iduser = ?", new String[]{String.valueOf(idUser)});
+
+        while (cursor.moveToNext()) {
+            listPost.add(cursor.getInt(0));
+        }
+
+        return listPost;
+    }
+
+    public int CountFollowing(int idUser) {
+        int count = 0;
+        Cursor cursor = sqLiteDatabase.query("follower", null, "iduser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
+        while (cursor.moveToNext()) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public int CountMyFollower(int myID) {
+        int count =0;
+        Cursor cursor = sqLiteDatabase.query("follower", null, "idfollowing = ?" , new String[]{String.valueOf(myID)}, null, null, null);
+
+        while (cursor.moveToNext()){
+            count++;
+        }
+
+        return count;
+    }
+
 //     myDB.execSQL("create Table user(" +
 //             "id Integer PRIMARY KEY NOT NULL UNIQUE," +
 //             "name Text," +
@@ -463,5 +577,45 @@ public class DB extends SQLiteOpenHelper {
 //             "following_count Integer NOT NULL DEFAULT (0)," +
 //             "description  TEXT)");
 
+    //check like
+
+    public Boolean CheckLike(int idUser, int idPost) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    //insertLike
+    public Boolean insertLikes(int iduser, int idpost) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("iduser", iduser);
+        contentValues.put("idpost", idpost);
+        long result = MyDB.insert("likes", null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+
+    // unlike
+    public void Unlike(int iduser,int idpost) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.delete("likes", "iduser = ? and idpost = ?" , new String[]{String.valueOf(iduser), String.valueOf(idpost)});
+    }
+
+    // getlike
+    public Cursor getLike(int idPost){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.query("likes", null,"idpost = ?", new String[] {String.valueOf(idPost)}, null, null, null);
+    }
+    public Cursor getLikeUser(int idPost){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.rawQuery("SELECT u.* FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
+    }
 
 }

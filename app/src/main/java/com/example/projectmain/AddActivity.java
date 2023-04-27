@@ -16,6 +16,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,13 +52,13 @@ public class AddActivity extends AppCompatActivity {
     Uri imageUri;
 
 
-    public static  final int CAMERA_REQUEST = 100;
+    public static final int CAMERA_REQUEST = 100;
     public static final int STORAGE_REQUEST = 101;
     public static final int IMAGE_PICK_GALLERY = 102;
     public static final int IMAGE_PICK_CAMERA = 103;
 
-    private String[]cameraPermission;
-    private String[]storagePermission;
+    private String[] cameraPermission;
+    private String[] storagePermission;
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_EMAIL = "email";
@@ -87,10 +88,9 @@ public class AddActivity extends AppCompatActivity {
         user = db.getUser(email);
         String strImageAvatar = db.getImagefor(user.getId());
 
-        if(strImageAvatar != null){
+        if (strImageAvatar != null) {
             ivPfp.setImageURI(Uri.parse(strImageAvatar));
-        }
-        else
+        } else
             ivPfp.setImageResource(R.drawable.def);
 
         mtvName.setText(name);
@@ -101,14 +101,15 @@ public class AddActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
         mbtnDangBai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String content = medtNoidung.getText().toString();
-                if(content.equals("")){
+                if (content.equals("")) {
                     Toast.makeText(AddActivity.this, "Hãy nhập nội dung bài viết", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     int iduser = db.getIduser(name);
                     SQLiteDatabase myDB = db.getWritableDatabase();
                     ContentValues contentValues = new ContentValues();
@@ -119,12 +120,22 @@ public class AddActivity extends AppCompatActivity {
                     Calendar c = Calendar.getInstance();
                     long t = c.getTimeInMillis();
                     contentValues.put("datetime", String.valueOf(t));
+                    contentValues.put("image", String.valueOf(imageUri));
+                    int idPost = db.getIDPostOf(iduser);
+                    // like share chưa có chức năng
+                    int idUserFollower = 0;
+                    int idshare = 0;
+                    int idlike = 0;
+                    int idComment = 0;
+                    Date currentTime = Calendar.getInstance().getTime();
+                    Log.d("Time: ", String.valueOf(currentTime));
+                    db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
+
                     long result = myDB.insert("post", null, contentValues);
-                    if(result > 0){
+                    if (result > 0) {
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
                         finish();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(AddActivity.this, "Đăng bài thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -139,7 +150,7 @@ public class AddActivity extends AppCompatActivity {
         });
     }
 
-    public void ImagePickDialog(){
+    public void ImagePickDialog() {
         String[] option = {"Camera", "Thư viện"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -148,19 +159,16 @@ public class AddActivity extends AppCompatActivity {
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if(i == 0){
-                    if(!CheckCamneraPermission()){
+                if (i == 0) {
+                    if (!CheckCamneraPermission()) {
                         requestCameraPermisson();
-                    }
-                    else {
+                    } else {
                         pickFormCamera();
                     }
-                }
-                else if (i == 1){
-                    if(!CheckCamneraPermission()){
+                } else if (i == 1) {
+                    if (!CheckCamneraPermission()) {
                         requestStoragePermission();
-                    }
-                    else {
+                    } else {
                         pickFromGallery();
                     }
                 }
@@ -171,24 +179,27 @@ public class AddActivity extends AppCompatActivity {
     }
 
 
-    private boolean CheckCamneraPermission(){
+    private boolean CheckCamneraPermission() {
         boolean result_storage = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
         boolean result_camera = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-        return  result_camera && result_storage;
+        return result_camera && result_storage;
     }
 
-    private void requestCameraPermisson(){
+    private void requestCameraPermisson() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST);
     }
-    private boolean CheckStoragePermission(){
+
+    private boolean CheckStoragePermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return  result;
+        return result;
     }
-    private void requestStoragePermission(){
+
+    private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST);
     }
-    private void pickFormCamera(){
+
+    private void pickFormCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Image title");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
@@ -202,7 +213,7 @@ public class AddActivity extends AppCompatActivity {
 
     }
 
-    private void pickFromGallery(){
+    private void pickFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK);
 
         galleryIntent.setType("image/*");
@@ -212,34 +223,31 @@ public class AddActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case CAMERA_REQUEST:
-                if(grantResults.length > 0){
+                if (grantResults.length > 0) {
                     boolean camera_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
                     boolean storage_accepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if(camera_accepted){
+                    if (camera_accepted) {
                         pickFormCamera();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(this, "Yêu cầu thư viện ảnh và camera", Toast.LENGTH_SHORT).show();
                     }
                 }
-            break;
+                break;
             case STORAGE_REQUEST:
-                if(grantResults.length > 0){
+                if (grantResults.length > 0) {
                     boolean storage_accepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
-                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S || storage_accepted){
+                    if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.S || storage_accepted) {
                         pickFromGallery();
-                    }
-                    else
+                    } else
                         Toast.makeText(this, "Yêu cầu thư viện ảnh", Toast.LENGTH_SHORT).show();
                 }
         }
     }
-
 
 
     //Hình ảnh được thay đổi do Camera hoặc Thư viện ảnh sẽ trả kết quả ở đây
@@ -249,7 +257,7 @@ public class AddActivity extends AppCompatActivity {
 
         //Trả kết quá Image từ Camera và Gallery ở đây
         if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_PICK_GALLERY){
+            if (requestCode == IMAGE_PICK_GALLERY) {
                 //Được trả từ Thư viên ảnh
 
                 //Crop Hình ảnh
@@ -257,22 +265,21 @@ public class AddActivity extends AppCompatActivity {
                 CropImage.activity(data.getData())
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(this);
-            }
-            else if (requestCode == IMAGE_PICK_CAMERA){
+            } else if (requestCode == IMAGE_PICK_CAMERA) {
                 //Được trả từ Camera
 
                 //Crop Hình ảnh
                 //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(imageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(1,1)
+                        .setAspectRatio(1, 1)
                         .start(this);
             }
 
             //Crop Hình ảnh trả kết quả
-            else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri resultUri = result.getUri();
                     imageUri = resultUri;
 
@@ -280,16 +287,16 @@ public class AddActivity extends AppCompatActivity {
                     mimgDangBai.setImageURI(resultUri);
                 }
                 //error
-                else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                     Exception error = result.getError();
-                    Toast.makeText(this,"" + error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "" + error, Toast.LENGTH_SHORT).show();
                 }
             }
         }
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void initView(){
+    public void initView() {
         mtvName = findViewById(R.id.vbn);
         medtNoidung = findViewById(R.id.qwe);
         mbtnDangBai = findViewById(R.id.zxc);

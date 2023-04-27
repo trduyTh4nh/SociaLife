@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.NotifClass;
 import com.example.projectmain.R;
 
@@ -38,6 +39,7 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
     TextView adTvT;
     ImageView adIvAv;
     Context context;
+    DB db;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,27 +49,18 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifAdapter.ViewHolder> 
             adTvMsg = itemView.findViewById(R.id.tvMsg);
             adTvT = itemView.findViewById(R.id.tvTime);
             adIvAv = itemView.findViewById(R.id.ivAvt);
-
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull NotifAdapter.ViewHolder holder, int position) {
         NotifClass n = notifList.get(position);
+        db = new DB(context);
+        adTvName.setText(notifList.get(position).getName());
+        adTvMsg.setText(String.valueOf(notifList.get(position).getMessage()));
+        adIvAv.setImageURI(Uri.parse(notifList.get(position).getImg()));
 
-        int day = n.getHour() / 24;
-        adTvName.setText(n.getName());
-        adTvMsg.setText(n.getMessage());
-        if (day < 1) {
-            adTvT.setText(n.getHour() + " giờ trước");
-        } else if (day > 14) {
-            adTvT.setText(day / 7 + " tuần trước");
-        } else if (day / 7 > 5) {
-            adTvT.setText(day / 30 + " tháng trước");
-        } else {
-            adTvT.setText(day + " ngày trước");
-        }
-        adIvAv.setImageURI(Uri.parse(n.getImg()));
+        adTvT.setText(notifList.get(position).getCurTime());
     }
 
     @Override

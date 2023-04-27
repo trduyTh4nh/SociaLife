@@ -11,6 +11,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.nfc.cardemulation.HostNfcFService;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,19 +34,24 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.EditPostActivity;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.ImageActivity;
+import com.example.projectmain.LikeActivity;
 import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.example.projectmain.SettingActivity;
+import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -66,7 +74,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private static final String KEY_IMAGE_LINK = "linkImage";
 
     private static final String KEY_EMAIL = "email";
+    private static final String KEY_NAME = "name";
     String email = null;
+    String name = null;
 
     /*
      * Lấy kiểu view
@@ -103,8 +113,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
-
+        visited = new Boolean[posts.size()];
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
         } else if (viewType == 1) {
@@ -122,7 +131,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
         db = new DB(context.getApplicationContext());
 
         Post post = posts.get(position);
@@ -133,6 +141,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_IMAGE_LINK, post.getImgPost());
         email = sharedPreferences.getString(KEY_EMAIL, null);
+        name = sharedPreferences.getString(KEY_NAME,null);
 
         user = db.getUser(email);
         editor.apply();
@@ -141,18 +150,31 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             return;
 
         String ava = post.getAvatar();
-        holder.avatar.setImageURI(Uri.parse(ava));
+        if(ava.equals("null")){
+            holder.avatar.setImageResource(R.drawable.def);
+        } else
+            holder.avatar.setImageURI(Uri.parse(ava));
         //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
-        holder.numberLike.setText(post.getNumber_like());
+        holder.numberLike.setText(String.valueOf(db.getLike(post.getId()).getCount()));
         holder.content.setText(post.getContent());
 
         Time now = new Time(position);
 
         holder.time.setText(post.getTime());
 
-
+        holder.btnShowProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, UserActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt("idUser", post.getIduser());
+                i.putExtras(b);
+                context.startActivity(i);
+            }
+        });
         if (type == 0) {
             //View 0: Hình ko caption
             /*
@@ -235,28 +257,51 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bn.putString("Content", post.getContent());
                     bn.putString("Img", post.getImgPost());
                 }
-                bn.putInt("idPost", position);
+                bn.putInt("idPost", post.getId());
                 bn.putString("Username", post.getUsername());
                 bn.putInt("idUser", post.getIduser());
                 bn.putString("Pfp", ava);
                 bn.putString("Name", post.getName());
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("ViewType", type);
+                bn.putInt("idUser", post.getIduser());
+                bn.putString("Time", holder.time.getText().toString());
+                bn.putString("Like", String.valueOf(db.getLike(post.getId()).getCount()));
                 intent.putExtras(bn);
                 context.startActivity(intent);
             }
         });
 
 
+        int iduser = db.getIduser(name);
+        int idpost = post.getId();
+
+        if (!db.CheckLike(iduser, idpost)) {
+            holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+        }
+        else {
+            holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+        }
+
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnLike = v.findViewById(R.id.btn_like);
-                if (btnLike.isChecked()) {
-                    btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
-                } else {
-                    btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                if(db.CheckLike(iduser,idpost) == false){
+                    Boolean insertLike = db.insertLikes(iduser,idpost);
+                    if (insertLike == true && holder.btnLike.isChecked()){
+                        holder.btnLike.setChecked(false);
+                        holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
+                        notifyItemChanged(position);
+                    }
                 }
+                else {
+                    db.Unlike(iduser,idpost);
+                    holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                    holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
+                    notifyItemChanged(position);
+                }
+
             }
 
         });
@@ -279,14 +324,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(context.getApplicationContext(), v);
-
+                refreshView(position);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_post:
-                                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(context, EditPostActivity.class);
+                                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                Bundle bd = new Bundle();
+                                bd.putInt("idPost", post.getId());
+                                i.putExtras(bd);
+                                context.startActivity(i);
                                 break;
                             case R.id.remove_post:
                                 AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
@@ -315,12 +365,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
-
         holder.flo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
+                visited = new Boolean[posts.size()];
                 holder.flo.setVisibility(v.GONE);
                 holder.tvFollowed.setVisibility(v.VISIBLE);
 
@@ -328,27 +377,29 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 int idUserFollow = followUser(post.getUsername());
                 String UserNameFollow = db.getName(idUserFollow);
 
-                //if (!db.CheckNameinFollower(idUserFollow)) {
+//                if (!db.CheckNameinFollower(idUserFollow)) {
                 db.insertDataFollow(idUser, idUserFollow);
                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+                int index;
                 for (int i = 0; i < listUserFollowed.size(); i++) {
                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(i)));
+                    db = new DB(context);
                     if (idUserFollow == listUserFollowed.get(i)) {
-                            holder.flo.setVisibility(View.GONE);
-                            holder.tvFollowed.setVisibility(View.VISIBLE);
-
+                        holder.flo.setVisibility(View.GONE);
+                        holder.tvFollowed.setVisibility(View.VISIBLE);
                     } else {
                         holder.flo.setVisibility(View.VISIBLE);
                         holder.tvFollowed.setVisibility(View.GONE);
                     }
-
-                    refreshView(listUserFollowed.get(i));
-
+                    //  refreshView(listUserFollowed.get(i));
+                    for (int k = 0; k < 100; k++) {
+                        refreshView(k);
+                    }
+                    for (int k = 100; k > 0; k--) {
+                        refreshView(k);
+                    }
                 }
-
                 Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
-                //   } else
-                //Toast.makeText(context, "Followed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -361,8 +412,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 b.setPositiveButton("Hủy theo dõi", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        holder.flo.setVisibility(v.VISIBLE);
-                        holder.tvFollowed.setVisibility(v.GONE);
+                        holder.flo.setVisibility(View.VISIBLE);
+                        holder.tvFollowed.setVisibility(View.GONE);
 
                         user = db.getUser(email);
                         int idUser = user.getId();
@@ -374,6 +425,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                             if (idUser > 0) {
                                 db.UnFollower(idUserFollow);
                                 ArrayList<Integer> listUserFollowed = db.listIdUserOf(user.getId());
+
                                 for (int j = 0; j < listUserFollowed.size(); j++) {
                                     Log.d("IDFollower: ", String.valueOf(listUserFollowed.get(j)));
                                     if (idUserFollow == listUserFollowed.get(j)) {
@@ -384,11 +436,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         holder.flo.setVisibility(View.VISIBLE);
                                         holder.tvFollowed.setVisibility(View.GONE);
                                     }
-
-                                    refreshView(listUserFollowed.get(j));
-
+                                    //refreshView(j);
                                 }
+                                for (int k = 0; k < 100; k++) {
+                                    refreshView(k);
+                                }
+                                for (int k = 100; k > 0; k--) {
+                                    refreshView(k);
+                                }
+
                                 Toast.makeText(context, "UnFollowed", Toast.LENGTH_SHORT).show();
+
 
                             } else
                                 Toast.makeText(context, "Bạn chưa có tài khoản .-.", Toast.LENGTH_SHORT).show();
@@ -410,7 +468,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 //Intent i = new Intent(context, SettingActivity.class);
             }
         });
-
+        holder.likeWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, LikeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle b = new Bundle();
+                b.putInt("idPost", posts.get(position).getId());
+                i.putExtras(b);
+                context.startActivity(i);
+            }
+        });
 
     }
 
@@ -432,7 +500,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         Cursor cursor = mydb.rawQuery("SELECT * FROM follower WHERE iduser = ?", new String[]{String.valueOf(idCurrentUser)});
         ArrayList<Integer> list = new ArrayList<Integer>();
         while (cursor.moveToNext()) {
-            list.add(cursor.getInt(2));
+            list.add(cursor.getInt(0));
+        }
+
+        return list;
+    }
+
+    public ArrayList<Integer> ListPostID() {
+        SQLiteDatabase mydb = db.getWritableDatabase();
+        Cursor cursor = mydb.rawQuery("SELECT * FROM post ", null);
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        while (cursor.moveToNext()) {
+            list.add(cursor.getInt(0));
         }
 
         return list;
@@ -458,10 +537,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private ShapeableImageView avatar;
         private ImageView imgPost;
         private TextView name, userName, numberLike, content, time, nameUserPost;
-
+        private LinearLayout btnShowProfile, likeWrapper;
         public PostViewHolder(@NonNull View view) {
             super(view);
-
+            likeWrapper = view.findViewById(R.id.likeWrapper);
             avatar = (ShapeableImageView) view.findViewById(R.id.avatar);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
             name = (TextView) view.findViewById(R.id.name);
@@ -475,12 +554,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnLike = (CheckBox) view.findViewById(R.id.btn_like);
             tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
             flo = (Button) view.findViewById(R.id.btnFlolow);
+            btnShowProfile = view.findViewById(R.id.btnShowProfile);
         }
 
 
     }
+
     public void refreshView(int position) {
         notifyItemChanged(position);
     }
 
+    Boolean[] visited;
+
+    public int getIndexOfPost(int idFollower) {
+        Arrays.fill(visited, false);
+        int index = -1;
+        for (int i = 0; i < getItemCount(); i++) {
+            if (posts.get(i).getIduser() == idFollower) {
+                if (visited[i]) {
+                    continue;
+                }
+                Log.d("indexFollower", String.valueOf(i));
+                visited[i] = true;
+                return i;
+            }
+        }
+        visited = new Boolean[posts.size()];
+        return index;
+    }
 }

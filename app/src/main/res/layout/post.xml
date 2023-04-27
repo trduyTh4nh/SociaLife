@@ -25,6 +25,7 @@
                 android:layout_marginTop="15dp">
 
                 <LinearLayout
+                    android:id="@+id/btnShowProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -112,7 +113,7 @@
 
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <LinearLayout
@@ -120,10 +121,10 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-
+                        android:scaleType="centerCrop"
                         android:id="@+id/img_post"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
@@ -187,13 +188,13 @@
                         android:layout_marginBottom="8dp">
 
                         <CheckBox
-                            android:stateListAnimator="@anim/anim_btnlike"
+                            android:stateListAnimator="@animator/anim_btnlike"
                             android:id="@+id/btn_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:button="@null"
                             android:background="@drawable/favorite_svgrepo_com"
-                            android:checked="true"
+                            android:checked="false"
                             android:layout_margin="18dp">
                         </CheckBox>
 
@@ -218,6 +219,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/likeWrapper"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 

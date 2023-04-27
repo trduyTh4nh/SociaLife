@@ -110,6 +110,8 @@ public class UserFragment extends Fragment {
 
         db = new DB(getActivity());
 
+
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
 
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -122,6 +124,11 @@ public class UserFragment extends Fragment {
         String linkImage = sharedPreferences.getString(KEY_IMAGE_LINK, null);
         Uri link = null;
         user = db.getUser(email);
+
+        int quantityCountFollowing = db.CountFollowing(user.getId());
+        int myfolloerCount = db.CountMyFollower(user.getId());
+
+
         String strImageAvatar = db.getImagefor(user.getId());
 //        if (linkImage == null) {
 //            link = null;
@@ -139,8 +146,8 @@ public class UserFragment extends Fragment {
             mtvUsername.setText(user.getName());
             mtvDes.setText(user.getDescription());
             mtvPostCount.setText(String.valueOf(CountPost(db.getIduser(name))));
-            mtvFollowingCount.setText(String.valueOf(user.getFollowing_count()));
-            mtvFollowerCount.setText(String.valueOf(user.getFollower_count()));
+            mtvFollowingCount.setText(String.valueOf(quantityCountFollowing));
+            mtvFollowerCount.setText(String.valueOf(myfolloerCount));
         }
 
         //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));

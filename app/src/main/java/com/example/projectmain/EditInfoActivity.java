@@ -90,8 +90,12 @@ public class EditInfoActivity extends AppCompatActivity {
         //
         edtUserName.setText(name);
         user = db.getUser(email);
-        imageUri = Uri.parse(db.getImagefor(user.getId()));
-        imgCurrent.setImageURI(imageUri);
+        if(db.getImagefor(user.getId()) == null){
+            imgCurrent.setImageResource(R.drawable.def);
+        } else {
+            imageUri = Uri.parse(db.getImagefor(user.getId()));
+            imgCurrent.setImageURI(imageUri);
+        }
         edtStory.setText(user.getDescription());
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override

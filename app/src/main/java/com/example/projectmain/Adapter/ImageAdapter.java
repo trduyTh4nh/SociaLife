@@ -21,9 +21,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Model.User;
+import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 
 import java.io.IOException;
@@ -43,11 +46,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     private List<Post> imageList;
 
     Context context;
-
+    DB db;
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        db = new DB(context);
         View view = LayoutInflater.from(context).inflate(R.layout.img_post_item, parent, false);
         return new ViewHolder(view);
     }
@@ -62,11 +66,34 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View v, int pos, boolean b) {
-                Intent i= new Intent(context, ImageActivity.class);
+                int type;
+                Intent i= new Intent(context, PostDetailActitivty.class);
+                int id = imagePost.getIduser();
+                User u = db.getUser(id);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Bundle bundle = new Bundle();
-                bundle.putString("ImgRes", imagePost.getImgPost());
-                i.putExtras(bundle);
+                String ava = db.getImagefor(imagePost.getIduser());
+                Bundle bn = new Bundle();
+                if(!imagePost.getImgPost().equals("null") && imagePost.getContent().equals("null")){
+                    type = 0;
+                } else {
+                    type = 3;
+                }
+                if (type == 0) {
+                    bn.putString("Img", imagePost.getImgPost());
+                } else {
+                    bn.putString("Content", imagePost.getContent());
+                    bn.putString("Img", imagePost.getImgPost());
+                }
+                bn.putInt("idPost", imagePost.getId());
+                bn.putString("Username", u.getName());
+                bn.putInt("idUser", imagePost.getIduser());
+                bn.putString("Pfp", ava);
+                bn.putString("Name", u.getName());
+                bn.putBoolean("IsCmt", true);
+                bn.putInt("ViewType", type);
+                bn.putInt("idUser", imagePost.getIduser());
+                bn.putString("Time", imagePost.getTime());
+                i.putExtras(bn);
                 context.startActivity(i);
             }
         });

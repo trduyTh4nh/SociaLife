@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,20 +36,22 @@ import java.util.Random;
 
 public class PostDetailActitivty extends AppCompatActivity {
 
-
+    CheckBox btnLike;
     EditText edtComment;
-    TextView tvname, tvUsername, tvContent;
+    TextView tvname, tvUsername, tvContent, tvTime, numberLike;
     View postView;
     ImageView ivPfp, ivImg;
     ImageButton btnExit;
     Post post;
-    Button btnUpcmt;
+    Button btnUpcmt, btnFollow;
     ArrayList<Comment> cmtList;
+    ImageButton btnMore;
     RecyclerView rcvComment;
     DB db;
     User user;
     SharedPreferences sharedPreferences;
-    LinearLayout llPostContain;
+    LinearLayout llPostContain, btnUser;
+    int id;
     private static final String SHARED_PREF_NAME = "mypref";
 
     private static final String KEY_EMAIL = "email";
@@ -62,11 +66,13 @@ public class PostDetailActitivty extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail_actitivty);
         // init
         // handle
+
         db = new DB(this);
         Intent i = getIntent();
         Bundle b = i.getExtras();
-
+        id = b.getInt("idUser");
         int viewType = b.getInt("ViewType");
+
         /*
          * Các kiểu view:
          * 0: Post có hình nhưng ko caption
@@ -75,30 +81,31 @@ public class PostDetailActitivty extends AppCompatActivity {
          * 3: Post vừa có hình, vừa có caption
          *
          */
-        if(viewType == 0){
+        if (viewType == 0) {
             //Né tránh nullPointerException cho Type 0: Chỉ setImageResource cho hình
             postView = getLayoutInflater().inflate(R.layout.post_img_notext, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             ivImg.setImageURI(Uri.parse(b.getString("Img")));
 
-        } else if(viewType == 1){
+        } else if (viewType == 1) {
             //Né tránh nullPointerException cho Type 1: Chỉ setText cho chữ
             postView = getLayoutInflater().inflate(R.layout.post_small_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             tvContent.setText(b.getString("Content"));
-        } else if(viewType == 3){
+        } else if (viewType == 3) {
             //Né tránh nullPointerException cho Type 3: Không có nullPointerException, set hình và text bình thường
             postView = getLayoutInflater().inflate(R.layout.post, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             tvContent.setText(b.getString("Content"));
             tvContent.setText(b.getString("Content"));
             ivImg.setImageURI(Uri.parse(b.getString("Img")));
-        } else if(viewType == 2){
+        } else if (viewType == 2) {
             //Né tránh nullPointerException cho Type 2: Chỉ setText cho chữ
             postView = getLayoutInflater().inflate(R.layout.post_large_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             tvContent.setText(b.getString("Content"));
         }
+
         llPostContain.addView(postView); //Lưu ý hàm này: thêm View vừa mới chuẩn bị vào LinearLayout
 
         tvname.setText(b.getString("Name"));
@@ -107,12 +114,21 @@ public class PostDetailActitivty extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
-
         String test = b.getString("Img");
         String linkImage = b.getString("Pfp");
+        String time = b.getString("Time");
+        tvTime.setText(time);
         ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
+        numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
+        if (!db.CheckLike(idUser, idPost)) {
+            btnLike.setChecked(false);
+            btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+        } else {
+            btnLike.setChecked(true);
+            btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+        }
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,13 +170,36 @@ public class PostDetailActitivty extends AppCompatActivity {
                 cmtAdap.notifyDataSetChanged();
             }
         });
+        btnFollow.setVisibility(View.GONE);
+        btnMore.setVisibility(View.GONE);
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(PostDetailActitivty.this, UserActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("idUser", id);
+                i.putExtras(b);
+                startActivity(i);
+            }
+        });
 
-
-
-
-
+        btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (!db.CheckLike(idUser, id)) {
+                    Boolean insertLike = db.insertLikes(idUser, id);
+                    if (insertLike && b) {
+                        btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
+                    }
+                } else {
+                    db.Unlike(idUser, id);
+                    btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+                    numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
+                }
+            }
+        });
     }
-
     void initView() {
        /* tvname = findViewById(R.id.tvPName);
         tvUsername = findViewById(R.id.tvUsername);
@@ -174,10 +213,16 @@ public class PostDetailActitivty extends AppCompatActivity {
         tvUsername = postView.findViewById(R.id.nameu_user);
         ivPfp = postView.findViewById(R.id.avatar);
         ivImg = postView.findViewById(R.id.img_post);
+        btnFollow = postView.findViewById(R.id.btnFlolow);
+        btnMore = postView.findViewById(R.id.btnOptions);
         tvContent = postView.findViewById(R.id.content_post);
+        btnUser = postView.findViewById(R.id.btnShowProfile);
         btnExit = findViewById(R.id.btnExit);
         edtComment = findViewById(R.id.edtComment);
         btnUpcmt = findViewById(R.id.btnUploadComment);
+        tvTime = postView.findViewById(R.id.time_post);
+            btnLike = postView.findViewById(R.id.btn_like);
+            numberLike = postView.findViewById(R.id.number_like);
     }
 
 

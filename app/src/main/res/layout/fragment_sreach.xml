@@ -9,15 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="0dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:gravity="center_horizontal"
-        android:padding="10dp">
+        android:paddingTop="100dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:orientation="vertical">
 
         <AutoCompleteTextView
             android:id="@+id/searchView"
-            android:layout_width="350dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_background"
             android:clipToOutline="false"
@@ -28,5 +31,20 @@
             android:padding="10dp"
             android:textCursorDrawable="@null"
             android:textSize="15dp" />
+        <TextView
+            style="@style/ParagraphContent"
+            android:layout_marginTop="10dp"
+            android:id="@+id/tvResultCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng nhập từ khóa"
+            />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/rcvSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"/>
+
     </LinearLayout>
 </FrameLayout>

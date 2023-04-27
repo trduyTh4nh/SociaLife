@@ -10,11 +10,7 @@
         android:id="@+id/action_search"
         android:title="@string/action_search"
         ></item>
-    <item
-        android:icon="@drawable/ic_add"
-        android:id="@+id/action_add"
-        android:title="@string/action_add"
-        ></item>
+
     <item
         android:icon="@drawable/ic_like"
         android:id="@+id/action_notify"
