@@ -251,7 +251,7 @@ public class HomeFragment extends Fragment {
 
         //Cursor cursor = myDB.query("post", null, null, null, "id", null, "id desc");
 
-        Cursor cursor = myDB.rawQuery("SELECT * FROM post p join follower f WHERE p.iduser = f.idfollowing and f.iduser = ? GROUP BY p.id ORDER BY p.id DESC ",new String[]{String.valueOf(myID)} );
+        Cursor cursor = myDB.rawQuery("SELECT * FROM post p join follower f WHERE  (p.iduser = f.idfollowing or p.iduser = ?) and f.iduser = ? GROUP BY p.id ORDER BY p.id DESC ",new String[]{String.valueOf(myID), String.valueOf(myID)} );
 
 
         //Cursor cursorGetUser = myDB.rawQuery("SELECT u.* FROM user u JOIN post p on u.id = p.iduser", null);
