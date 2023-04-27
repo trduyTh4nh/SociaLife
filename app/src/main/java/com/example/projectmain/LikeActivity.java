@@ -9,9 +9,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ public class LikeActivity extends AppCompatActivity {
     DB database;
     UserSearchAdapter a;
     RecyclerView rcvLike;
+    ImageButton btnExits;
     int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,14 @@ public class LikeActivity extends AppCompatActivity {
         LinearLayoutManager l = new LinearLayoutManager(this);
         rcvLike.setAdapter(a);
         rcvLike.setLayoutManager(l);
+        btnExits = findViewById(R.id.btn_exit);
+
+        btnExits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     @SuppressLint("Range")
     void getContent(){
