@@ -92,7 +92,7 @@ public class SreachFragment extends Fragment {
         sview.setAdapter(a);
         a.notifyDataSetChanged();
 
-        UserSearchAdapter adap = new UserSearchAdapter(view.getContext(), arrUser);
+        UserSearchAdapter adap = new UserSearchAdapter(getActivity(), arrUser);
         LinearLayoutManager g = new LinearLayoutManager(view.getContext());
         r.setLayoutManager(g);
         r.setAdapter(adap);

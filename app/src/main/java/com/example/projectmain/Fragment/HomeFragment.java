@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
     List<String> listName;
     ImageButton btnHeart;
     ImageButton btnMenu;
-
+    int id;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -114,7 +114,8 @@ public class HomeFragment extends Fragment {
 
         db = new DB(getContext().getApplicationContext());
 
-        user = db.getUser(email);
+        //user = db.getUser(email);
+        id = db.getIduser(name);
         listName = db.getListNameID();
 
         SQLiteDatabase database = db.getReadableDatabase();
@@ -139,7 +140,7 @@ public class HomeFragment extends Fragment {
 
 
         //   Log.d("ID: ",  db.getName(list.get(i)));
-        posts = getPostVip(user.getId());
+        posts = getPostVip(id);
         adapter = new PostAdapter(getActivity(), posts);
 
         adapter.notifyDataSetChanged();
@@ -184,7 +185,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         if (posts != null)
             posts.clear();
-        posts.addAll(getPostVip(user.getId()));
+        posts.addAll(getPostVip(id));
         adapter = new PostAdapter(getContext().getApplicationContext(), posts);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
