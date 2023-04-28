@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,19 +52,14 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
             return;
         }
         holder.ivProfile.setImageURI(Uri.parse(db.getImagefor(usr.getId())));
-
-
-
-        holder.layoutUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putInt("idUser", usr.getId());
-
-                Intent i = new Intent(c.getApplicationContext(), UserActivity.class);
-                i.putExtras(b);
-                c.startActivity(i);
-            }
+        holder.layoutUser.setOnClickListener(v -> {
+            Toast.makeText(c, "toast", Toast.LENGTH_SHORT).show();
+            Bundle b = new Bundle();
+            b.putInt("idUser", usr.getId());
+            Intent i = new Intent(c, UserActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtras(b);
+            c.startActivity(i);
         });
     }
 
@@ -72,7 +68,7 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
         return usrs.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         Button btnFlo;
         TextView tvName, tvDesc;
         ImageView ivProfile;
