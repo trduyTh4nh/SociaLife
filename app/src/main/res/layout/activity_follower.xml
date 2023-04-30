@@ -26,6 +26,7 @@
             tools:layout_editor_absoluteY="5dp">
 
             <TextView
+                android:id="@+id/tvFollowCount"
                 style="@style/ParagraphTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,6 +55,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:padding="10dp"
         android:id="@+id/rview"
         android:layout_width="match_parent"
         android:layout_height="0dp"

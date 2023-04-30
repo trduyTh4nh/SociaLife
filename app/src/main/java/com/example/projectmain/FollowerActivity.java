@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.projectmain.Adapter.FollowerAdapter;
 import com.example.projectmain.Database.DB;
@@ -26,6 +27,7 @@ public class FollowerActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FollowerAdapter adapter;
     ImageButton exitBTN;
+    TextView tvCount;
 
     SharedPreferences sharedPreferences;
     private static final String SHARE_PRE_NAME = "mypref";
@@ -38,6 +40,7 @@ public class FollowerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower);
+        tvCount = findViewById(R.id.tvFollowCount);
         exitBTN = findViewById(R.id.btn_exit);
         exitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,11 +55,11 @@ public class FollowerActivity extends AppCompatActivity {
 
         User currentUser = db.getUser(email);
         recyclerView = findViewById(R.id.rview);
-        adapter = new FollowerAdapter(listFollowers(currentUser.getId()));
+        adapter = new FollowerAdapter(this, listFollowers(currentUser.getId()));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
+        tvCount.setText("Đang theo dõi " + String.valueOf(adapter.getItemCount()) + " người");
     }
 
     public List<Follower> listFollowers(int idCurrentUser) {

@@ -193,6 +193,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bd.putString("ImgPoster", post.getName());
                     bd.putString("ImgUsername", post.getUsername());
                     bd.putString("ImgPfp", ava);
+                    bd.putInt("idPost", post.getId());
                     i.putExtras(bd);
                     context.startActivity(i);
                 }
@@ -214,13 +215,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context.getApplicationContext(), ImageActivity.class);
+                    Intent i = new Intent(context, ImageActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Bundle bd = new Bundle();
                     bd.putString("ImgRes", post.getImgPost());
                     bd.putString("ImgPoster", post.getName());
                     bd.putString("ImgUsername", post.getUsername());
                     bd.putString("ImgPfp", ava);
+                    bd.putInt("idPost", post.getId());
                     i.putExtras(bd);
                     context.startActivity(i);
                 }

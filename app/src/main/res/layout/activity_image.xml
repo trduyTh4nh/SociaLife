@@ -131,6 +131,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|end">
                 <ImageButton
+                    android:id="@+id/btnLike"
                     style="@style/ImageButtonNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
