@@ -118,7 +118,10 @@ public class PostDetailActitivty extends AppCompatActivity {
         String linkImage = b.getString("Pfp");
         String time = b.getString("Time");
         tvTime.setText(time);
-        ivPfp.setImageURI(Uri.parse(linkImage));
+        if(linkImage == null){
+            ivPfp.setImageResource(R.drawable.def);
+        }else
+            ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
         numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
@@ -186,14 +189,14 @@ public class PostDetailActitivty extends AppCompatActivity {
         btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!db.CheckLike(idUser, id)) {
-                    Boolean insertLike = db.insertLikes(idUser, id);
+                if (!db.CheckLike(idUser, idPost)) {
+                    Boolean insertLike = db.insertLikes(idUser, idPost);
                     if (insertLike && b) {
                         btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
                         numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
                     }
                 } else {
-                    db.Unlike(idUser, id);
+                    db.Unlike(idUser, idPost);
                     btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
                     numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
                 }

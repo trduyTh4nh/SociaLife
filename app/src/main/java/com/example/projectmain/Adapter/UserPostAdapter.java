@@ -68,8 +68,13 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
         if (position == 0) {
             ImageAdapter adapter = new ImageAdapter(PostImg, c);
             holder.rcvPosts.setAdapter(adapter);
-            GridLayoutManager g = new GridLayoutManager(c, 3);
-            holder.rcvPosts.setLayoutManager(g);
+            if(PostImg.size() != 0){
+                GridLayoutManager g = new GridLayoutManager(c, 3);
+                holder.rcvPosts.setLayoutManager(g);
+            } else {
+                LinearLayoutManager g = new LinearLayoutManager(c);
+                holder.rcvPosts.setLayoutManager(g);
+            }
         } else if (position == 1) {
             TextPostAdapter adapter = new TextPostAdapter(c, PostText);
             LinearLayoutManager l = new LinearLayoutManager(c);

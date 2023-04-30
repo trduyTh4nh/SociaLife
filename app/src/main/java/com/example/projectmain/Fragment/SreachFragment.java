@@ -1,10 +1,7 @@
 package com.example.projectmain.Fragment;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,16 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.projectmain.Adapter.UserSearchAdapter;
+import com.example.projectmain.Adapter.UserAdapter;
 import com.example.projectmain.Database.DB;
-import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
 
@@ -92,7 +85,7 @@ public class SreachFragment extends Fragment {
         sview.setAdapter(a);
         a.notifyDataSetChanged();
 
-        UserSearchAdapter adap = new UserSearchAdapter(getActivity(), arrUser);
+        UserAdapter adap = new UserAdapter(getActivity(), arrUser);
         LinearLayoutManager g = new LinearLayoutManager(view.getContext());
         r.setLayoutManager(g);
         r.setAdapter(adap);
