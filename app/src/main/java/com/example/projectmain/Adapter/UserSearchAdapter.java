@@ -26,14 +26,14 @@ import com.example.projectmain.UserActivity;
 
 import java.util.ArrayList;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
+public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.ViewHolder>{
     Context c;
     SharedPreferences sharedPreferences;
     String name;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     ArrayList<User> usrs;
-    public UserAdapter(Context c, ArrayList<User> usrs){
+    public UserSearchAdapter(Context c, ArrayList<User> usrs){
         sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         this.c = c;

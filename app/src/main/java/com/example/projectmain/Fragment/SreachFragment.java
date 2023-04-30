@@ -20,7 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.example.projectmain.Adapter.UserAdapter;
+import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
@@ -85,7 +85,7 @@ public class SreachFragment extends Fragment {
         sview.setAdapter(a);
         a.notifyDataSetChanged();
 
-        UserAdapter adap = new UserAdapter(getActivity(), arrUser);
+        UserSearchAdapter adap = new UserSearchAdapter(getActivity(), arrUser);
         LinearLayoutManager g = new LinearLayoutManager(view.getContext());
         r.setLayoutManager(g);
         r.setAdapter(adap);

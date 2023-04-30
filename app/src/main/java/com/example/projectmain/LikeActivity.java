@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.example.projectmain.Adapter.UserAdapter;
+import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class LikeActivity extends AppCompatActivity {
     ArrayList<User> users = new ArrayList<User>();
     DB database;
-    UserAdapter a;
+    UserSearchAdapter a;
     RecyclerView rcvLike;
     ImageButton btnExits;
     int id;
@@ -34,7 +34,7 @@ public class LikeActivity extends AppCompatActivity {
         rcvLike = findViewById(R.id.rcvLikeList);
         database = new DB(this);
         getContent();
-        a = new UserAdapter(this, users);
+        a = new UserSearchAdapter(this, users);
         LinearLayoutManager l = new LinearLayoutManager(this);
         rcvLike.setAdapter(a);
         rcvLike.setLayoutManager(l);
