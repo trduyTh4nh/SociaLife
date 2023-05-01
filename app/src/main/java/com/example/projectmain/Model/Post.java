@@ -44,6 +44,12 @@ public class  Post {
 
 
 
+    String postContent;
+
+    Post sharedPost;
+
+
+
     public Post(int iduser,String avatar, String imgPost, String username, String name, String number_like, String content, String time) {
         this.avatar = avatar;
         this.iduser = iduser;
@@ -53,6 +59,14 @@ public class  Post {
         this.number_like = number_like;
         this.content = content;
         this.time = time;
+    }
+
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
     }
 
 
@@ -118,4 +132,24 @@ public class  Post {
     public void setTime(String time) {
         this.time = time;
     }
+
+
+    public Post getSharedPost() {
+        return sharedPost;
+    }
+    public void setSharedPost(Post sharedPost) {
+        this.sharedPost = sharedPost;
+    }
+
+    public Post(String avatar, Post sharedPost, String username, String name, String number_like, String content, String time) {
+        this.avatar = avatar;
+        this.sharedPost = sharedPost;
+        this.username = username;
+        this.name = name;
+        this.number_like = number_like;
+        this.content = content;
+        this.time = time;
+    }
+
+
 }

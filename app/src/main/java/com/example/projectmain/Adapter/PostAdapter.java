@@ -51,7 +51,9 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
@@ -93,7 +95,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         String postContent = posts.get(position).getContent();
 
         String img = posts.get(position).getImgPost();
+        Post childPost = posts.get(position).getSharedPost();
 
+        if (childPost != null) {
+            return 5;
+        }
         if (postContent == null && !img.equals("null")) {
             return 0;
         }
@@ -114,6 +120,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         visited = new Boolean[posts.size()];
+
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
         } else if (viewType == 1) {
@@ -122,17 +129,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_large_paragraph, parent, false);
         } else if (viewType == 3) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post, parent, false);
-        } else {
+        } else if (viewType == 5) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.shared_post, parent, false);
+        } else
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.error, parent, false);
-        }
+
         return new PostViewHolder(view);
     }
 
-    @SuppressLint("SuspiciousIndentation")
+    @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         db = new DB(context.getApplicationContext());
-
+        Post childPost = posts.get(position).getSharedPost();
         Post post = posts.get(position);
 
         //   User user = users.get(position);
@@ -141,7 +150,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_IMAGE_LINK, post.getImgPost());
         email = sharedPreferences.getString(KEY_EMAIL, null);
-        name = sharedPreferences.getString(KEY_NAME,null);
+        name = sharedPreferences.getString(KEY_NAME, null);
 
         user = db.getUser(email);
         editor.apply();
@@ -150,7 +159,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             return;
 
         String ava = post.getAvatar();
-        if(ava.equals("null")){
+        if (ava.equals("null")) {
             holder.avatar.setImageResource(R.drawable.def);
         } else
             holder.avatar.setImageURI(Uri.parse(ava));
@@ -197,6 +206,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     context.startActivity(i);
                 }
             });
+        } else if (type == 5) {
+
+            holder.tvSharedOwner.setText("@" + childPost.getUsername());
+            holder.tvTime.setText(childPost.getTime());
+            holder.tvSharedCaption.setText(childPost.getContent());
+            holder.tvSharedLikeCount.setText(childPost.getNumber_like());
+            holder.ivSharedImage.setImageURI(Uri.parse(childPost.getImgPost()));
+            holder.content.setText(childPost.getContent());
+            //    holder.nameUserPost.setText(childPost.getUsername());
+
+            holder.avatar.setImageURI(Uri.parse(post.getAvatar()));
+            holder.name.setText(post.getName());
+            holder.userName.setText(post.getUsername());
+            holder.numberLike.setText(post.getNumber_like());
+            holder.time.setText(post.getTime());
+
+            holder.btnComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, PostDetailActitivty.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle bn = new Bundle();
+                    if (type == 0) {
+                        bn.putString("Img", post.getImgPost());
+                    } else if (type == 1 || type == 2) {
+                        bn.putString("Content", post.getContent());
+                    } else if (type == 3) {
+                        bn.putString("Content", post.getContent());
+                        bn.putString("Img", post.getImgPost());
+                    }
+                    bn.putString("Username", post.getUsername());
+                    bn.putString("Pfp", post.getAvatar());
+                    bn.putString("Name", post.getName());
+                    bn.putBoolean("IsCmt", true);
+                    bn.putInt("ViewType", type);
+                    intent.putExtras(bn);
+                    context.startActivity(intent);
+                }
+            });
+
+
         } else if (type == 1 || type == 2) {
             //View 1, View 2: Có caption nhưng ko có hình
             /*
@@ -278,25 +328,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         if (!db.CheckLike(iduser, idpost)) {
             holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
-        }
-        else {
+        } else {
             holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
         }
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(db.CheckLike(iduser,idpost) == false){
-                    Boolean insertLike = db.insertLikes(iduser,idpost);
-                    if (insertLike == true && holder.btnLike.isChecked()){
+                if (db.CheckLike(iduser, idpost) == false) {
+                    Boolean insertLike = db.insertLikes(iduser, idpost);
+                    if (insertLike == true && holder.btnLike.isChecked()) {
                         holder.btnLike.setChecked(false);
                         holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
                         holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
                         notifyItemChanged(position);
                     }
-                }
-                else {
-                    db.Unlike(iduser,idpost);
+                } else {
+                    db.Unlike(iduser, idpost);
                     holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
                     holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
                     notifyItemChanged(position);
@@ -480,7 +528,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
 
+        holder.btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentIDpost = post.getId();
+                int myID = idUser;
+                Date currentTime = Calendar.getInstance().getTime();
+                db.saveShare(myID, currentIDpost, String.valueOf(currentTime));
+            }
+        });
+
     }
+
 
     public int followUser(String name) {
         SQLiteDatabase mydb = db.getWritableDatabase();
@@ -533,11 +592,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         private Button flo;
         private CheckBox btnLike;
-        private ImageButton btnComment;
+        private ImageButton btnComment, btnShare;
         private ShapeableImageView avatar;
-        private ImageView imgPost;
-        private TextView name, userName, numberLike, content, time, nameUserPost;
+        private ImageView imgPost, ivSharedImage;
+        private TextView name, userName, numberLike, content, time, nameUserPost, tvSharedOwner, tvTime, tvSharedCaption, tvSharedLikeCount;
         private LinearLayout btnShowProfile, likeWrapper;
+
+        LinearLayout llUser;
+
         public PostViewHolder(@NonNull View view) {
             super(view);
             likeWrapper = view.findViewById(R.id.likeWrapper);
@@ -555,6 +617,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
             flo = (Button) view.findViewById(R.id.btnFlolow);
             btnShowProfile = view.findViewById(R.id.btnShowProfile);
+            // nameUserPost = view.findViewById(R.id.)
+            //
+            ivSharedImage = view.findViewById(R.id.ivSharedImage);
+            tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
+            tvSharedOwner = view.findViewById(R.id.tvSharedOwner);
+            tvTime = view.findViewById(R.id.tvTime);
+            tvSharedCaption = view.findViewById(R.id.tvSharedCaption);
+            tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
+            btnShare = view.findViewById(R.id.btn_Pshare);
         }
 
 

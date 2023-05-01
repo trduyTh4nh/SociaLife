@@ -216,6 +216,7 @@
                             </ImageButton>
 
                             <ImageButton
+                                android:id="@+id/btn_Pshare"
                                 android:src="@drawable/paper_plane_svgrepo_com"
                                 android:background="@drawable/transparent_ripple"
                                 android:layout_width="wrap_content"

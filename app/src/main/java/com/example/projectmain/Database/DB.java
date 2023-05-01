@@ -105,6 +105,19 @@ public class DB extends SQLiteOpenHelper {
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
     }
 
+    public void saveShare(int idUser, int idCurPost, String curTime){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("iduser", idUser);
+        contentValues.put("idpost", idCurPost);
+        contentValues.put("datetime", curTime);
+
+        database.insert("share", null, contentValues);
+    }
+
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
@@ -521,6 +534,28 @@ public class DB extends SQLiteOpenHelper {
             return post;
         }
         return null;
+    }
+
+    public Post getPost(int id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        Post post = null;
+        Cursor cursor = database.query("post", null, "id = ?" , new String[]{String.valueOf(id)}, null, null, null, null);
+        while (cursor.moveToNext()){
+            post = new Post();
+            User u = getUser(cursor.getInt(1));
+            post.setImgPost(cursor.getString(3));
+            post.setContent(cursor.getString(2));
+            post.setId(cursor.getInt(0));
+            post.setIduser(u.getId());
+            post.setAvatar(getImagefor(cursor.getInt(1)));
+            post.setUsername(u.getName());
+            post.setName(u.getName());
+            post.setNumber_like("0");
+            Calendar calendar = Calendar.getInstance();
+            long time = calendar.getTimeInMillis();
+            post.setTime(String.valueOf(time));
+        }
+        return post;
     }
     public long UpdatePost(Post p){
         SQLiteDatabase db = getWritableDatabase();
