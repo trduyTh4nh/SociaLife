@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/clickto"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="false"
+    android:descendantFocusability="blocksDescendants"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,7 +15,7 @@
     android:backgroundTint="@color/foreground"
     android:layout_marginBottom="5dp">
     <LinearLayout
-        android:id="@+id/clickto"
+
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

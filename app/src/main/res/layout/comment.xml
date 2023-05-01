@@ -56,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:visibility="gone"
                 app:srcCompat="@drawable/heart_line" />
 
             <TextView
@@ -63,7 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="21" />
+                android:text="21"
+                android:visibility="gone" />
 
             <ImageButton
                 android:id="@+id/imageButton5"
@@ -71,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
+                android:visibility="gone"
                 app:srcCompat="@drawable/reply_line" />
 
             <TextView
@@ -78,7 +81,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="10" />
+                android:text="10"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
