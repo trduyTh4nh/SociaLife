@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,7 +155,7 @@ public class UserFragment extends Fragment {
 
         //   ArrayList<String> list = (ArrayList<String>) ListImgPost(db.getIduser(name));
 
-        UserPostAdapter adapter = new UserPostAdapter(getActivity().getApplicationContext(), posts);
+        UserPostAdapter adapter = new UserPostAdapter(getActivity().getApplicationContext(), posts, getActivity());
         ViewPager2 r = getView().findViewById(R.id.vpPosts);
         r.setNestedScrollingEnabled(false);
         r.setAdapter(adapter);
@@ -204,7 +207,7 @@ public class UserFragment extends Fragment {
             temp.setImgPost(c.getString(3));
             temp.setContent(c.getString(c.getColumnIndex("content")));
             temp.setNumber_like(c.getString(c.getColumnIndex("like_count")));
-            temp.setTime("0");
+            temp.setTime(c.getString(c.getColumnIndex("datetime")));
             posts.add(temp);
         }
     }

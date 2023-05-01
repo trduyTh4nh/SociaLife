@@ -199,6 +199,15 @@
                                 android:background="@drawable/transparent_ripple"
                                 android:src="@drawable/comment_svgrepo_com__1_"></ImageButton>
 
+                            <ImageButton
+                                android:id="@+id/btn_Pshare"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="18dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/transparent_ripple"
+                                android:src="@drawable/paper_plane_svgrepo_com"></ImageButton>
+
 
                         </LinearLayout>
 

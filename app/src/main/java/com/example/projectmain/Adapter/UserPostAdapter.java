@@ -1,5 +1,6 @@
 package com.example.projectmain.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
     ArrayList<Post> Posts;
     ArrayList<Post> PostText;
     ArrayList<Post> PostImg;
+    Activity a;
 
     private void SplitList() {
 
@@ -35,7 +37,8 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
         }
     }
 
-    public UserPostAdapter(Context c, ArrayList<Post> posts) {
+    public UserPostAdapter(Context c, ArrayList<Post> posts, Activity a) {
+        this.a = a;
         this.c = c;
         Posts = posts;
     }
@@ -66,7 +69,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         SplitList();
         if (position == 0) {
-            ImageAdapter adapter = new ImageAdapter(PostImg, c);
+            ImageAdapter adapter = new ImageAdapter(PostImg, c, a);
             holder.rcvPosts.setAdapter(adapter);
             if(PostImg.size() != 0){
                 GridLayoutManager g = new GridLayoutManager(c, 3);
@@ -76,7 +79,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.PostVi
                 holder.rcvPosts.setLayoutManager(g);
             }
         } else if (position == 1) {
-            TextPostAdapter adapter = new TextPostAdapter(c, PostText);
+            TextPostAdapter adapter = new TextPostAdapter(c, PostText, a);
             LinearLayoutManager l = new LinearLayoutManager(c);
             holder.rcvPosts.setAdapter(adapter);
             holder.rcvPosts.setLayoutManager(l);

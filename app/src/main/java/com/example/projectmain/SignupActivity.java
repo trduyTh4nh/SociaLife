@@ -67,19 +67,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String user = edtUserName.getText().toString();
         String pass = edtPassword.getText().toString();
         String repass = edtConfirm.getText().toString();
-
+        boolean passwordCheck = pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$");
+        boolean emailCheck = email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
         if(email.equals("")||pass.equals("")||repass.equals("")||user.equals(""))
             Toast.makeText(SignupActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         else{
-            if(!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")){
+            if(!passwordCheck){
                 Toast.makeText(this, "Mật khẩu không hợp yêu cầu!", Toast.LENGTH_SHORT).show();
                 edtPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.lock_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     edtPassword.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
                 }
-                return;
             }
-            if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+            if(!emailCheck){
                 edtEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.envelope_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     edtEmail.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
@@ -88,7 +88,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 return;
             }
             //Check repass
-            if(pass.equals(repass)){
+            if(pass.equals(repass) && passwordCheck && emailCheck){
 
                 //check name
                 Boolean checkname = db.CheckName(user);

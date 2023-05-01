@@ -88,7 +88,7 @@ public class UserActivity extends AppCompatActivity {
         mtvFollowerCount.setText(String.valueOf(listFollow(id)));
         posts = new ArrayList<Post>();
         ListImgPost();
-        UserPostAdapter adap = new UserPostAdapter(this,posts);
+        UserPostAdapter adap = new UserPostAdapter(this,posts,this);
         vp.setAdapter(adap);
         new TabLayoutMediator(tlPostType, vp, ((tab, position) -> {
             if(position == 0){
@@ -150,7 +150,7 @@ public class UserActivity extends AppCompatActivity {
             temp.setImgPost(c.getString(3));
             temp.setContent(c.getString(c.getColumnIndex("content")));
             temp.setNumber_like(c.getString(c.getColumnIndex("like_count")));
-            temp.setTime("0");
+            temp.setTime(c.getString(c.getColumnIndex("datetime")));
             posts.add(temp);
         }
     }

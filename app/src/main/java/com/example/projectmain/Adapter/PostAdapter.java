@@ -62,8 +62,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostAdapter(Context context, List<Post> posts) {
         this.posts = posts;
         this.context = context;
+        if(posts.size() == 0){
+            Size = 1;
+        } else {
+            Size = posts.size();
+        }
     }
-
+    int Size;
     Context context;
     List<Post> posts;
     List<User> users;
@@ -92,6 +97,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      * */
     @Override
     public int getItemViewType(int position) {
+        if(posts.size() == 0)
+            return -1;
         String postContent = posts.get(position).getContent();
 
         String img = posts.get(position).getImgPost();
@@ -120,7 +127,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         visited = new Boolean[posts.size()];
-
+        if(posts.size() == 0){
+            return new PostViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.error, parent, false));
+        }
         if (viewType == 0) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_img_notext, parent, false);
         } else if (viewType == 1) {
@@ -140,6 +149,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if(posts.size() == 0){
+            holder.tvError.setText("Không có bài viết");
+            holder.tvErrorMsg.setText("Hãy theo dõi một người dùng để thấy bài viết của họ ở đây bằng cách vào trang tìm kiếm và tìm một người dùng để theo dõi.");
+            return;
+        }
         db = new DB(context.getApplicationContext());
         Post childPost = posts.get(position).getSharedPost();
         Post post = posts.get(position);
@@ -582,7 +596,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public int getItemCount() {
         if (posts != null)
-            return posts.size();
+            return Size;
         return 0;
     }
 
@@ -601,6 +615,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private LinearLayout btnShowProfile, likeWrapper;
 
         LinearLayout llUser;
+        TextView tvErrorMsg, tvError;
 
         public PostViewHolder(@NonNull View view) {
             super(view);
@@ -628,6 +643,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvSharedCaption = view.findViewById(R.id.tvSharedCaption);
             tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
             btnShare = view.findViewById(R.id.btn_Pshare);
+            tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
+            tvError = itemView.findViewById(R.id.tvError);
         }
 
 

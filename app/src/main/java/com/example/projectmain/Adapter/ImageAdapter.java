@@ -2,8 +2,12 @@ package com.example.projectmain.Adapter;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
@@ -14,9 +18,11 @@ import android.speech.SpeechRecognizer;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +30,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.EditPostActivity;
 import com.example.projectmain.ImageActivity;
 import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Model.timeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 
@@ -40,12 +48,21 @@ import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
     Boolean isEmpty = false;
-    public ImageAdapter(List<Post> imageList, Context context) {
+    private static final String SHARE_PRE_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+    SharedPreferences sharedPreferences;
+
+    Activity a;
+    String name;
+    public ImageAdapter(List<Post> imageList, Context context, Activity a) {
         this.imageList = imageList;
         this.context = context;
+        this.a = a;
         if(imageList.size() == 0){
             isEmpty = true;
         }
+        sharedPreferences = context.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+        name = sharedPreferences.getString(KEY_NAME, null);
     }
 
     private List<Post> imageList;
@@ -66,7 +83,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(isEmpty){
+        if (isEmpty) {
             holder.tvError.setText("Không có bài đăng hình ảnh.");
             holder.tvErrorMsg.setText("Người dùng này chưa có bài đăng nào có hình ảnh.");
             return;
@@ -76,17 +93,17 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         Log.d("d", imagePost.getImgPost());
         // méo hiểu
         holder.image.setImageURI(imgPost);
-        holder.setItemClickListener(new ItemClickListener() {
+        holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v, int pos, boolean b) {
+            public void onClick(View view) {
                 int type;
-                Intent i= new Intent(context, PostDetailActitivty.class);
+                Intent i = new Intent(context, PostDetailActitivty.class);
                 int id = imagePost.getIduser();
                 User u = db.getUser(id);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String ava = db.getImagefor(imagePost.getIduser());
                 Bundle bn = new Bundle();
-                if(!imagePost.getImgPost().equals("null") && imagePost.getContent().equals("null")){
+                if (!imagePost.getImgPost().equals("null") && imagePost.getContent().equals("null")) {
                     type = 0;
                 } else {
                     type = 3;
@@ -105,13 +122,55 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("ViewType", type);
                 bn.putInt("idUser", imagePost.getIduser());
-                bn.putString("Time", imagePost.getTime());
+                String timedifference = timeHelper.getTime(imagePost.getTime());
+                bn.putString("Time", timedifference);
                 i.putExtras(bn);
                 context.startActivity(i);
             }
         });
+        if (db.getIduser(name) == imagePost.getIduser()) {
+            holder.image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    PopupMenu menu = new PopupMenu(context, view);
+                    menu.inflate(R.menu.menu_option_post);
+                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            switch (menuItem.getItemId()) {
+                                case R.id.remove_post:
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(a);
+                                    builder.setTitle("Xóa bài viết")
+                                            .setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
+                                    builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            db.removePost(imagePost.getId());
+                                            imageList.remove(position);
+                                            notifyItemRemoved(position);
+                                        }
+                                    });
+                                    builder.setNegativeButton("Hủy", null);
+                                    builder.create().show();
+                                    break;
+                                case R.id.edit_post:
+                                    Intent i = new Intent(context, EditPostActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    Bundle bd = new Bundle();
+                                    bd.putInt("idPost", imagePost.getId());
+                                    i.putExtras(bd);
+                                    context.startActivity(i);
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                    menu.show();
+                    return false;
+                }
+            });
+        }
     }
-
     
     @Override
     public int getItemCount() {
