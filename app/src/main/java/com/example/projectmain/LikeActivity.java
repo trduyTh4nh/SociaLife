@@ -8,14 +8,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
-import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
 
 import java.util.ArrayList;

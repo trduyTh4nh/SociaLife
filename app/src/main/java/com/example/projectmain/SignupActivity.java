@@ -1,10 +1,12 @@
 package com.example.projectmain;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -65,10 +67,26 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String user = edtUserName.getText().toString();
         String pass = edtPassword.getText().toString();
         String repass = edtConfirm.getText().toString();
+
         if(email.equals("")||pass.equals("")||repass.equals("")||user.equals(""))
             Toast.makeText(SignupActivity.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         else{
-
+            if(!pass.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")){
+                Toast.makeText(this, "Mật khẩu không hợp yêu cầu!", Toast.LENGTH_SHORT).show();
+                edtPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.lock_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    edtPassword.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                }
+                return;
+            }
+            if(!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+                edtEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.envelope_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    edtEmail.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                }
+                Toast.makeText(SignupActivity.this, "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+                return;
+            }
             //Check repass
             if(pass.equals(repass)){
 
@@ -106,14 +124,30 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                     else {
+                        edtEmail.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.envelope_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            edtEmail.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                        }
                         Toast.makeText(SignupActivity.this, "Email này đã được tạo !", Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
+                    edtUserName.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.user_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        edtUserName.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                    }
                     Toast.makeText(SignupActivity.this, "Tên này đã được sử dụng !", Toast.LENGTH_SHORT).show();
                 }
             }
             else{
+                edtPassword.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.lock_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    edtPassword.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                }
+                edtConfirm.setCompoundDrawablesRelativeWithIntrinsicBounds(AppCompatResources.getDrawable(this, R.drawable.lock_solid), null, AppCompatResources.getDrawable(this,R.drawable.circle_exclamation_solid), null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    edtConfirm.setCompoundDrawableTintList(getResources().getColorStateList(R.color.secondary_alt));
+                }
                 Toast.makeText(SignupActivity.this, "Mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             }
         }

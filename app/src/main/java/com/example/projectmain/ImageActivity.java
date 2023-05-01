@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,26 +17,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.example.projectmain.Database.DB;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 
 public class ImageActivity extends AppCompatActivity {
-    ImageButton btnClose;
+    ImageButton btnClose, btnLike;
+    Boolean isLiked = false;
     Boolean clicked = false;
     Toolbar tbActionbar, tbBottom;
     ImageView ivPicture, ivPfp;
     TextView tvPname, tvUsername;
-
+    private static final String SHARE_PRE_NAME = "mypref";
+    private static final String KEY_NAME = "name";
+    SharedPreferences sharedPreferences;
+    DB db;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
+        db = new DB(this);
         // init
         initView();
-
+        sharedPreferences = getSharedPreferences(SHARE_PRE_NAME, MODE_PRIVATE);
+        String name = sharedPreferences.getString(KEY_NAME, null);
+        int id = db.getIduser(name);
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +56,22 @@ public class ImageActivity extends AppCompatActivity {
         Bundle b = i.getExtras();
 
         ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
-
+        int idPost = b.getInt("idPost");
+        if(db.CheckLike(id, idPost)){
+            btnLike.setImageResource(R.drawable.heart_fill);
+            isLiked = true;
+        }
+        btnLike.setOnClickListener(v -> {
+            if(isLiked){
+                db.Unlike(id, idPost);
+                isLiked = false;
+                btnLike.setImageResource(R.drawable.heart_line_white);
+            } else {
+                db.insertLikes(id, idPost);
+                isLiked = true;
+                btnLike.setImageResource(R.drawable.heart_fill);
+            }
+        });
         ivPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,5 +111,6 @@ public class ImageActivity extends AppCompatActivity {
         tvPname = findViewById(R.id.tvPName);
         tvUsername = findViewById(R.id.tvUsername);
         ivPfp = findViewById(R.id.ivPfp);
+        btnLike = findViewById(R.id.btnLike);
     }
 }

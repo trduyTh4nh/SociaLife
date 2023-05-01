@@ -11,11 +11,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.SpeechRecognizer;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,10 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
-
+    Boolean isEmpty = false;
     public ImageAdapter(List<Post> imageList, Context context) {
         this.imageList = imageList;
         this.context = context;
+        if(imageList.size() == 0){
+            isEmpty = true;
+        }
     }
 
     private List<Post> imageList;
@@ -51,6 +56,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(isEmpty){
+            return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.error, parent,false));
+        }
         db = new DB(context);
         View view = LayoutInflater.from(context).inflate(R.layout.img_post_item, parent, false);
         return new ViewHolder(view);
@@ -58,6 +66,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(isEmpty){
+            holder.tvError.setText("Không có bài đăng hình ảnh.");
+            holder.tvErrorMsg.setText("Người dùng này chưa có bài đăng nào có hình ảnh.");
+            return;
+        }
         Post imagePost = imageList.get(position);
         Uri imgPost = Uri.parse(imagePost.getImgPost());
         Log.d("d", imagePost.getImgPost());
@@ -102,17 +115,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     
     @Override
     public int getItemCount() {
+        if(isEmpty)
+            return 1;
         return imageList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
+        private TextView tvError, tvErrorMsg;
         private ImageView image;
         private ItemClickListener i;
         public ViewHolder(@NonNull View v){
             super(v);
             image = v.findViewById(R.id.ivImage);
-
+            tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
+            tvError = itemView.findViewById(R.id.tvError);
             v.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener listener){

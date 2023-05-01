@@ -1,39 +1,52 @@
 package com.example.projectmain.Adapter;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Follower;
 import com.example.projectmain.R;
+import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
 public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.FollowerHolder>{
-
-    public FollowerAdapter(List<Follower> followers) {
+    Context c;
+    public FollowerAdapter(Context c, List<Follower> followers) {
+        this.c = c;
         this.followers = followers;
     }
 
     List<Follower> followers;
+    DB db;
 
     @NonNull
     @Override
     public FollowerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        db = new DB(c);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_item, parent, false);
         return new FollowerHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FollowerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FollowerHolder holder, @SuppressLint("RecyclerView") int position) {
         Follower follower = followers.get(position);
 
         if(follower == null)
@@ -41,8 +54,31 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
         ///// chưa xử lý ảnh
         holder.img.setImageURI(Uri.parse(follower.getAvatar()));
         holder.name.setText(follower.getName());
-        holder.userName.setText(follower.getUserName());
-        holder.stateFollow.setChecked(follower.isState());
+        AlertDialog.Builder b = new AlertDialog.Builder(c);
+        b.setTitle("Hủy theo dõi");
+        b.setMessage("Bạn có muốn hủy theo dõi người dùng " + follower.getName() + "? Bạn sẽ không thể thấy thông báo khi họ đăng bài, cũng như là bài đăng của họ trên trang chủ.");
+        b.setPositiveButton("Hủy theo dõi", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                int id = db.getIduser(follower.getName());
+                db.UnFollower(id);
+                followers.remove(position);
+                notifyItemRemoved(position);
+            }
+        });
+        b.setNegativeButton("Hủy", null);
+        holder.stateFollow.setOnClickListener(v -> {
+            AlertDialog a = b.create();
+            a.show();
+        });
+        holder.btnUsr.setOnClickListener(v -> {
+            Bundle bd = new Bundle();
+            bd.putInt("idUser", db.getIduser(follower.getName()));
+
+            Intent i = new Intent(c.getApplicationContext(), UserActivity.class);
+            i.putExtras(bd);
+            c.startActivity(i);
+        });
     }
 
     @Override
@@ -53,16 +89,17 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
     }
 
     public class FollowerHolder extends RecyclerView.ViewHolder {
-        private ShapeableImageView img;
+        private ImageView img;
         private TextView name, userName;
-        private CheckBox stateFollow;
+        private Button stateFollow;
+        LinearLayout btnUsr;
 
         public FollowerHolder(@NonNull View view) {
             super(view);
             img = view.findViewById(R.id.avatar);
             name = view.findViewById(R.id.name);
-            userName = view.findViewById(R.id.userName);
             stateFollow = view.findViewById(R.id.stateFollow);
+            btnUsr = view.findViewById(R.id.btnUsr);
         }
     }
 }
