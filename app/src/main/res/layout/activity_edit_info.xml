@@ -172,31 +172,6 @@
                                 android:enabled="false"></EditText>
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="8dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:textStyle="bold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="5dp"
-                                android:text="Họ và tên"></TextView>
-
-                            <EditText
-                                android:textSize="16dp"
-                                android:padding="10dp"
-                                android:id="@+id/edt_name"
-                                style="@style/editTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center_vertical"
-                                android:background="@drawable/edt_background"></EditText>
-
-
-                        </LinearLayout>
                     </LinearLayout>
 
                 </LinearLayout>
