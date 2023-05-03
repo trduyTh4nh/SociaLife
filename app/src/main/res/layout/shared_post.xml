@@ -54,7 +54,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\@wuang"
-                        android:textColor="#565656"></TextView>
+                        android:textColor="#565656">
+
+                    </TextView>
 
                 </LinearLayout>
             </LinearLayout>
@@ -128,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="\@Username"
+                    android:text="\@DuyThanh"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -163,7 +165,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:text="Caption"
+                    android:text="hello"
                     android:textStyle="normal" />
 
                 <LinearLayout

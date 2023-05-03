@@ -286,6 +286,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     bd.putString("ImgPoster", post.getName());
                     bd.putString("ImgUsername", post.getUsername());
                     bd.putString("ImgPfp", ava);
+                    bd.putString("content", post.getContent());
                     bd.putInt("idPost", post.getId());
                     i.putExtras(bd);
                     context.startActivity(i);

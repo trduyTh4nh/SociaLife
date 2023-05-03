@@ -118,9 +118,9 @@ public class PostDetailActitivty extends AppCompatActivity {
         String linkImage = b.getString("Pfp");
         String time = b.getString("Time");
         tvTime.setText(time);
-        if(linkImage == null){
+        if (linkImage == null) {
             ivPfp.setImageResource(R.drawable.def);
-        }else
+        } else
             ivPfp.setImageURI(Uri.parse(linkImage));
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
@@ -203,6 +203,7 @@ public class PostDetailActitivty extends AppCompatActivity {
             }
         });
     }
+
     void initView() {
        /* tvname = findViewById(R.id.tvPName);
         tvUsername = findViewById(R.id.tvUsername);
@@ -211,6 +212,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         btnExit = findViewById(R.id.btnExit);
         edtComment = findViewById(R.id.edtComment);
         btnUpcmt = findViewById(R.id.btnUploadComment);*/
+
         llPostContain = findViewById(R.id.llPostContainer);
         tvname = postView.findViewById(R.id.name); //LƯU Ý: post.findViewById là lấy từ id của post vừa mới chuẩn bị khi nãy (các thao tác chuẩn bị ở dòng 53, 59, 64, 71)
         tvUsername = postView.findViewById(R.id.nameu_user);
@@ -224,8 +226,8 @@ public class PostDetailActitivty extends AppCompatActivity {
         edtComment = findViewById(R.id.edtComment);
         btnUpcmt = findViewById(R.id.btnUploadComment);
         tvTime = postView.findViewById(R.id.time_post);
-            btnLike = postView.findViewById(R.id.btn_like);
-            numberLike = postView.findViewById(R.id.number_like);
+        btnLike = postView.findViewById(R.id.btn_like);
+        numberLike = postView.findViewById(R.id.number_like);
     }
 
 
@@ -236,7 +238,7 @@ public class PostDetailActitivty extends AppCompatActivity {
 
         Cursor cursor = myDB.query("comment", null, " idpost = ?", new String[]{String.valueOf(idPost)}, null, null, null);
 
-      // Cursor cursor = myDB.rawQuery("SELECT * FROM commnent c  WHERE c.idpost = ? ", new String[]{String.valueOf(idPost)});
+        // Cursor cursor = myDB.rawQuery("SELECT * FROM commnent c  WHERE c.idpost = ? ", new String[]{String.valueOf(idPost)});
 
         while (cursor.moveToNext()) {
             int idUser = cursor.getInt(1);

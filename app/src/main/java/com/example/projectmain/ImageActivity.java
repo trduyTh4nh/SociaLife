@@ -18,13 +18,14 @@ import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.example.projectmain.Database.DB;
+import com.example.projectmain.Model.Post;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Arrays;
 
 public class ImageActivity extends AppCompatActivity {
-    ImageButton btnClose, btnLike;
+    ImageButton btnClose, btnLike, bntCmt;
     Boolean isLiked = false;
     Boolean clicked = false;
     Toolbar tbActionbar, tbBottom;
@@ -34,6 +35,7 @@ public class ImageActivity extends AppCompatActivity {
     private static final String KEY_NAME = "name";
     SharedPreferences sharedPreferences;
     DB db;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +59,12 @@ public class ImageActivity extends AppCompatActivity {
 
         ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
         int idPost = b.getInt("idPost");
-        if(db.CheckLike(id, idPost)){
+        if (db.CheckLike(id, idPost)) {
             btnLike.setImageResource(R.drawable.heart_fill);
             isLiked = true;
         }
         btnLike.setOnClickListener(v -> {
-            if(isLiked){
+            if (isLiked) {
                 db.Unlike(id, idPost);
                 isLiked = false;
                 btnLike.setImageResource(R.drawable.heart_line_white);
@@ -95,7 +97,7 @@ public class ImageActivity extends AppCompatActivity {
         Uri avtRes = null;
         try {
             avtRes = Uri.parse(b.getString("ImgPfp"));
-        } catch (Exception exception){
+        } catch (Exception exception) {
             Toast.makeText(this, "Lỗi truy xuất hình ảnh \"mềm\". Đang dùng ảnh cứng." + " Lỗi do: " + exception, Toast.LENGTH_SHORT).show();
         }
         if (b.getString("ImgPoster") != null && b.getString("ImgUsername") != null) {
@@ -103,14 +105,41 @@ public class ImageActivity extends AppCompatActivity {
             tvUsername.setText(username);
             ivPfp.setImageURI(avtRes);
         }
+
+        bntCmt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Post post = db.getPost(idPost);
+                Intent intent = new Intent(ImageActivity.this, PostDetailActitivty.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bn = new Bundle();
+
+                bn.putString("Img", post.getImgPost());
+                bn.putString("Username", post.getUsername());
+                bn.putString("Pfp", post.getAvatar());
+                bn.putString("Name", post.getName());
+                bn.putBoolean("IsCmt", true);
+
+                String content = (String) b.get("content");
+                if (content.length() > 0) {
+                    bn.putInt("ViewType", 0);
+                } else
+                    bn.putInt("ViewType", 3);
+
+                intent.putExtras(bn);
+                startActivity(intent);
+
+            }
+        });
     }
 
-     void initView(){
+    void initView() {
         btnClose = findViewById(R.id.btnClose);
         ivPicture = findViewById(R.id.ivImage);
         tvPname = findViewById(R.id.tvPName);
         tvUsername = findViewById(R.id.tvUsername);
         ivPfp = findViewById(R.id.ivPfp);
         btnLike = findViewById(R.id.btnLike);
+        bntCmt = findViewById(R.id.btnCmt);
     }
 }

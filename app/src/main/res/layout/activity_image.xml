@@ -137,6 +137,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/heart_line_white" />
                 <ImageButton
+                    android:id="@+id/btnCmt"
                     style="@style/ImageButtonNormal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
