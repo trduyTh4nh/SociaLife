@@ -19,7 +19,7 @@
     <style name="Wrap">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:elevation">8dp</item>
         <item name="android:background">@drawable/wrap_bg</item>
         <item name="cardCornerRadius">@dimen/slight_round</item>

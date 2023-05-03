@@ -59,7 +59,7 @@ public class FollowerActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        tvCount.setText("Đang theo dõi " + String.valueOf(adapter.getItemCount()) + " người");
+        tvCount.setText("Đang theo dõi " + String.valueOf(listFollowers(currentUser.getId()).size()) + " người");
     }
 
     public List<Follower> listFollowers(int idCurrentUser) {

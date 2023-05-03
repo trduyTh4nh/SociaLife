@@ -29,9 +29,11 @@ import java.util.List;
 
 public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.FollowerHolder>{
     Context c;
+    Boolean isEmpty;
     public FollowerAdapter(Context c, List<Follower> followers) {
         this.c = c;
         this.followers = followers;
+        isEmpty = followers.size() == 0;
     }
 
     List<Follower> followers;
@@ -40,6 +42,9 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
     @NonNull
     @Override
     public FollowerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(isEmpty){
+            return new FollowerHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.error, parent, false));
+        }
         db = new DB(c);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_item, parent, false);
         return new FollowerHolder(view);
@@ -47,6 +52,11 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
 
     @Override
     public void onBindViewHolder(@NonNull FollowerHolder holder, @SuppressLint("RecyclerView") int position) {
+        if(isEmpty){
+            holder.tvError.setText("Bạn chưa theo dõi ai cả.");
+            holder.tvErrorMsg.setText("Hãy theo dõi một người dùng và họ sẽ xuất hiện ở đây!");
+            return;
+        }
         Follower follower = followers.get(position);
 
         if(follower == null)
@@ -62,7 +72,10 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
             public void onClick(DialogInterface dialogInterface, int i) {
                 int id = db.getIduser(follower.getName());
                 db.UnFollower(id);
-                followers.remove(position);
+                if(followers.size() == 1){
+                    followers.remove(0);
+                } else
+                    followers.remove(position);
                 notifyItemRemoved(position);
             }
         });
@@ -83,8 +96,12 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
 
     @Override
     public int getItemCount() {
-        if(followers != null)
+        if(followers != null){
+            if(isEmpty){
+                return 1;
+            }
             return followers.size();
+        }
         return 0;
     }
 
@@ -93,6 +110,7 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
         private TextView name, userName;
         private Button stateFollow;
         LinearLayout btnUsr;
+        private TextView tvError, tvErrorMsg;
 
         public FollowerHolder(@NonNull View view) {
             super(view);
@@ -100,6 +118,8 @@ public class FollowerAdapter extends RecyclerView.Adapter<FollowerAdapter.Follow
             name = view.findViewById(R.id.name);
             stateFollow = view.findViewById(R.id.stateFollow);
             btnUsr = view.findViewById(R.id.btnUsr);
+            tvErrorMsg = view.findViewById(R.id.tvErrorMsg);
+            tvError = view.findViewById(R.id.tvError);
         }
     }
 }
