@@ -16,5 +16,5 @@ Cũng như xin chân thành cảm ơn giảng viên:
 vì đã hướng dẫn tụi em.
 
 # Phiên bản mới có gì?
-## 1.0STABLE_SQLITE
+## 1.0.sqlite
 STABLE RỒI!!!!!!!!! (nhưng vẫn SQLITE)
