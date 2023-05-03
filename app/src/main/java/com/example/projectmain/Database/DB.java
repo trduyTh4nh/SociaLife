@@ -536,6 +536,7 @@ public class DB extends SQLiteOpenHelper {
         return null;
     }
 
+    @SuppressLint("Range")
     public Post getPost(int id){
         SQLiteDatabase database = this.getWritableDatabase();
         Post post = null;
@@ -550,10 +551,8 @@ public class DB extends SQLiteOpenHelper {
             post.setAvatar(getImagefor(cursor.getInt(1)));
             post.setUsername(u.getName());
             post.setName(u.getName());
-            post.setNumber_like("0");
-            Calendar calendar = Calendar.getInstance();
-            long time = calendar.getTimeInMillis();
-            post.setTime(String.valueOf(time));
+            post.setNumber_like(String.valueOf(getLike(id).getCount()));
+            post.setTime(cursor.getString(cursor.getColumnIndex("datetime")));
         }
         return post;
     }

@@ -19,6 +19,7 @@ import android.widget.Toolbar;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Model.timeHelper;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -118,13 +119,16 @@ public class ImageActivity extends AppCompatActivity {
                 bn.putString("Username", post.getUsername());
                 bn.putString("Pfp", post.getAvatar());
                 bn.putString("Name", post.getName());
+                bn.putString("Content", post.getContent());
+                String time = timeHelper.getTime(post.getTime());
+                bn.putString("Time", time);
                 bn.putBoolean("IsCmt", true);
-
+                bn.putInt("idPost", post.getId());
                 String content = (String) b.get("content");
                 if (content.length() > 0) {
-                    bn.putInt("ViewType", 0);
-                } else
                     bn.putInt("ViewType", 3);
+                } else
+                    bn.putInt("ViewType", 0);
 
                 intent.putExtras(bn);
                 startActivity(intent);

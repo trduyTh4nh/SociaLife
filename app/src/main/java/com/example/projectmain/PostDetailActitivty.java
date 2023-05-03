@@ -40,6 +40,7 @@ public class PostDetailActitivty extends AppCompatActivity {
     EditText edtComment;
     TextView tvname, tvUsername, tvContent, tvTime, numberLike;
     View postView;
+    LinearLayout likeWrapper;
     ImageView ivPfp, ivImg;
     ImageButton btnExit;
     Post post;
@@ -86,7 +87,18 @@ public class PostDetailActitivty extends AppCompatActivity {
             postView = getLayoutInflater().inflate(R.layout.post_img_notext, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             ivImg.setImageURI(Uri.parse(b.getString("Img")));
-
+            ivImg.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ImageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bd = new Bundle();
+                bd.putString("ImgRes", b.getString("Img"));
+                bd.putString("ImgPoster", b.getString("Name"));
+                bd.putString("ImgUsername", b.getString("Username"));
+                bd.putString("ImgPfp", b.getString("Pfp"));
+                bd.putInt("idPost", b.getInt("idPost"));
+                intent.putExtras(bd);
+                startActivity(intent);
+            });
         } else if (viewType == 1) {
             //Né tránh nullPointerException cho Type 1: Chỉ setText cho chữ
             postView = getLayoutInflater().inflate(R.layout.post_small_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
@@ -99,6 +111,19 @@ public class PostDetailActitivty extends AppCompatActivity {
             tvContent.setText(b.getString("Content"));
             tvContent.setText(b.getString("Content"));
             ivImg.setImageURI(Uri.parse(b.getString("Img")));
+            ivImg.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ImageActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Bundle bd = new Bundle();
+                bd.putString("ImgRes", b.getString("Img"));
+                bd.putString("ImgPoster", b.getString("Name"));
+                bd.putString("ImgUsername", b.getString("Username"));
+                bd.putString("ImgPfp", b.getString("Pfp"));
+                bd.putInt("idPost", b.getInt("idPost"));
+                bd.putString("content", b.getString("Content"));
+                intent.putExtras(bd);
+                startActivity(intent);
+            });
         } else if (viewType == 2) {
             //Né tránh nullPointerException cho Type 2: Chỉ setText cho chữ
             postView = getLayoutInflater().inflate(R.layout.post_large_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
@@ -202,6 +227,13 @@ public class PostDetailActitivty extends AppCompatActivity {
                 }
             }
         });
+        likeWrapper.setOnClickListener(v -> {
+            Intent intent = new Intent(this, LikeActivity.class);
+            Bundle bd = new Bundle();
+            bd.putInt("idPost", idPost);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
     }
 
     void initView() {
@@ -228,6 +260,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         tvTime = postView.findViewById(R.id.time_post);
         btnLike = postView.findViewById(R.id.btn_like);
         numberLike = postView.findViewById(R.id.number_like);
+        likeWrapper = postView.findViewById(R.id.likeWrapper);
     }
 
 
