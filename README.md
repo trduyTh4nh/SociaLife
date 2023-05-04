@@ -6,7 +6,7 @@
 # SociaLife
 Đồ án ứng dụng MXH
 # Tiến độ
-![](https://geps.dev/progress/99)\
+![](https://geps.dev/progress/99.99)\
 99% - Không có làm SHARE nhưng mọi tính năng cơ bản đã hoàn thành.
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
