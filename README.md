@@ -2,7 +2,7 @@
 - Hình ảnh sẽ không được hiển thị đúng cách.
 - SQLite có thể ngừng hoạt động.
 - SharedPreferences có thể sẽ bị "null".
-# SocialNetworkApplication
+# SociaLife
 Đồ án ứng dụng MXH
 # Tiến độ
 ![](https://geps.dev/progress/99)\
