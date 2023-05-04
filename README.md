@@ -2,6 +2,7 @@
 - Hình ảnh sẽ không được hiển thị đúng cách.
 - SQLite có thể ngừng hoạt động.
 - SharedPreferences có thể sẽ bị "null".
+- **Cho nên:** Hãy chạy ứng dụng trên Android mới hơn (8.0+)
 # SociaLife
 Đồ án ứng dụng MXH
 # Tiến độ
