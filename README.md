@@ -1,4 +1,4 @@
-## Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
+# Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
 - Hình ảnh sẽ không được hiển thị đúng cách.
 - SQLite có thể ngừng hoạt động.
 - SharedPreferences có thể sẽ bị "null".
