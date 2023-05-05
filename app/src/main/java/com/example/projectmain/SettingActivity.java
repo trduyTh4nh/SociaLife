@@ -25,7 +25,7 @@ import com.example.projectmain.Model.User;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class SettingActivity extends AppCompatActivity {
-    ImageButton btnExit;
+    ImageButton btnExit, btnInfo;
     ImageButton btnLogout;
 
     LinearLayout btnUpdate;
@@ -60,7 +60,11 @@ public class SettingActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.setting_email);
         ivAvatar = findViewById(R.id.ivAvatar);
         btnListFollow = findViewById(R.id.btnFlolow);
-
+        btnInfo = findViewById(R.id.btn_info);
+        btnInfo.setOnClickListener(v -> {
+            Intent i = new Intent(SettingActivity.this, AppCreditsActivity.class);
+            startActivity(i);
+        });
         btnListFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
