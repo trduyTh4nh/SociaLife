@@ -98,7 +98,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public int getItemViewType(int position) {
         if(posts.size() == 0)
-            return -1;
+            return -2;
+        if(position >= posts.size()){
+            return -3;
+        }
         String postContent = posts.get(position).getContent();
 
         String img = posts.get(position).getImgPost();
@@ -149,6 +152,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if(getItemViewType(position) == -3){
+            return;
+        }
         if(posts.size() == 0){
             holder.tvError.setText("Không có bài viết");
             holder.tvErrorMsg.setText("Hãy theo dõi một người dùng để thấy bài viết của họ ở đây bằng cách vào trang tìm kiếm và tìm một người dùng để theo dõi.");
@@ -410,9 +416,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                        //này tự hiểu r pk?
                                         db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
+                                        //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
+                                        Size = posts.size();
                                     }
                                 });
                                 b.setNegativeButton("Hủy, đừng xóa nó", null);
