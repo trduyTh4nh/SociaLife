@@ -8,11 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Layout;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,15 +23,11 @@ import com.example.projectmain.Database.DB;
 import com.example.projectmain.EditPostActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
-import com.example.projectmain.Model.timeHelper;
+import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHolder> {
     Context c;
@@ -103,7 +95,7 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
             bn.putBoolean("IsCmt", true);
             bn.putInt("ViewType", type);
             bn.putInt("idUser", posts.get(position).getIduser());
-            String timedifference = timeHelper.getTime(posts.get(position).getTime());
+            String timedifference = TimeHelper.getTime(posts.get(position).getTime());
             bn.putString("Time", timedifference);
             i.putExtras(bn);
             c.startActivity(i);
@@ -170,8 +162,5 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
             btnLike = itemView.findViewById(R.id.btnLike);
 
         }
-
-
-
     }
 }

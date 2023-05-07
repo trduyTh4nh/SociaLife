@@ -5,6 +5,9 @@
     <string name="action_add">Add</string>
     <string name="action_notify">Notification</string>
     <string name="action_profile">Profile</string>
+    <string name="tab1">Khám phá</string>
+    <string name="tab2">Theo dõi</string>
+    <string name="tab3">Chia sẻ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="version">SociaLife Indev0.0.11</string>

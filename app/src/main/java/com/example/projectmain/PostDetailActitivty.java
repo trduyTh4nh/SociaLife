@@ -28,6 +28,7 @@ import com.example.projectmain.Adapter.CommentAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Comment;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.Model.User;
 
 import java.util.ArrayList;
@@ -38,11 +39,11 @@ public class PostDetailActitivty extends AppCompatActivity {
 
     CheckBox btnLike;
     EditText edtComment;
-    TextView tvname, tvUsername, tvContent, tvTime, numberLike;
+    TextView tvname, tvUsername, tvContent, tvTime, numberLike, tvSharedOwner, tvSharedTime, tvSharedCaption, tvSharedLikeCount;
     View postView;
     LinearLayout likeWrapper;
-    ImageView ivPfp, ivImg;
-    ImageButton btnExit;
+    ImageView ivPfp, ivImg, ivSharedImage;
+    ImageButton btnExit, btnPComment, btnPShare;
     Post post;
     Button btnUpcmt, btnFollow;
     ArrayList<Comment> cmtList;
@@ -129,6 +130,22 @@ public class PostDetailActitivty extends AppCompatActivity {
             postView = getLayoutInflater().inflate(R.layout.post_large_paragraph, null); //Lưu ý biến này: Chuẩn bị view để thêm vào LinearLayout.
             initView();
             tvContent.setText(b.getString("Content"));
+        } else {
+            postView = getLayoutInflater().inflate(R.layout.shared_post, null);
+            initView();
+            tvContent.setText(b.getString("Content"));
+            int childId = b.getInt("childID");
+            Toast.makeText(this, String.valueOf(childId), Toast.LENGTH_SHORT).show();
+            Post post = db.getPost(childId);
+            tvSharedOwner.setText(post.getName());
+            tvTime.setText(TimeHelper.getTime(post.getTime()));
+            tvSharedCaption.setText(post.getContent());
+            if(!post.getImgPost().equals("null")){
+                ivSharedImage.setImageURI(Uri.parse(post.getImgPost()));
+            } else {
+                ivSharedImage.setVisibility(View.GONE);
+            }
+            tvSharedLikeCount.setText(String.valueOf(db.getLike(post.getId()).getCount()));
         }
 
         llPostContain.addView(postView); //Lưu ý hàm này: thêm View vừa mới chuẩn bị vào LinearLayout
@@ -234,6 +251,15 @@ public class PostDetailActitivty extends AppCompatActivity {
             intent.putExtras(b);
             startActivity(intent);
         });
+        btnPComment.setVisibility(View.GONE);
+        btnPShare.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onPause() {
+        btnPComment.setVisibility(View.VISIBLE);
+        btnPShare.setVisibility(View.VISIBLE);
+        super.onPause();
     }
 
     void initView() {
@@ -261,6 +287,14 @@ public class PostDetailActitivty extends AppCompatActivity {
         btnLike = postView.findViewById(R.id.btn_like);
         numberLike = postView.findViewById(R.id.number_like);
         likeWrapper = postView.findViewById(R.id.likeWrapper);
+
+        tvSharedOwner = postView.findViewById(R.id.tvSharedOwner);
+        tvSharedTime = postView.findViewById(R.id.tvTime);
+        tvSharedCaption = postView.findViewById(R.id.tvSharedCaption);
+        tvSharedLikeCount = postView.findViewById(R.id.tvSharedLikeCount);
+        ivSharedImage = postView.findViewById(R.id.ivSharedImage);
+        btnPComment = postView.findViewById(R.id.btn_Pcomment);
+        btnPShare = postView.findViewById(R.id.btn_Pshare);
     }
 
 

@@ -95,14 +95,14 @@
                     android:text="Theo dõi"
                     android:textAlignment="center"
                     android:textAllCaps="false" />
+
                 <ImageButton
                     android:paddingLeft="15dp"
                     android:id="@+id/btnOptions"
                     android:background="@drawable/transparent_ripple"
                     android:src="@drawable/ellipsis_v_solid"
                     android:layout_width="35dp"
-                    android:layout_height="50dp"
-                    />
+                    android:layout_height="50dp"/>
 
             </LinearLayout>
 
@@ -151,15 +151,20 @@
             </LinearLayout>
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:paddingStart="24dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingStart="0dp"
                 android:paddingTop="0dp"
-                android:paddingEnd="24dp"
+                android:paddingEnd="0dp"
                 android:paddingBottom="10dp">
 
                 <TextView
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
                     android:id="@+id/tvSharedCaption"
                     style="@style/ParagraphContent"
                     android:layout_width="wrap_content"
@@ -172,15 +177,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="end" />
+                    android:gravity="end" ></LinearLayout>
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:id="@+id/ivSharedImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/imgquang" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivSharedImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/imgquang" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,6 +290,7 @@
                     </ImageButton>
 
                     <ImageButton
+                        android:visibility="gone"
                         android:id="@+id/btn_Pshare"
                         android:src="@drawable/paper_plane_svgrepo_com"
                         android:background="@drawable/transparent_ripple"

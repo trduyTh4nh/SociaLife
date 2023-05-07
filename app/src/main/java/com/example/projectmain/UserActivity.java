@@ -92,9 +92,9 @@ public class UserActivity extends AppCompatActivity {
         vp.setAdapter(adap);
         new TabLayoutMediator(tlPostType, vp, ((tab, position) -> {
             if(position == 0){
-                tab.setIcon(R.drawable.landscape_line);
+                tab.setIcon(R.drawable.mountain_sun_solid);
             } else {
-                tab.setIcon(R.drawable.text);
+                tab.setIcon(R.drawable.font_solid);
             }
         })).attach();
         mtvPostCount.setText(String.valueOf(posts.size()));

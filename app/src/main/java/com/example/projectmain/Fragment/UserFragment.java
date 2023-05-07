@@ -161,9 +161,9 @@ public class UserFragment extends Fragment {
         r.setAdapter(adapter);
         new TabLayoutMediator(tlPostType, r, ((tab, position) -> {
             if(position == 0){
-                tab.setIcon(R.drawable.landscape_line);
+                tab.setIcon(R.drawable.mountain_sun_solid);
             } else {
-                tab.setIcon(R.drawable.text);
+                tab.setIcon(R.drawable.font_solid);
             }
         })).attach();
     }
@@ -201,6 +201,9 @@ public class UserFragment extends Fragment {
         int id = db.getIduser(name);
         Cursor c = db.getPostsFromUser(id);
         while(c.moveToNext()){
+            if(c.getInt(c.getColumnIndex("isshare")) == 1){
+                continue;
+            }
             Post temp = new Post();
             temp.setId(c.getInt(c.getColumnIndex("id")));
             temp.setIduser(id);

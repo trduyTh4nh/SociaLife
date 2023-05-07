@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.projectmain.Fragment.SreachFragment;
 import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.Model.User;
 
 import java.io.ByteArrayOutputStream;
@@ -35,7 +36,7 @@ import java.util.List;
 
 public class DB extends SQLiteOpenHelper {
     public DB(Context context) {
-        super(context, "dbSocialNetwork.db", null, 1);
+        super(context, "dbSocialNetwork.db", null, 3);
     }
 
     @Override
@@ -86,6 +87,7 @@ public class DB extends SQLiteOpenHelper {
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
+                "frompost Integer REFERENCES post(id) NOT NULL,"+
                 "datetime Datetime)");
         //follower
         myDB.execSQL("create Table follower(" +
@@ -108,11 +110,12 @@ public class DB extends SQLiteOpenHelper {
     public void saveShare(int idUser, int idCurPost, String curTime){
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-
+        insertPostShare(idUser);
+        int frompost = getJustAddedPost();
         contentValues.put("iduser", idUser);
         contentValues.put("idpost", idCurPost);
         contentValues.put("datetime", curTime);
-
+        contentValues.put("frompost", frompost);
         database.insert("share", null, contentValues);
     }
 
@@ -121,14 +124,8 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
-        myDB.execSQL("drop Table if exists account");
-        myDB.execSQL("drop Table if exists user");
-        myDB.execSQL("drop Table if exists post");
-        myDB.execSQL("drop Table if exists likes");
-        myDB.execSQL("drop Table if exists comment");
-        myDB.execSQL("drop Table if exists share");
-        myDB.execSQL("drop Table if exists follower");
-        myDB.execSQL("drop Table if exists notification");
+        myDB.execSQL("ALTER TABLE share ADD frompost Integer CONSTRAINT fl_share REFERENCES post(id)");
+        myDB.execSQL("ALTER TABLE post ADD isshare Integer");
     }
 
     //Get ID của user để truyển qua cho Account
@@ -275,25 +272,30 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // insert post
-
-    public boolean insertPost(int iduser, String content) {
+    public int getJustAddedPost(){
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        Cursor c = MyDB.query("post", null,"isshare =?", new String[]{"1"}, "id", null, "id desc");
+        c.moveToFirst();
+        int id = c.getInt(0);
+        return id;
+    }
+    public void insertPostShare(int iduser) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("iduser", iduser);
-        contentValues.put("content", content);
-
+        contentValues.put("datetime", TimeHelper.getCurrentTime());
+        contentValues.put("isshare", 1);
         long result = MyDB.insert("post", null, contentValues);
-
-        return result != -1;
     }
 
     // remove post
 
     public void removePost(int idPost) {
         SQLiteDatabase database = this.getWritableDatabase();
-
+        database.delete("likes", "idpost = ?", new String[]{String.valueOf(idPost)});
+        database.delete("share", "idpost = ?", new String[]{String.valueOf(idPost)});
         database.delete("post", "id = ?", new String[]{String.valueOf(idPost)});
     }
 
@@ -651,5 +653,9 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         return db.rawQuery("SELECT u.* FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
     }
-
+    public Post getPostFromID(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.query("post", null, "id =?", new String[]{String.valueOf(id)}, null, null, null, null);
+        return new Post(c.getInt(0), c.getInt(1), getImgAvata(c.getInt(1)), c.getString(3), getName(c.getInt(1)), getName(c.getInt(1)), "0", c.getString(2), c.getString(7), c.getInt(8) == 1);
+    }
 }

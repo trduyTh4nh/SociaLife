@@ -1,21 +1,13 @@
 package com.example.projectmain.Adapter;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.speech.SpeechRecognizer;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,26 +16,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.EditPostActivity;
-import com.example.projectmain.ImageActivity;
-import com.example.projectmain.Model.Image;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
-import com.example.projectmain.Model.timeHelper;
+import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
@@ -122,7 +106,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("ViewType", type);
                 bn.putInt("idUser", imagePost.getIduser());
-                String timedifference = timeHelper.getTime(imagePost.getTime());
+                String timedifference = TimeHelper.getTime(imagePost.getTime());
                 bn.putString("Time", timedifference);
                 i.putExtras(bn);
                 context.startActivity(i);

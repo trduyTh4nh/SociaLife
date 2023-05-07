@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:id="@+id/scollViewMain"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scollViewMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".Fragment.HomeFragment"
-    android:orientation="vertical">
+    android:paddingTop="64dp"
+    android:paddingBottom="64dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="60dp"
-        android:id="@+id/render"
+    <com.google.android.material.tabs.TabLayout
+        android:translationZ="20dp"
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        app:tabIndicatorFullWidth="false">
+<!--        <com.google.android.material.tabs.TabItem-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Khám phá">-->
+<!--&lt;!&ndash;        </com.google.android.material.tabs.TabItem>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <com.google.android.material.tabs.TabItem&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Đã theo dõi">&ndash;&gt;-->
+<!--&lt;!&ndash;        </com.google.android.material.tabs.TabItem>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <com.google.android.material.tabs.TabItem&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:text="Chia sẻ">&ndash;&gt;-->
+<!--        </com.google.android.material.tabs.TabItem>-->
+
+    </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager2.widget.ViewPager2>
 
 
-</FrameLayout>
+</LinearLayout>

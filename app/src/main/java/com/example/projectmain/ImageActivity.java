@@ -3,8 +3,6 @@ package com.example.projectmain;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -19,11 +17,7 @@ import android.widget.Toolbar;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
-import com.example.projectmain.Model.timeHelper;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Arrays;
+import com.example.projectmain.Model.TimeHelper;
 
 public class ImageActivity extends AppCompatActivity {
     ImageButton btnClose, btnLike, bntCmt;
@@ -120,7 +114,7 @@ public class ImageActivity extends AppCompatActivity {
                 bn.putString("Pfp", post.getAvatar());
                 bn.putString("Name", post.getName());
                 bn.putString("Content", post.getContent());
-                String time = timeHelper.getTime(post.getTime());
+                String time = TimeHelper.getTime(post.getTime());
                 bn.putString("Time", time);
                 bn.putBoolean("IsCmt", true);
                 bn.putInt("idPost", post.getId());

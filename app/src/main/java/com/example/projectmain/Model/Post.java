@@ -1,6 +1,7 @@
 package com.example.projectmain.Model;
 
 public class  Post {
+    Boolean isShare = false;
     public Post() {
     }
 
@@ -11,7 +12,18 @@ public class  Post {
 //    String number_like;
 //    String content;
 //    String time;
-
+public Post(int id, int iduser, String avatar, String imgPost, String username, String name, String number_like, String content, String time, boolean isShare) {
+    this.id = id;
+    this.iduser = iduser;
+    this.avatar = avatar;
+    this.imgPost = imgPost;
+    this.username = username;
+    this.name = name;
+    this.number_like = number_like;
+    this.content = content;
+    this.time = time;
+    this.isShare = isShare;
+}
     public Post(int id, int iduser, String avatar, String imgPost, String username, String name, String number_like, String content, String time) {
         this.id = id;
         this.iduser = iduser;
@@ -141,7 +153,8 @@ public class  Post {
         this.sharedPost = sharedPost;
     }
 
-    public Post(String avatar, Post sharedPost, String username, String name, String number_like, String content, String time) {
+    public Post(int id, String avatar, Post sharedPost, String username, String name, String number_like, String content, String time) {
+        this.id = id;
         this.avatar = avatar;
         this.sharedPost = sharedPost;
         this.username = username;

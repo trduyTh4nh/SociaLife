@@ -117,6 +117,7 @@ public class AddActivity extends AppCompatActivity {
                     contentValues.put("iduser", iduser);
                     contentValues.put("content", content);
                     contentValues.put("image",String.valueOf(imageUri));
+                    contentValues.put("isshare", 0);
                     Calendar c = Calendar.getInstance();
                     long t = c.getTimeInMillis();
                     contentValues.put("datetime", String.valueOf(t));

@@ -5,7 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class timeHelper {
+public class TimeHelper {
+    public static String getCurrentTime(){
+        Calendar cal = Calendar.getInstance();
+        return String.valueOf(cal.getTimeInMillis());
+    }
     public static String getTime(String time){
         Calendar calendar = Calendar.getInstance();
         if (time == null) {
