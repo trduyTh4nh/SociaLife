@@ -1,6 +1,14 @@
 package com.example.projectmain.Model;
 
 public class  Post {
+    public Boolean getShare() {
+        return isShare;
+    }
+
+    public void setShare(Boolean share) {
+        isShare = share;
+    }
+
     Boolean isShare = false;
     public Post() {
     }

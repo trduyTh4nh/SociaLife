@@ -437,18 +437,18 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 break;
                             case R.id.remove_post:
                                 AlertDialog.Builder b = new AlertDialog.Builder(v.getRootView().getContext());
-                                b.setTitle("Xóa bài viết")
-                                        .setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
+                                b.setTitle("Xóa bài viết").setMessage("Bạn có chắc là bạn muốn xóa bài viết này? Hành động này sẽ không thể đảo ngược.");
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        //này tự hiểu r pk?
+                                        //này tự hiểu
                                         if(type == 5){
                                             db.RemoveSharedPost(post.getId());
                                         } else
                                             db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
+                                        notifyItemChanged(position);
                                         //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
                                         Size = posts.size();
                                     }
