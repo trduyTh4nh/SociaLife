@@ -179,7 +179,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         }
         @Override
         public void onClick(View view) {
-            i.onClick(view, getAdapterPosition(), false);
+            //i.onClick(view, getAdapterPosition(), false);
         }
     }
 

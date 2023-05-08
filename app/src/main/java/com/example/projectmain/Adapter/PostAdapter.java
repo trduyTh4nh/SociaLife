@@ -448,6 +448,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                             db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
+                                        // cập nhật lại position của recyclerview
                                         notifyItemChanged(position);
                                         //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
                                         Size = posts.size();
