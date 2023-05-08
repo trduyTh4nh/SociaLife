@@ -6,8 +6,8 @@
 # SociaLife
 Đồ án ứng dụng MXH
 # Tiến độ
-![](https://geps.dev/progress/99)\
-99% - Không có làm SHARE nhưng mọi tính năng cơ bản đã hoàn thành.
+![](https://geps.dev/progress/100)\
+100% - Mọi thứ đã hoàn thành.
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
