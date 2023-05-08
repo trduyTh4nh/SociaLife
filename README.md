@@ -1,4 +1,4 @@
-~~# Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
+# Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
 - Hình ảnh sẽ không được hiển thị đúng cách.
 - SQLite có thể ngừng hoạt động.
 - SharedPreferences có thể sẽ bị "null".
@@ -21,5 +21,19 @@ Cũng như xin chân thành cảm ơn giảng viên:
 vì đã hướng dẫn tụi em.
 
 # Phiên bản mới có gì?
-## 1.0.sqlite
-STABLE RỒI!!!!!!!!! (nhưng vẫn SQLITE)~~
+## 1.5.sqlite
+1. Tính năng Share
+### Đây là phiên bản cuối cùng
+Cũng cảm ơn anh em vì đã đồng hành cùng nhau trong suốt quá trình này, chúng ta đã làm hết sức và đã có rất nhiều kỷ niệm với nhau.\
+Mong nhóm đạt được kết quả tốt nhất trong buổi báo cáo ngày mai và không có bug ngầm (dbsavechange)
+### Best wishes from Quang.
+```
+     =/\                 /\=
+     / \'._   (\_/)   _.'/ \
+    / .''._'--(o.o)--'_.''. \
+   /.' _/ |`'=/ " \='`| \_ `.\
+  /` .' `\;-,'\___/',-;/` '. '\
+ /.-'       `\(-V-)/`       `-.\
+ `            "   "            `
+ ```
+ Group 22, signing off.
