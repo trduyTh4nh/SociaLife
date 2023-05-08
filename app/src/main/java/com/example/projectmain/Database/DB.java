@@ -289,7 +289,11 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put("isshare", 1);
         long result = MyDB.insert("post", null, contentValues);
     }
-
+    public void RemoveSharedPost(int idpost){
+        removePost(idpost);
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("share", "frompost =?", new String[]{String.valueOf(idpost)});
+    }
     // remove post
 
     public void removePost(int idPost) {

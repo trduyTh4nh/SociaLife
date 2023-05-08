@@ -148,7 +148,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
         if (posts.size() == 0) {
             holder.tvError.setText("Không có bài viết");
-            holder.tvErrorMsg.setText("Hãy theo dõi một người dùng để thấy bài viết của họ ở đây bằng cách vào trang tìm kiếm và tìm một người dùng để theo dõi.");
+            holder.tvErrorMsg.setText("Chưa có ai đăng bài ở đây cả!.");
             return;
         }
         db = new DB(context.getApplicationContext());
@@ -232,9 +232,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 return;
             }
             int id = db.getIduser(name);
-            if(id == post.getIduser()){
-                holder.flo.setVisibility(View.GONE);
-            }
             holder.ivSharedImage.setVisibility(View.VISIBLE);
             holder.btnComment.setVisibility(View.VISIBLE);
             holder.btnLike.setVisibility(View.VISIBLE);
@@ -245,13 +242,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             Log.d("idPost", String.valueOf(post.getId()));
 
             holder.tvSharedLikeCount.setText(childPost.getNumber_like());
-            Uri u = Uri.parse(childPost.getImgPost());
-            if (!u.equals("null")) {
+            Uri u;
+            if (!childPost.getImgPost().equals("null")) {
+                 u = Uri.parse(childPost.getImgPost());
                 holder.ivSharedImage.setImageURI(u);
             } else {
                 holder.ivSharedImage.setVisibility(View.GONE);
             }
+            holder.ivSharedImage.setOnClickListener(v -> {
 
+            });
 
             holder.tvSharedCaption.setText(childPost.getContent());
             // holder.ivSharedImage.setImageURI(Uri.parse(childPost.getImgPost()));
@@ -424,6 +424,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_post:
+                                if(type == 5){
+                                    Toast.makeText(context, "Chức năng edit không hỗ trợ bài viết Share.", Toast.LENGTH_SHORT).show();
+                                    return false;
+                                }
                                 Intent i = new Intent(context, EditPostActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 Bundle bd = new Bundle();
@@ -439,7 +443,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //này tự hiểu r pk?
-                                        db.removePost(post.getId());
+                                        if(type == 5){
+                                            db.RemoveSharedPost(post.getId());
+                                        } else
+                                            db.removePost(post.getId());
                                         posts.remove(position);
                                         notifyItemRemoved(position);
                                         //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
@@ -466,8 +473,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             @Override
             public void onClick(View v) {
                 visited = new Boolean[posts.size()];
-                holder.flo.setVisibility(v.GONE);
-                holder.tvFollowed.setVisibility(v.VISIBLE);
+                holder.flo.setVisibility(View.GONE);
+                holder.tvFollowed.setVisibility(View.VISIBLE);
 
                 String UserName = db.getName(user.getId());
                 int idUserFollow = followUser(post.getUsername());
@@ -579,10 +586,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int currentIDpost = post.getId();
-                int myID = idUser;
-                Date currentTime = Calendar.getInstance().getTime();
-                db.saveShare(myID, currentIDpost, String.valueOf(currentTime));
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getRootView().getContext());
+                builder.setTitle("Chia sẻ bài viết");
+                builder.setMessage("Bạn có muốn chia sẻ bài viết của " + post.getUsername() + " không?");
+                builder.setNegativeButton("Không", null);
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int currentIDpost = post.getId();
+                        int myID = idUser;
+                        Date currentTime = Calendar.getInstance().getTime();
+                        db.saveShare(myID, currentIDpost, String.valueOf(currentTime));
+                    }
+                });
+                builder.create().show();
+
             }
         });
 

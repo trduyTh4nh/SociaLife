@@ -142,8 +142,12 @@ public class UserActivity extends AppCompatActivity {
     }
     @SuppressLint("Range")
     public void ListImgPost() {
+
         Cursor c = db.getPostsFromUser(id);
         while(c.moveToNext()){
+            if(c.getInt(c.getColumnIndex("isshare")) == 1){
+                continue;
+            }
             Post temp = new Post();
             temp.setId(c.getInt(c.getColumnIndex("id")));
             temp.setIduser(id);

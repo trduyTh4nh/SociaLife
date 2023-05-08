@@ -313,15 +313,19 @@ public class ShareFragment extends Fragment {
                 if(post != null && cursorq.getColumnIndex("frompost") != -1){
                     Post p = db.getPost(cursorq.getInt(cursorq.getColumnIndex("frompost")));
                     String time;
+                    int idUser;
                     if(p == null){
+                        idUser = -1;
                         time = "0";
                     } else {
+                        idUser = p.getIduser();
                         time = TimeHelper.getTime(p.getTime());
                     }
+                    Log.d("IDUSER", String.valueOf(idUser));
                     User u = db.getUser(cursorq.getInt(1));
                     Log.d("Value", String.valueOf(post.getContent()));
                     Post shareP = new Post(post.getId(), post.getIduser(), db.getImgAvata(post.getIduser()), post.getImgPost(), db.getName(post.getIduser()), db.getName(post.getIduser()), post.getNumber_like(), post.getContent(), post.getTime());
-                    posts.add(new Post(id,db.getImgAvata(u.getId()), shareP, u.getName(), u.getName(), post.getNumber_like(), post.getPostContent(), time));
+                    posts.add(new Post(id, idUser,db.getImgAvata(u.getId()), shareP, u.getName(), u.getName(), post.getNumber_like(), post.getPostContent(), time));
                 }
             }
 

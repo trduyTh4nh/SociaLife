@@ -163,6 +163,16 @@ public Post(int id, int iduser, String avatar, String imgPost, String username, 
         this.content = content;
         this.time = time;
     }
-
+    public Post(int id, int idUser, String avatar, Post sharedPost, String username, String name, String number_like, String content, String time) {
+        this.iduser = idUser;
+        this.id = id;
+        this.avatar = avatar;
+        this.sharedPost = sharedPost;
+        this.username = username;
+        this.name = name;
+        this.number_like = number_like;
+        this.content = content;
+        this.time = time;
+    }
 
 }
