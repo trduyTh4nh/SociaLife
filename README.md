@@ -7,7 +7,7 @@
 Đồ án ứng dụng MXH
 # Tiến độ
 ![](https://geps.dev/progress/100)\
-100% - Mọi thứ đã hoàn thành.
+100% - Mọi thứ đã hoàn thành - 9 điểm.
 # Credits
 Xin chân thành cảm ơn dến các Dev đã giúp tạo nên dự án này.
 1. Trần Duy Thanh
