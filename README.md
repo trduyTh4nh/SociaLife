@@ -37,3 +37,7 @@ Mong nhóm đạt được kết quả tốt nhất trong buổi báo cáo ngày
  `            "   "            `
  ```
  Group 22, signing off.
+# Tổng hợp mấy con điểm chiến báo:
+1. Báo cáo lần 1: 10
+2. Báo cáo lần 2: 9.5
+3. Báo cáo CK: 9
