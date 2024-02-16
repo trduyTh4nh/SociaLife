@@ -62,11 +62,16 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "content Text," +
                 "image Blob," +
+                "isshare Integer," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
                 "datetime Datetime)");
 
+
+
+//        myDB.execSQL("ALTER TABLE post add isshare Integer NOT NULL DEFAULT (0)");
+       // myDB.execSQL("ALTER TABLE post drop column isshare");
         //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -440,7 +445,6 @@ public class DB extends SQLiteOpenHelper {
             listUser.add(cursor.getInt(2));
         }
         return listUser;
-
     }
 
     SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -617,8 +621,8 @@ public class DB extends SQLiteOpenHelper {
 //             "following_count Integer NOT NULL DEFAULT (0)," +
 //             "description  TEXT)");
 
-    //check like
 
+    //check like
     public Boolean CheckLike(int idUser, int idPost) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);

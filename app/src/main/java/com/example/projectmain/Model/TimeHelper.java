@@ -37,6 +37,7 @@ public class TimeHelper {
         } else if (min <= 1) {
             timedifference = String.valueOf(t / (1000) + " Giây trước");
         }
+
         DateFormat d = SimpleDateFormat.getDateInstance();
         d.setCalendar(calendar);
         String test = d.format(new Date(Long.parseLong(time)));

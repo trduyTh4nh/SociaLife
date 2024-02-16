@@ -7,7 +7,6 @@
     tools:context=".PostDetailActitivty">
 
     <androidx.appcompat.widget.Toolbar
-
         android:id="@+id/tbActionbar"
         android:layout_width="match_parent"
         android:layout_height="67dp"

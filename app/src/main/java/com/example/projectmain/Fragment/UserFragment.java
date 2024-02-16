@@ -186,7 +186,6 @@ public class UserFragment extends Fragment {
 
     public int CountPost(int idUser) {
         SQLiteDatabase database = db.getReadableDatabase();
-
         Cursor cursorCount = database.query("post", null, "idUser = ?", new String[]{String.valueOf(idUser)}, null, null, null);
         int count = 0;
         while (cursorCount.moveToNext()) {

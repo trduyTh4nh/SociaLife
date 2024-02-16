@@ -110,6 +110,7 @@ public class AddActivity extends AppCompatActivity {
                 if (content.equals("")) {
                     Toast.makeText(AddActivity.this, "Hãy nhập nội dung bài viết", Toast.LENGTH_SHORT).show();
                 } else {
+
                     int iduser = db.getIduser(name);
                     SQLiteDatabase myDB = db.getWritableDatabase();
                     ContentValues contentValues = new ContentValues();
@@ -123,7 +124,7 @@ public class AddActivity extends AppCompatActivity {
                     contentValues.put("datetime", String.valueOf(t));
                     contentValues.put("image", String.valueOf(imageUri));
                     int idPost = db.getIDPostOf(iduser);
-                    // like share chưa có chức năng
+
                     int idUserFollower = 0;
                     int idshare = 0;
                     int idlike = 0;
@@ -131,6 +132,8 @@ public class AddActivity extends AppCompatActivity {
                     Date currentTime = Calendar.getInstance().getTime();
                     Log.d("Time: ", String.valueOf(currentTime));
                     db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
+
+                    Log.d("Content Value of post: ", String.valueOf(contentValues));
 
                     long result = myDB.insert("post", null, contentValues);
                     if (result > 0) {
