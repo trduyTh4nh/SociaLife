@@ -3,6 +3,13 @@
 - SQLite có thể ngừng hoạt động.
 - SharedPreferences có thể sẽ bị "null".
 - **Cho nên:** Hãy chạy ứng dụng trên Android mới hơn (8.0+)
+<hr>
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+
+<hr>
 # SociaLife
 Đồ án ứng dụng MXH
 # Tiến độ
