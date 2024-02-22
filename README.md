@@ -1,11 +1,3 @@
-# Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
-- Hình ảnh sẽ không được hiển thị đúng cách.
-- SQLite có thể ngừng hoạt động.
-- SharedPreferences có thể sẽ bị "null".
-- **Cho nên:** Hãy chạy ứng dụng trên Android mới hơn (8.0+)
-
-
-
 <div align='center'>
      <img src='https://github.com/trduyTh4nh/SociaLife/assets/68984861/9d20d1e5-afa2-47b6-848b-a42f88718677' height=512/>
      <br/>
@@ -19,6 +11,11 @@
 </div>
 
 # Cách build và cài đặt
+#### Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
+- Hình ảnh sẽ không được hiển thị đúng cách.
+- SQLite có thể ngừng hoạt động.
+- SharedPreferences có thể sẽ bị "null".
+- **Cho nên:** Hãy chạy ứng dụng trên Android mới hơn (8.0+)
 ## Cài đặt
 - Vào releases và lấy apk về.
 ## Build
