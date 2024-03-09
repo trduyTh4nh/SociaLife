@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.squareup.picasso.Picasso;
@@ -73,21 +74,13 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         // init
         initView();
-
         db = new DB(this);
         user = new User();
-
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String name = sharedPreferences.getString(KEY_NAME, null);
-        String imgUri = sharedPreferences.getString(KEY_IMAGE_LINK, null);
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        Uri link = null;
-        user = db.getUser(email);
+        user = GlobalUser.getInstance(this).getUser();
         String strImageAvatar = db.getImagefor(user.getId());
-
+        String name = user.getName();
         if (strImageAvatar != null) {
             ivPfp.setImageURI(Uri.parse(strImageAvatar));
         } else
