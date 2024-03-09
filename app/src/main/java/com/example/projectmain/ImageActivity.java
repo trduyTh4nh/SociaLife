@@ -123,7 +123,6 @@ public class ImageActivity extends AppCompatActivity {
                     bn.putInt("ViewType", 3);
                 } else
                     bn.putInt("ViewType", 0);
-
                 intent.putExtras(bn);
                 startActivity(intent);
 

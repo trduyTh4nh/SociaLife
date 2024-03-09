@@ -60,6 +60,7 @@ public class DB extends SQLiteOpenHelper {
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
+                
                 "content Text," +
                 "image Blob," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
@@ -105,7 +106,12 @@ public class DB extends SQLiteOpenHelper {
                 " idcomment Integer REFERENCES comment(id) NOT NULL, " +
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
+
+
+
+
     }
+
 
     public void saveShare(int idUser, int idCurPost, String curTime){
         SQLiteDatabase database = this.getWritableDatabase();

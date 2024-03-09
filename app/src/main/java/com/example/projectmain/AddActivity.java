@@ -30,6 +30,8 @@ import android.widget.Toast;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Builder.ContentValueBuilder;
+import com.example.projectmain.Refactoring.Builder.Director;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.squareup.picasso.Picasso;
@@ -112,16 +114,29 @@ public class AddActivity extends AppCompatActivity {
                 } else {
                     int iduser = db.getIduser(name);
                     SQLiteDatabase myDB = db.getWritableDatabase();
-                    ContentValues contentValues = new ContentValues();
+//                    ContentValues contentValues = new ContentValues();
+//
+//                    contentValues.put("iduser", iduser);
+//                    contentValues.put("content", content);
+//                    contentValues.put("image",String.valueOf(imageUri));
+//                    contentValues.put("isshare", 0);
+//
+//                    Calendar c = Calendar.getInstance();
+//                    long t = c.getTimeInMillis();
+//                    contentValues.put("datetime", String.valueOf(t));
+//                    contentValues.put("image", String.valueOf(imageUri));
+                    Log.d("ID USER IN Acitivty: ", String.valueOf(iduser));
+                    // BUILDER DESIGN PATTERN
+                    ContentValueBuilder post = new ContentValueBuilder();
+                    Director director = new Director(post, iduser);
+                    ContentValues contentValues = director.buildImageAndContentPost(imageUri, content, 0);
 
-                    contentValues.put("iduser", iduser);
-                    contentValues.put("content", content);
-                    contentValues.put("image",String.valueOf(imageUri));
-                    contentValues.put("isshare", 0);
-                    Calendar c = Calendar.getInstance();
-                    long t = c.getTimeInMillis();
-                    contentValues.put("datetime", String.valueOf(t));
-                    contentValues.put("image", String.valueOf(imageUri));
+                    Log.d("ContentValues", "iduser: " + contentValues.get("iduser"));
+                    Log.d("ContentValues", "content: " + contentValues.get("content"));
+                    Log.d("ContentValues", "image: " + contentValues.get("image"));
+                    Log.d("ContentValues", "isshare: " + contentValues.get("isshare"));
+                    Log.d("ContentValues", "datetime: " + contentValues.get("datetime"));
+
                     int idPost = db.getIDPostOf(iduser);
                     // like share chưa có chức năng
                     int idUserFollower = 0;
@@ -133,6 +148,7 @@ public class AddActivity extends AppCompatActivity {
                     db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
 
                     long result = myDB.insert("post", null, contentValues);
+
                     if (result > 0) {
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
                         finish();
@@ -154,9 +170,7 @@ public class AddActivity extends AppCompatActivity {
     public void ImagePickDialog() {
         String[] option = {"Camera", "Thư viện"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         builder.setTitle("Chọn ảnh từ ");
-
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {

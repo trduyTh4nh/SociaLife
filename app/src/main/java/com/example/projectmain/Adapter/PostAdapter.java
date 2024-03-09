@@ -47,8 +47,6 @@ import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
-
-
     public PostAdapter(Context context, List<Post> posts) {
         this.posts = posts;
         this.context = context;
@@ -86,6 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
      * 2: Post có caption dài
      * 3: Post vừa có hình, vừa có caption
      * */
+
     @Override
     public int getItemViewType(int position) {
         if (posts.size() == 0)
@@ -154,7 +153,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         db = new DB(context.getApplicationContext());
         Post childPost = posts.get(position).getSharedPost();
         Post post = posts.get(position);
-
         //   User user = users.get(position);
         int type = getItemViewType(position);
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
@@ -174,7 +172,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.avatar.setImageResource(R.drawable.def);
         } else
             holder.avatar.setImageURI(Uri.parse(ava));
-        //    holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
+        // holder.imgPost.setImageURI(Uri.parse(post.getImgPost()));
         holder.name.setText(post.getName());
         holder.userName.setText(post.getUsername());
         holder.numberLike.setText(String.valueOf(db.getLike(post.getId()).getCount()));
