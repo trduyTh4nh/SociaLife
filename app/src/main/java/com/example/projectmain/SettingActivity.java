@@ -43,7 +43,6 @@ public class SettingActivity extends AppCompatActivity {
     private static final String KEY_EMAIL = "email";
 
     SharedPreferences sharedPreferences;
-
     DB db;
 
     User user;

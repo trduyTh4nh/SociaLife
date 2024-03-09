@@ -3,7 +3,7 @@ package com.example.projectmain.Model;
 public class User {
     private int id;
     private String name;
-    private byte[] image;
+    private String image; //con lạy ông nội
     private int post_count;
     private int following_count;
     private int follower_count;
@@ -23,6 +23,7 @@ public class User {
         this.following_count = following_count;
         this.follower_count = follower_count;
         this.description = description;
+        //HẢ????
     }
 
     public int getId() {
@@ -41,11 +42,11 @@ public class User {
         this.name = name;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
