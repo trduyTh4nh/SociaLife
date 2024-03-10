@@ -60,13 +60,14 @@ public class DB extends SQLiteOpenHelper {
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
-                
                 "content Text," +
                 "image Blob," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "datetime Datetime)");
+                "datetime Datetime," +
+                "isshare Integer" +
+                ")");
 
         //likes
         myDB.execSQL("create Table likes(" +
@@ -88,8 +89,8 @@ public class DB extends SQLiteOpenHelper {
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
-                "frompost Integer REFERENCES post(id) NOT NULL,"+
-                "datetime Datetime)");
+                "datetime Datetime,"+
+                "frompost Integer REFERENCES post(id) NOT NULL)");
         //follower
         myDB.execSQL("create Table follower(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +

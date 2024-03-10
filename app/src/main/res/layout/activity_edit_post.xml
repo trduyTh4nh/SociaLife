@@ -113,6 +113,15 @@
                     android:text="Lấy lại hình"
                     android:textColor="@color/text"
                     android:layout_margin="10dp"/>
+                <Button
+                    android:id="@+id/btnNewImage"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/GenericBTN"
+                    android:text="Lấy ảnh mới"
+                    android:textColor="@color/text"
+                    android:layout_margin="10dp"/>
                 <TextView
                     android:id="@+id/noImage"
                     android:visibility="gone"

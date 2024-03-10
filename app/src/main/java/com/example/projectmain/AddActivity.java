@@ -59,13 +59,12 @@ public class AddActivity extends AppCompatActivity {
     public static final int IMAGE_PICK_GALLERY = 102;
     public static final int IMAGE_PICK_CAMERA = 103;
 
-    private String[] cameraPermission;
-    private String[] storagePermission;
+    private static String[] cameraPermission;
+    private static String[] storagePermission;
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_NAME = "name";
-
     private static final String KEY_IMAGE_LINK = "linkImage";
 
 
@@ -163,6 +162,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ImagePickDialog();
+
             }
         });
     }
