@@ -62,6 +62,7 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "content Text," +
                 "image Blob," +
+                "isshare Integer," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
@@ -69,6 +70,11 @@ public class DB extends SQLiteOpenHelper {
                 "isshare Integer" +
                 ")");
 
+
+
+
+//        myDB.execSQL("ALTER TABLE post add isshare Integer NOT NULL DEFAULT (0)");
+       // myDB.execSQL("ALTER TABLE post drop column isshare");
         //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -131,8 +137,7 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
-        myDB.execSQL("ALTER TABLE share ADD frompost Integer CONSTRAINT fl_share REFERENCES post(id)");
-        myDB.execSQL("ALTER TABLE post ADD isshare Integer");
+
     }
 
     //Get ID của user để truyển qua cho Account
@@ -322,7 +327,7 @@ public class DB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             user.setName(cursor.getString(cursor.getColumnIndex("name")));
-            user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
+            user.setImage(cursor.getString(cursor.getColumnIndex("image")));
             user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
             user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
             user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
@@ -343,7 +348,7 @@ public class DB extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex("id"))));
             user.setName(cursor.getString(cursor.getColumnIndex("name")));
-            user.setImage(cursor.getBlob(cursor.getColumnIndex("image")));
+            user.setImage(cursor.getString(cursor.getColumnIndex("image")));
             user.setPost_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("post_count"))));
             user.setFollower_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("follower_count"))));
             user.setFollowing_count(Integer.parseInt(cursor.getString(cursor.getColumnIndex("following_count"))));
@@ -447,7 +452,6 @@ public class DB extends SQLiteOpenHelper {
             listUser.add(cursor.getInt(2));
         }
         return listUser;
-
     }
 
     SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -624,8 +628,8 @@ public class DB extends SQLiteOpenHelper {
 //             "following_count Integer NOT NULL DEFAULT (0)," +
 //             "description  TEXT)");
 
-    //check like
 
+    //check like
     public Boolean CheckLike(int idUser, int idPost) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);
