@@ -86,7 +86,8 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
                 "content Text," +
-                "datetime Datetime)");
+                "datetime Datetime," +
+                "parent Integer REFERENCES comment(id))");
         //share
         myDB.execSQL("create Table share(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -129,7 +130,14 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
-
+        myDB.execSQL("DROP TABLE COMMENT");
+        myDB.execSQL("create Table comment(" +
+                "id Integer PRIMARY KEY NOT NULL UNIQUE," +
+                "iduser Integer REFERENCES user(id) NOT NULL," +
+                "idpost Integer REFERENCES post(id) NOT NULL," +
+                "content Text," +
+                "datetime Datetime," +
+                "parent Integer REFERENCES comment(id))");
     }
 
     //Get ID của user để truyển qua cho Account
