@@ -53,7 +53,7 @@
             android:name=".AddActivity"
             android:exported="true" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".StrategyDB.SettingActivity"
             android:exported="true" />
         <activity
             android:name=".SignupActivity"

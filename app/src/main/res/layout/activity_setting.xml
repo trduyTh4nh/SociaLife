@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
-    tools:context=".SettingActivity">
+    tools:context=".StrategyDB.SettingActivity"
+   >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbActionbar"
@@ -123,128 +124,133 @@
                         android:textSize="16dp"></TextView>
                 </LinearLayout>
 
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:id="@+id/btnUpdateInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
+<!--                prototype-->
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/user_3_line"></ImageView>
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/layoutPrototype"-->
+<!--                    style="@style/Wrap"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="15dp"-->
+<!--                    android:layout_marginTop="40dp"-->
+<!--                    android:layout_marginBottom="15dp"-->
+<!--                    >-->
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Chỉnh sửa thông tin cá nhân"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
-                    </LinearLayout>
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/btnUpdateInfo"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:background="@drawable/transparent_ripple"-->
+<!--                        android:clickable="true"-->
+<!--                        android:contextClickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:paddingLeft="30dp">-->
 
+<!--                        <ImageView-->
+<!--                            android:id="@+id/img_Icon"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:src="@drawable/user_3_line"></ImageView>-->
 
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btnFlolow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/star_line"></ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Danh sách người theo dõi"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btnLogoff"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/logout_box_r_line"></ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Đăng xuất"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_title"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginLeft="30dp"-->
+<!--                            android:text="Chỉnh sửa thông tin cá nhân"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
 
 
-                    </LinearLayout>
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    style="@style/Wrap"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginBottom="15dp"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/btnFlolow"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/transparent_ripple"-->
+<!--                        android:clickable="true"-->
+<!--                        android:contextClickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:paddingLeft="30dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="30dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:src="@drawable/star_line"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginLeft="30dp"-->
+<!--                            android:text="Danh sách người theo dõi"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+<!--                </LinearLayout>-->
+
+<!--                <LinearLayout-->
+<!--                    style="@style/Wrap"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="15dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_marginRight="15dp"-->
+<!--                    android:layout_marginBottom="15dp"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/btnLogoff"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="@drawable/transparent_ripple"-->
+<!--                        android:clickable="true"-->
+<!--                        android:contextClickable="true"-->
+<!--                        android:focusable="true"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:padding="10dp"-->
+<!--                        android:paddingLeft="30dp">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:src="@drawable/logout_box_r_line"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginLeft="30dp"-->
+<!--                            android:text="Đăng xuất"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="16dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
 
 
-                </LinearLayout>
+<!--                    </LinearLayout>-->
 
 
-                <!--                <LinearLayout-->
+<!--                </LinearLayout>-->
+
+
+<!--                                <LinearLayout-->
 <!--                    style="@style/Wrap"-->
 <!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
