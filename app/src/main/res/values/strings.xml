@@ -11,4 +11,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="version">SociaLife Indev0.0.11</string>
+
+
+    <string-array name="Type_of_search">
+        <item>Search theo tên</item>
+        <item>Search theo bài viết</item>
+    </string-array>
 </resources>
