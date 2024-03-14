@@ -26,6 +26,7 @@ import com.example.projectmain.Model.User;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
+import java.sql.SQLInput;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -672,5 +673,9 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("post", null, "id =?", new String[]{String.valueOf(id)}, null, null, null, null);
         return new Post(c.getInt(0), c.getInt(1), getImgAvata(c.getInt(1)), c.getString(3), getName(c.getInt(1)), getName(c.getInt(1)), "0", c.getString(2), c.getString(7), c.getInt(8) == 1);
+    }
+    public void insertReplyComment(ContentValues contentValues){
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert("comment", null, contentValues);
     }
 }
