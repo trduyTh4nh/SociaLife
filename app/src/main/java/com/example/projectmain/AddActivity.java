@@ -38,7 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddActivity extends AppCompatActivity {
+public class    AddActivity extends AppCompatActivity {
 
     EditText medtNoidung;
     TextView mtvName, tvFullName;
@@ -256,7 +256,6 @@ public class AddActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_PICK_GALLERY) {
                 //Được trả từ Thư viên ảnh
-
                 //Crop Hình ảnh
                 //Kéo hình ảnh vị trí mình muốn
                 CropImage.activity(data.getData())

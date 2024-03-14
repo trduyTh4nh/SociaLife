@@ -361,6 +361,15 @@ public class DB extends SQLiteOpenHelper {
         return myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.name LIKE '%" + keyword + "%'", null);
     }
 
+
+    @SuppressLint("Range")
+    public Cursor getPostFromSearch(String keyword)
+    {
+        SQLiteDatabase myDB=this.getWritableDatabase();
+
+        return myDB.rawQuery("SELECT p.* FROM post p  WHERE content LIKE '%"+keyword+"%'", null);
+    }
+
     public List<String> getListName() {
         String[] column = {"name"};
 
@@ -377,6 +386,7 @@ public class DB extends SQLiteOpenHelper {
         }
         return listName;
     }
+
 
     public List<String> getListNameID() {
         String[] column = {"name"};

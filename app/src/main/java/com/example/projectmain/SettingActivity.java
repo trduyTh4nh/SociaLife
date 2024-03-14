@@ -5,10 +5,7 @@ import static android.app.PendingIntent.getActivity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -22,11 +19,14 @@ import android.widget.TextView;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Prototype.ItemPrototype;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class SettingActivity extends AppCompatActivity {
     ImageButton btnExit, btnInfo;
     ImageButton btnLogout;
+    ImageView img_Icon;
+    TextView tv_title;
 
     LinearLayout btnUpdate;
     ShapeableImageView ivAvatar;
@@ -52,25 +52,28 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
         DB db = new DB(this);
-        btnLogoff = findViewById(R.id.btnLogoff);
-        btnExit = findViewById(R.id.btn_exit);
+        RefactorPrototype();
+
+//        btnLogoff = findViewById(R.id.btnLogoff);
+//        btnExit = findViewById(R.id.btn_exit);
         tvName = findViewById(R.id.setting_userName);
         tvEmail = findViewById(R.id.setting_email);
         ivAvatar = findViewById(R.id.ivAvatar);
-        btnListFollow = findViewById(R.id.btnFlolow);
-        btnInfo = findViewById(R.id.btn_info);
-        btnInfo.setOnClickListener(v -> {
-            Intent i = new Intent(SettingActivity.this, AppCreditsActivity.class);
-            startActivity(i);
-        });
-        btnListFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(SettingActivity.this, FollowerActivity.class);
-                startActivity(i);
-            }
-        });
+//        btnListFollow = findViewById(R.id.btnFlolow);
+//        btnInfo = findViewById(R.id.btn_info);
+//        btnInfo.setOnClickListener(v -> {
+//            Intent i = new Intent(SettingActivity.this, AppCreditsActivity.class);
+//            startActivity(i);
+//        });
+//        btnListFollow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(SettingActivity.this, FollowerActivity.class);
+//                startActivity(i);
+//            }
+//        });
 
 
         db = new DB(getApplicationContext());
@@ -97,48 +100,78 @@ public class SettingActivity extends AppCompatActivity {
             tvName.setText(name);
             tvEmail.setText(email);
         }
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btnLogoff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder d = new AlertDialog.Builder(SettingActivity.this);
-                d.setTitle("Đăng xuất");
-                d.setMessage("Bạn có chắc là muốn đăng xuất không?");
-                d.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
-                        editor.commit();
-                        finish();
-                        Intent j = new Intent(SettingActivity.this, LoginActivity.class);
-                        startActivity(j);
-                    }
-                });
-                d.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+//        btnExit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
+//        btnLogoff.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder d = new AlertDialog.Builder(SettingActivity.this);
+//                d.setTitle("Đăng xuất");
+//                d.setMessage("Bạn có chắc là muốn đăng xuất không?");
+//                d.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        SharedPreferences.Editor editor = sharedPreferences.edit();
+//                        editor.clear();
+//                        editor.commit();
+//                        finish();
+//                        Intent j = new Intent(SettingActivity.this, LoginActivity.class);
+//                        startActivity(j);
+//                    }
+//                });
+//                d.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                    }
+//                });
+//                AlertDialog a = d.create();
+//                a.show();
+//            }
+//        });
 
-                    }
-                });
-                AlertDialog a = d.create();
-                a.show();
-            }
+//        btnUpdate = findViewById(R.id.btnUpdateInfo);
+//        btnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(SettingActivity.this, EditInfoActivity.class);
+//                startActivity(i);
+//            }
+//        });
+    }
+
+    public void RefactorPrototype()
+    {
+        ItemPrototype info=new ItemPrototype(this);
+        ItemPrototype follower=new ItemPrototype(this);
+        ItemPrototype exit=new ItemPrototype(this);
+        follower.SetContent(R.drawable.star_line,"Danh sách người theo dõi");
+        exit.SetContent(R.drawable.logout_box_r_line,"Đăng xuất");
+        info.SetContent(R.drawable.user_3_line,"Chỉnh sửa thông tin cá nhân");
+        View itemView = info.getView();
+        View itemView1=follower.getView();
+        View itemView2=exit.getView();
+
+        itemView.setOnClickListener(v -> {
+            Intent intent=new Intent(SettingActivity.this, EditInfoActivity.class);
+            startActivity(intent);
+        });
+        itemView1.setOnClickListener(v -> {
+            Intent intent=new Intent(SettingActivity.this, FollowerActivity.class);
+            startActivity(intent);
+        });
+        itemView2.setOnClickListener(v -> {
+            finish();
         });
 
-        btnUpdate = findViewById(R.id.btnUpdateInfo);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(SettingActivity.this, EditInfoActivity.class);
-                startActivity(i);
-            }
-        });
+        LinearLayout layoutCha=findViewById(R.id.linearLayout2);
+        layoutCha.addView(itemView);
+        layoutCha.addView(itemView1);
+        layoutCha.addView(itemView2);
     }
 
     @Override
