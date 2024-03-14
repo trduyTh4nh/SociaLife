@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textAlignment="center"
-    tools:context=".SettingActivity">
+    tools:context=".SettingActivity"
+   >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbActionbar"
@@ -102,17 +103,36 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/def"
                         app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:strokeWidth="6dp" />
-
-                    <TextView
-                        android:id="@+id/setting_userName"
-                        android:layout_width="wrap_content"
+                        app:strokeWidth="6dp"
+                        app:strokeColor="@color/border_fb"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Name"
-                        android:textColor="@color/black"
-                        android:textSize="28dp"
-                        android:textStyle="bold"></TextView>
+                        android:gravity="center"
+                        >
+                        <TextView
+                            android:id="@+id/setting_userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Name"
+                            android:textColor="@color/black"
+                            android:textSize="28dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical">
+                        </TextView>
+
+                        <ImageView
+                            android:src="@drawable/baseline_verified_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            >
+                        </ImageView>
+
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/setting_email"
@@ -122,170 +142,6 @@
                         android:text="Email"
                         android:textSize="16dp"></TextView>
                 </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btnUpdateInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/user_3_line"></ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Chỉnh sửa thông tin cá nhân"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btnFlolow"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
-
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/star_line"></ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Danh sách người theo dõi"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    style="@style/Wrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/btnLogoff"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/transparent_ripple"
-                        android:clickable="true"
-                        android:contextClickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:padding="10dp"
-                        android:paddingLeft="30dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/logout_box_r_line"></ImageView>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
-                            android:text="Đăng xuất"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:textStyle="bold"></TextView>
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <!--                <LinearLayout-->
-<!--                    style="@style/Wrap"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="15dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_marginRight="15dp"-->
-<!--                    android:layout_marginBottom="15dp"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/imageView4"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="51dp"-->
-<!--                        app:srcCompat="@drawable/socialife" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView5"-->
-<!--                        style="@style/ParagraphTitle"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/version"-->
-<!--                        android:textAlignment="center" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView6"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Proudly made by Duy Thanh, Gia Đường, Trí Quang"-->
-<!--                        android:textAlignment="center" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView8"-->
-<!--                        style="@style/ParagraphContent"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="With 💖 from 🇻🇳"-->
-<!--                        android:textAlignment="center" />-->
-<!--                </LinearLayout>-->
-
-
-
 
             </LinearLayout>
 

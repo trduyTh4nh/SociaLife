@@ -30,12 +30,12 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
     Context c;
     SharedPreferences sharedPreferences;
     String name;
+
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
     ArrayList<User> usrs;
     public UserSearchAdapter(Context c, ArrayList<User> usrs){
         sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-
         this.c = c;
         this.usrs = usrs;
     }
@@ -104,7 +104,7 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         Button btnFlo, btnUnflo, btnSelf;
-        TextView tvName, tvDesc;
+        TextView tvName;
         ImageView ivProfile;
         LinearLayout layoutUser;
         public ViewHolder(@NonNull View itemView) {

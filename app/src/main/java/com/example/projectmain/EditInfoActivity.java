@@ -37,7 +37,7 @@ import com.example.projectmain.Model.User;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-public class EditInfoActivity extends AppCompatActivity {
+public class    EditInfoActivity extends AppCompatActivity {
 
     EditText edtName, edtEmail, edtUserName, edtPassword, edtConfirmPass, edtStory;
     ImageView imgCurrent;

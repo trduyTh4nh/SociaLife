@@ -67,7 +67,10 @@ public class DB extends SQLiteOpenHelper {
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "   datetime Datetime)");
+                "datetime Datetime," +
+                "isshare Integer" +
+                ")");
+
 
 
 
@@ -94,8 +97,8 @@ public class DB extends SQLiteOpenHelper {
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
-                "frompost Integer REFERENCES post(id) NOT NULL,"+
-                "datetime Datetime)");
+                "datetime Datetime,"+
+                "frompost Integer REFERENCES post(id) NOT NULL)");
         //follower
         myDB.execSQL("create Table follower(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -112,7 +115,12 @@ public class DB extends SQLiteOpenHelper {
                 " idcomment Integer REFERENCES comment(id) NOT NULL, " +
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
+
+
+
+
     }
+
 
     public void saveShare(int idUser, int idCurPost, String curTime){
         SQLiteDatabase database = this.getWritableDatabase();
@@ -370,6 +378,15 @@ public class DB extends SQLiteOpenHelper {
         return myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.name LIKE '%" + keyword + "%'", null);
     }
 
+
+    @SuppressLint("Range")
+    public Cursor getPostFromSearch(String keyword)
+    {
+        SQLiteDatabase myDB=this.getWritableDatabase();
+
+        return myDB.rawQuery("SELECT p.* FROM post p  WHERE content LIKE '%"+keyword+"%'", null);
+    }
+
     public List<String> getListName() {
         String[] column = {"name"};
 
@@ -386,6 +403,7 @@ public class DB extends SQLiteOpenHelper {
         }
         return listName;
     }
+
 
     public List<String> getListNameID() {
         String[] column = {"name"};
