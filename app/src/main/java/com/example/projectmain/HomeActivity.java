@@ -23,7 +23,6 @@ import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Fragment.NotifyFragment;
 import com.example.projectmain.Fragment.SreachFragment;
 import com.example.projectmain.Fragment.UserFragment;
-import com.example.projectmain.StrategyDB.SettingActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

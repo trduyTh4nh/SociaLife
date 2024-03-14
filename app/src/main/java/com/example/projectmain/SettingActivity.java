@@ -1,4 +1,4 @@
-package com.example.projectmain.StrategyDB;
+package com.example.projectmain;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -18,11 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.projectmain.Database.DB;
-import com.example.projectmain.EditInfoActivity;
-import com.example.projectmain.FollowerActivity;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.Prototype.ItemPrototype;
-import com.example.projectmain.R;
 import com.google.android.material.imageview.ShapeableImageView;
 
 public class SettingActivity extends AppCompatActivity {
