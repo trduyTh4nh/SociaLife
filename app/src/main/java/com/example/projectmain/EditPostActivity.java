@@ -37,7 +37,7 @@ public class EditPostActivity extends AppCompatActivity {
     TextView tvNoImg;
     ImageView ivPost;
     ImageButton btnSave, btnDelete, btnExit;
-    Button resotreImage, getNewImage;
+    Button resotreImage, getNewImage, getImageGallery;
     ConstraintLayout ImageWrapper;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_NAME = "name";
@@ -64,6 +64,7 @@ public class EditPostActivity extends AppCompatActivity {
         tvNoImg = findViewById(R.id.noImage);
         btnExit = findViewById(R.id.btn_exit);
         getNewImage = findViewById(R.id.btnNewImage);
+        getImageGallery = findViewById(R.id.btnNewImageLib);
 
         String name = share.getString(KEY_NAME, null);
         db = new DB(this);
@@ -115,15 +116,24 @@ public class EditPostActivity extends AppCompatActivity {
                 ImageWrapper.setVisibility(View.GONE);
                 resotreImage.setVisibility(View.VISIBLE);
                 getNewImage.setVisibility(View.VISIBLE);
+                getImageGallery.setVisibility(View.VISIBLE);
             }
         });
         getNewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 IimagePicker picker = new CameraImagePicker(EditPostActivity.this,EditPostActivity.this);
-                picker.pickImage();
+                picker.pickImage(EditPostActivity.this);
             }
         });
+        getImageGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                IimagePicker picker = new GalleryImagePicker(EditPostActivity.this, EditPostActivity.this);
+                picker.pickImage(EditPostActivity.this);
+            }
+        });
+
         Uri finalTempUri = tempUri;
         String finalTempImage = tempImage;
         resotreImage.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +144,7 @@ public class EditPostActivity extends AppCompatActivity {
                 ImageWrapper.setVisibility(View.VISIBLE);
                 resotreImage.setVisibility(View.GONE);
                 getNewImage.setVisibility(View.GONE);
+                getImageGallery.setVisibility(View.GONE);
             }
         });
     }
@@ -202,6 +213,8 @@ public class EditPostActivity extends AppCompatActivity {
                     ImageWrapper.setVisibility(View.VISIBLE);
                     resotreImage.setVisibility(View.GONE);
                     getNewImage.setVisibility(View.GONE);
+                    getImageGallery.setVisibility(View.GONE);
+
 
                     Log.d("Current image uri: ", String.valueOf(resultUri));
                 }

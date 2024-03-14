@@ -112,16 +112,38 @@
                     style="@style/GenericBTN"
                     android:text="Lấy lại hình"
                     android:textColor="@color/text"
-                    android:layout_margin="10dp"/>
-                <Button
-                    android:id="@+id/btnNewImage"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/GenericBTN"
-                    android:text="Lấy ảnh mới"
-                    android:textColor="@color/text"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="10dp"
+                    android:drawableRight="@drawable/baseline_360_24"
+                    />
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="2">
+                   <Button
+                       android:drawableRight="@drawable/camera_solid"
+                       android:layout_weight="1"
+                       android:id="@+id/btnNewImage"
+                       android:visibility="gone"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       style="@style/GenericBTN"
+                       android:text="Camera"
+                       android:textColor="@color/text"
+                       android:layout_margin="10dp"/>
+
+                   <Button
+                       android:drawableRight="@drawable/ibrary_books_24"
+                       android:layout_weight="1"
+                       android:id="@+id/btnNewImageLib"
+                       android:visibility="gone"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       style="@style/GenericBTN"
+                       android:text="Thư viện"
+                       android:textColor="@color/text"
+                       android:layout_margin="10dp"/>
+               </LinearLayout>
                 <TextView
                     android:id="@+id/noImage"
                     android:visibility="gone"

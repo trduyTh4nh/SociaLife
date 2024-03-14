@@ -102,17 +102,36 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/def"
                         app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:strokeWidth="6dp" />
-
-                    <TextView
-                        android:id="@+id/setting_userName"
-                        android:layout_width="wrap_content"
+                        app:strokeWidth="6dp"
+                        app:strokeColor="@color/border_fb"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Name"
-                        android:textColor="@color/black"
-                        android:textSize="28dp"
-                        android:textStyle="bold"></TextView>
+                        android:gravity="center"
+                        >
+                        <TextView
+                            android:id="@+id/setting_userName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:text="Name"
+                            android:textColor="@color/black"
+                            android:textSize="28dp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_vertical">
+                        </TextView>
+
+                        <ImageView
+                            android:src="@drawable/baseline_verified_24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            >
+                        </ImageView>
+
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/setting_email"

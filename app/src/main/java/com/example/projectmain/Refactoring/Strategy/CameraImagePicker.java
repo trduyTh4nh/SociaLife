@@ -82,5 +82,6 @@ public class CameraImagePicker implements IimagePicker {
 //                break;
 //        }
 //    }
+
 }
 

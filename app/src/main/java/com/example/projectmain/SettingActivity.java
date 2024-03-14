@@ -91,6 +91,7 @@ public class SettingActivity extends AppCompatActivity {
             if (strImageAvatar != null) {
                 link = Uri.parse(strImageAvatar);
                 ivAvatar.setImageURI(link);
+
             } else {
                 ivAvatar.setImageResource(R.drawable.def);
             }
