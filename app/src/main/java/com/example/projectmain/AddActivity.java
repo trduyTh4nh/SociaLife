@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.squareup.picasso.Picasso;
@@ -73,21 +74,13 @@ public class    AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         // init
         initView();
-
         db = new DB(this);
         user = new User();
-
         cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
         storagePermission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
-
-        sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String name = sharedPreferences.getString(KEY_NAME, null);
-        String imgUri = sharedPreferences.getString(KEY_IMAGE_LINK, null);
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        Uri link = null;
-        user = db.getUser(email);
+        user = GlobalUser.getInstance(this).getUser();
         String strImageAvatar = db.getImagefor(user.getId());
-
+        String name = user.getName();
         if (strImageAvatar != null) {
             ivPfp.setImageURI(Uri.parse(strImageAvatar));
         } else
@@ -110,6 +103,7 @@ public class    AddActivity extends AppCompatActivity {
                 if (content.equals("")) {
                     Toast.makeText(AddActivity.this, "Hãy nhập nội dung bài viết", Toast.LENGTH_SHORT).show();
                 } else {
+
                     int iduser = db.getIduser(name);
                     SQLiteDatabase myDB = db.getWritableDatabase();
                     ContentValues contentValues = new ContentValues();
@@ -123,7 +117,7 @@ public class    AddActivity extends AppCompatActivity {
                     contentValues.put("datetime", String.valueOf(t));
                     contentValues.put("image", String.valueOf(imageUri));
                     int idPost = db.getIDPostOf(iduser);
-                    // like share chưa có chức năng
+
                     int idUserFollower = 0;
                     int idshare = 0;
                     int idlike = 0;
@@ -131,6 +125,8 @@ public class    AddActivity extends AppCompatActivity {
                     Date currentTime = Calendar.getInstance().getTime();
                     Log.d("Time: ", String.valueOf(currentTime));
                     db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
+
+                    Log.d("Content Value of post: ", String.valueOf(contentValues));
 
                     long result = myDB.insert("post", null, contentValues);
                     if (result > 0) {
