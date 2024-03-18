@@ -36,7 +36,7 @@ import java.util.List;
 
 public class DB extends SQLiteOpenHelper {
     public DB(Context context) {
-        super(context, "dbSocialNetwork.db", null, 3);
+        super(context, "dbSocialNetwork.db", null, 4);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "email Text," +
                 "password Text)");
-        //user
+
         myDB.execSQL("create Table user(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "name Text," +
@@ -55,14 +55,15 @@ public class DB extends SQLiteOpenHelper {
                 "post_count Integer NOT NULL DEFAULT (0)," +
                 "follower_count Integer NOT NULL DEFAULT (0)," +
                 "following_count Integer NOT NULL DEFAULT (0)," +
-                "description  TEXT)");
-        //post
+                "description  TEXT," +
+                "status_tick Integer DEFAULT (0)," +
+                "status_green_frame Integer DEFAULT (0)," +
+                "status_crown Integer DEFAULT (0))");
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "content Text," +
                 "image Blob," +
-                "isshare Integer," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
@@ -71,11 +72,6 @@ public class DB extends SQLiteOpenHelper {
                 ")");
 
 
-
-
-//        myDB.execSQL("ALTER TABLE post add isshare Integer NOT NULL DEFAULT (0)");
-       // myDB.execSQL("ALTER TABLE post drop column isshare");
-        //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
@@ -114,9 +110,6 @@ public class DB extends SQLiteOpenHelper {
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
 
-
-
-
     }
 
 
@@ -131,8 +124,6 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put("frompost", frompost);
         database.insert("share", null, contentValues);
     }
-
-
 
 
     @Override
@@ -683,4 +674,45 @@ public class DB extends SQLiteOpenHelper {
         Cursor c = db.query("post", null, "id =?", new String[]{String.valueOf(id)}, null, null, null, null);
         return new Post(c.getInt(0), c.getInt(1), getImgAvata(c.getInt(1)), c.getString(3), getName(c.getInt(1)), getName(c.getInt(1)), "0", c.getString(2), c.getString(7), c.getInt(8) == 1);
     }
+
+    // mua vật phẩm
+    public void buyCrown(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_crown = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyBlueFrame(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_green_frame = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyTickGreen(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_tick = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    // checking
+
+    public Boolean CheckTick(int idUser) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("user", null,"id = ? and status_tick = 1", new String[]{String.valueOf(idUser)},null,null,null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean CheckFrameAndCrown(int idUser){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("user", null, "id = ? and status_crown = 1 and status_green_frame = 1", new String[]{String.valueOf(idUser)}, null, null, null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
+
 }

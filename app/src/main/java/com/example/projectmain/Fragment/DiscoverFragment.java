@@ -74,6 +74,7 @@ public class DiscoverFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,16 +101,12 @@ public class DiscoverFragment extends Fragment {
         Post p = new Post();
         while (cursorGetUser.moveToNext()) {
             int idfit = cursorGetUser.getInt(0);
-
             list.add(idfit);
             int idUser = cursorGetUser.getInt(0);
-
             String userName = cursorGetUser.getString(1);
 
 
         }
-
-
         //   Log.d("LinkImage: ", db.getImgAvata(3));
 
 

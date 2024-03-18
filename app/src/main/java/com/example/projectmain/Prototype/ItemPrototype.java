@@ -25,8 +25,6 @@ public class ItemPrototype implements Prototype{
         this.imageView = view.findViewById(R.id.img_Icon);
         this.title = view.findViewById(R.id.tv_title);
 
-
-
     }
     public void SetContent(int imageView, String title)
     {

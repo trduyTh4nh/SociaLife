@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
@@ -200,7 +202,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              */
             //  holder.imgPost.setImageResource(Integer.parseInt(post.getImgPost()));
 
-
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -322,6 +323,20 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         int idUserFollow = posts.get(position).getIduser();
         int idUser = user.getId();
+
+        if(holder.blueTick != null){
+            if(db.CheckTick(post.getIduser())){
+                holder.blueTick.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        if(db.CheckFrameAndCrown(post.getIduser())){
+            int strokeColor = ContextCompat.getColor(context, R.color.border_frame);
+            holder.avatar.setStrokeColor(ColorStateList.valueOf(strokeColor));
+
+            holder.crown.setVisibility(View.VISIBLE);
+        }
         //Log.d("IDFollower: ", email);
 
         if (db.CheckNameinFollowing(idUserFollow, idUser)) {
@@ -333,6 +348,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.VISIBLE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
+
 
 
         holder.btnComment.setOnClickListener(new View.OnClickListener() {
@@ -666,6 +682,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         LinearLayout llUser;
         TextView tvErrorMsg, tvError;
 
+        private ImageView blueTick;
+        private ImageView crown;
+
+
         public PostViewHolder(@NonNull View view) {
             super(view);
             likeWrapper = view.findViewById(R.id.likeWrapper);
@@ -683,8 +703,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
             flo = (Button) view.findViewById(R.id.btnFlolow);
             btnShowProfile = view.findViewById(R.id.btnShowProfile);
-            // nameUserPost = view.findViewById(R.id.)
-            //
+
             ivSharedImage = view.findViewById(R.id.ivSharedImage);
             tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
             tvSharedOwner = view.findViewById(R.id.tvSharedOwner);
@@ -694,6 +713,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnShare = view.findViewById(R.id.btn_Pshare);
             tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
             tvError = itemView.findViewById(R.id.tvError);
+            blueTick = view.findViewById(R.id.blueTick);
+            crown = view.findViewById(R.id.crownIcon);
+
         }
 
 
