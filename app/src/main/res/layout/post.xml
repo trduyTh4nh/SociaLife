@@ -211,43 +211,60 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:paddingLeft="0dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginBottom="8dp"
+                        android:paddingLeft="0dp">
 
                         <CheckBox
-                            android:stateListAnimator="@animator/anim_btnlike"
                             android:id="@+id/btn_like"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:button="@null"
+                            android:layout_margin="18dp"
                             android:background="@drawable/favorite_svgrepo_com"
+                            android:button="@null"
                             android:checked="false"
-                            android:layout_margin="18dp">
-                        </CheckBox>
+                            android:stateListAnimator="@animator/anim_btnlike"></CheckBox>
 
 
                         <ImageButton
                             android:id="@+id/btn_Pcomment"
-                            android:src="@drawable/comment_svgrepo_com__1_"
-                            android:background="@drawable/transparent_ripple"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="12dp">
-                        </ImageButton>
+                            android:layout_margin="12dp"
+                            android:background="@drawable/transparent_ripple"
+                            android:src="@drawable/comment_svgrepo_com__1_"></ImageButton>
 
                         <ImageButton
                             android:id="@+id/btn_Pshare"
-                            android:src="@drawable/paper_plane_svgrepo_com"
-                            android:background="@drawable/transparent_ripple"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="18dp">
-                        </ImageButton>
+                            android:layout_margin="18dp"
+                            android:background="@drawable/transparent_ripple"
+                            android:src="@drawable/paper_plane_svgrepo_com"></ImageButton>
 
                     </LinearLayout>
-
+                    <LinearLayout
+                        android:id="@+id/reactions"
+                        android:layout_marginBottom="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvReactions"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content" />
+                        <ImageButton
+                            android:id="@+id/btn_close_reaction"
+                            android:src="@drawable/close_line"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:background="@drawable/transparent_ripple"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/likeWrapper"
                         android:layout_width="wrap_content"

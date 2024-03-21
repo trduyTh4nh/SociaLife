@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ReactionRegistry implements IReactionRegistry{
-    private ArrayList<IReaction> reactions = new ArrayList<>(Arrays.asList(new Reaction("\uD83D\uDE02"), new Reaction("\uD83D\uDC4D"), new Reaction("\uD83D\uDE22"), new Reaction("❤\uFE0F")));
+    private final ArrayList<IReaction> reactions = new ArrayList<>(Arrays.asList(new Reaction("\uD83D\uDE02"), new Reaction("\uD83D\uDC4D"), new Reaction("\uD83D\uDE22"), new Reaction("❤\uFE0F")));
     @Override
     public void add(IReaction item) {
         reactions.add(item);
@@ -23,7 +23,7 @@ public class ReactionRegistry implements IReactionRegistry{
         return null;
     }
     @Override
-    public ReactionAdapter prepareAdapter(Context context){
-        return new ReactionAdapter(context, reactions);
+    public ReactionAdapter prepareAdapter(Context context, int idPost){
+        return new ReactionAdapter(context, reactions, idPost);
     }
 }

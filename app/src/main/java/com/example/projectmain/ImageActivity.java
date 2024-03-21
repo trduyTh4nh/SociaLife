@@ -54,7 +54,7 @@ public class ImageActivity extends AppCompatActivity {
 
         ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
         int idPost = b.getInt("idPost");
-        if (db.CheckLike(id, idPost)) {
+        if (db.CheckLike(id, idPost).getCount() > 0) {
             btnLike.setImageResource(R.drawable.heart_fill);
             isLiked = true;
         }

@@ -23,6 +23,7 @@ import com.example.projectmain.MainActivity;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
@@ -36,8 +37,10 @@ import java.util.List;
 
 
 public class DB extends SQLiteOpenHelper {
+    Context c;
     public DB(Context context) {
         super(context, "dbSocialNetwork.db", null, 4);
+        c = context;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class DB extends SQLiteOpenHelper {
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "email Text," +
                 "password Text)");
-
+        //user
         myDB.execSQL("create Table user(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "name Text," +
@@ -56,28 +59,32 @@ public class DB extends SQLiteOpenHelper {
                 "post_count Integer NOT NULL DEFAULT (0)," +
                 "follower_count Integer NOT NULL DEFAULT (0)," +
                 "following_count Integer NOT NULL DEFAULT (0)," +
-                "description  TEXT," +
-                "status_tick Integer DEFAULT (0)," +
-                "status_green_frame Integer DEFAULT (0)," +
-                "status_crown Integer DEFAULT (0))");
+                "description  TEXT)");
+        //post
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "content Text," +
                 "image Blob," +
+                "isshare Integer," +
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "datetime Datetime," +
-                "isshare Integer" +
+                "datetime Datetime" +
                 ")");
 
 
+
+
+//        myDB.execSQL("ALTER TABLE post add isshare Integer NOT NULL DEFAULT (0)");
+       // myDB.execSQL("ALTER TABLE post drop column isshare");
+        //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
-                "datetime Datetime)");
+                "datetime Datetime," +
+                "liketype Nvarchar(2))");
 
 
         //comment
@@ -112,6 +119,9 @@ public class DB extends SQLiteOpenHelper {
                 "idshare Integer REFERENCES share(id) NOT NULL, " +
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
 
+
+
+
     }
 
 
@@ -128,16 +138,11 @@ public class DB extends SQLiteOpenHelper {
     }
 
 
+
+
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
-        myDB.execSQL("DROP TABLE COMMENT");
-        myDB.execSQL("create Table comment(" +
-                "id Integer PRIMARY KEY NOT NULL UNIQUE," +
-                "iduser Integer REFERENCES user(id) NOT NULL," +
-                "idpost Integer REFERENCES post(id) NOT NULL," +
-                "content Text," +
-                "datetime Datetime," +
-                "parent Integer REFERENCES comment(id))");
+        myDB.execSQL("ALTER TABLE likes ADD liketype nvarchar(2)");
     }
 
     //Get ID của user để truyển qua cho Account
@@ -640,21 +645,26 @@ public class DB extends SQLiteOpenHelper {
 
 
     //check like
-    public Boolean CheckLike(int idUser, int idPost) {
+    //TODO: Refactor lại
+    public Cursor CheckLike(int idUser, int idPost) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
         Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
+        return cursor;
     }
-
+    public void editLike(int idPost, String newEmoji){
+        SQLiteDatabase myDb = this.getWritableDatabase();
+        int idUser = GlobalUser.getInstance(c).getUser().getId();
+        ContentValues cv = new ContentValues();
+        cv.put("liketype", newEmoji);
+        myDb.update("likes", cv, "iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)});
+    }
     //insertLike
-    public Boolean insertLikes(int iduser, int idpost) {
+    public Boolean insertLikes(int iduser, int idpost, String reaction) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("iduser", iduser);
         contentValues.put("idpost", idpost);
+        contentValues.put("likeType", reaction);
         long result = MyDB.insert("likes", null, contentValues);
         if (result == -1)
             return false;
@@ -662,7 +672,18 @@ public class DB extends SQLiteOpenHelper {
             return true;
     }
 
-
+    public Boolean insertLikes(int iduser, int idpost) {
+        SQLiteDatabase MyDB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("iduser", iduser);
+        contentValues.put("idpost", idpost);
+        contentValues.put("likeType", "❤\uFE0F");
+        long result = MyDB.insert("likes", null, contentValues);
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
     // unlike
     public void Unlike(int iduser,int idpost) {
         SQLiteDatabase database = this.getWritableDatabase();
@@ -676,7 +697,7 @@ public class DB extends SQLiteOpenHelper {
     }
     public Cursor getLikeUser(int idPost){
         SQLiteDatabase db = getWritableDatabase();
-        return db.rawQuery("SELECT u.* FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
+        return db.rawQuery("SELECT u.*, l.liketype FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
     }
     public Post getPostFromID(int id){
         SQLiteDatabase db = getReadableDatabase();
@@ -687,45 +708,4 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.insert("comment", null, contentValues);
     }
-
-    // mua vật phẩm
-    public void buyCrown(int idUser){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE user SET status_crown = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
-    }
-
-    public void buyBlueFrame(int idUser){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE user SET status_green_frame = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
-    }
-
-    public void buyTickGreen(int idUser){
-        SQLiteDatabase db = getWritableDatabase();
-        db.execSQL("UPDATE user SET status_tick = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
-    }
-
-    // checking
-
-    public Boolean CheckTick(int idUser) {
-        SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.query("user", null,"id = ? and status_tick = 1", new String[]{String.valueOf(idUser)},null,null,null);
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
-    }
-
-    public Boolean CheckFrameAndCrown(int idUser){
-        SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.query("user", null, "id = ? and status_crown = 1 and status_green_frame = 1", new String[]{String.valueOf(idUser)}, null, null, null);
-        if (cursor.getCount() > 0)
-            return true;
-        else
-            return false;
-    }
-
-
-
-
-
 }

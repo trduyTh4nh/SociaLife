@@ -1,19 +1,17 @@
 package com.example.projectmain.Adapter;
 
-import static com.example.projectmain.Fragment.DiscoverFragment.recyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
@@ -40,9 +38,8 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
-import com.example.projectmain.Refactoring.Mememto.GlobalMemento;
-import com.example.projectmain.Refactoring.Mememto.PostHistory;
-import com.example.projectmain.Refactoring.Mememto.PostMemento;
+import com.example.projectmain.Refactoring.Prototype.IReaction;
+import com.example.projectmain.Refactoring.Prototype.IReactionRegistry;
 import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -53,8 +50,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import kotlin.Unit;
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
-    public PostAdapter(Context context, List<Post> posts) {
+    Cursor likes;
+    public PostAdapter(Context context, List<Post> posts, IReactionRegistry reactionRegistry) {
         this.posts = posts;
         this.context = context;
         if (posts.size() == 0) {
@@ -62,23 +62,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             Size = posts.size();
         }
-
-        history = new PostHistory();
-
-
+        this.reactionRegistry = reactionRegistry;
     }
-    public Post getPosts(int idPost) {
-        Post post = null;
-        for (int i = 0; i < posts.size(); i++){
-            if (posts.get(i).getId() == idPost){
-                post = posts.get(i);
-            }
-        }
-
-        return post;
-    }
-
-    PostHistory history;
+    IReactionRegistry reactionRegistry;
     int Size;
     Context context;
     List<Post> posts;
@@ -161,8 +147,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return new PostViewHolder(view);
     }
 
-
-    @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
+    @SuppressLint({"SuspiciousIndentation", "SetTextI18n", "Range"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (getItemViewType(position) == -3) {
@@ -186,28 +171,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         user = db.getUser(email);
         editor.apply();
-
-        // Lặp qua danh sách bài post trong adapter
-        GlobalMemento globalMemento = GlobalMemento.getInstance();
-        for (int i = 0; i < globalMemento.getArrs().size(); i++) {
-            if (posts.get(position).getId() == globalMemento.getArrs().get(i).getState().getId()) {
-                final int removePosition = position; // Lưu vị trí cần xóa
-                recyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Xóa phần tử khỏi danh sách dữ liệu
-//                        posts.remove(removePosition);
-//                        notifyItemRemoved(removePosition);
-
-                        recyclerView.findViewById(R.id.wrapPostAll).setVisibility(View.GONE);
-                        //notifyDataSetChanged();
-                    }
-                });
-                break;
-            }
-        }
-
-
 
         if (post == null)
             return;
@@ -244,6 +207,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
              * Hình ko caption, chỉ cần setImage và setOnClick cho imgPost, không cần set cho tvContent thứ khác (sẽ gây nullPointerException)
              */
             //  holder.imgPost.setImageResource(Integer.parseInt(post.getImgPost()));
+
 
             holder.imgPost.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -366,20 +330,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         int idUserFollow = posts.get(position).getIduser();
         int idUser = user.getId();
-
-        if(holder.blueTick != null){
-            if(db.CheckTick(post.getIduser())){
-                holder.blueTick.setVisibility(View.VISIBLE);
-            }
-        }
-
-
-        if(db.CheckFrameAndCrown(post.getIduser())){
-            int strokeColor = ContextCompat.getColor(context, R.color.border_frame);
-            holder.avatar.setStrokeColor(ColorStateList.valueOf(strokeColor));
-
-            holder.crown.setVisibility(View.VISIBLE);
-        }
         //Log.d("IDFollower: ", email);
 
         if (db.CheckNameinFollowing(idUserFollow, idUser)) {
@@ -427,23 +377,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         int iduser = db.getIduser(name);
         int idpost = post.getId();
-
-        if (!db.CheckLike(iduser, idpost)) {
+        likes = db.CheckLike(iduser, idpost);
+        IReaction reaction;
+        if (likes.getCount() == 0) {
             holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+            holder.btnLike.setText("");
+            holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
         } else {
-            holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+            holder.btnLike.setBackgroundResource(0);
+            if(likes.moveToNext()){
+                reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
+                holder.btnLike.setText(reaction.getEmoji());
+                holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+            }
         }
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if (db.CheckLike(iduser, idpost) == false) {
+                likes = db.CheckLike(iduser, idpost);
+                if (likes.getCount() == 0) {
                     Boolean insertLike = db.insertLikes(iduser, idpost);
-                    if (insertLike == true && holder.btnLike.isChecked()) {
+                    if (insertLike && holder.btnLike.isChecked()) {
                         holder.btnLike.setChecked(false);
-                        holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        //holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
                         holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
+                        likes = db.CheckLike(iduser, idpost);
                         notifyItemChanged(position);
+                        IReaction reaction;
+                        if(likes.moveToNext()){
+                            reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
+                            holder.btnLike.setText(reaction.getEmoji());
+                        }
                     }
                 } else {
                     db.Unlike(iduser, idpost);
@@ -468,9 +434,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
-
-        // history of Post
-
+        ReactionAdapter adap = reactionRegistry.prepareAdapter(context, posts.get(position).getId());
+        adap.setOnReaction(v -> {
+            holder.reactionDialog.setVisibility(View.GONE);
+            notifyItemChanged(position);
+        });
+        holder.rcvReactions.setAdapter(adap);
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(RecyclerView.HORIZONTAL);
+        holder.rcvReactions.setLayoutManager(llm);
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -499,7 +471,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-
                                         //này tự hiểu
                                         if(type == 5){
                                             db.RemoveSharedPost(post.getId());
@@ -511,25 +482,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         notifyItemChanged(position);
                                         //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
                                         Size = posts.size();
-
-                                        Post postMem = post;
-
-                                        history.save(post.saveToMemento());
-
-                                        ArrayList<PostMemento> postMen = new ArrayList<>();
-                                        postMen = history.getArrs();
-                                        GlobalMemento globalMemento;
-                                        globalMemento = GlobalMemento.getInstance();
-                                        globalMemento.setArrs(history.getArrs());
-
-//                                        for (PostMemento postMemento : postMen) {
-//                                            if(posts.get(position).getId() == postMemento.getState().getId()){
-//                                                posts.remove(position);
-//                                                notifyItemRemoved(position);
-//                                            }
-//                                            Log.d("Bài đã bị xóa ", String.valueOf(postMemento.getState().getContent()));
-//                                        }
-
                                     }
                                 });
                                 b.setNegativeButton("Hủy, đừng xóa nó", null);
@@ -661,7 +613,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 context.startActivity(i);
             }
         });
-
+        holder.btnLike.setOnLongClickListener(v -> {
+            if(holder.reactionDialog.getVisibility() == View.VISIBLE)
+                holder.reactionDialog.setVisibility(View.GONE);
+            else
+                holder.reactionDialog.setVisibility(View.VISIBLE);
+            return true;
+        });
+        holder.btnCloseReaction.setOnClickListener(v -> {
+            holder.reactionDialog.setVisibility(View.GONE);
+        });
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -743,17 +704,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private TextView name, userName, numberLike, content, time, nameUserPost, tvSharedOwner, tvTime, tvSharedCaption, tvSharedLikeCount;
         private LinearLayout btnShowProfile, likeWrapper;
 
-        LinearLayout lnWrapPost;
+        LinearLayout llUser;
         TextView tvErrorMsg, tvError;
-
-        private ImageView blueTick;
-        private ImageView crown;
-
-
-
+        RecyclerView rcvReactions;
+        LinearLayout reactionDialog;
+        ImageButton btnCloseReaction;
 
         public PostViewHolder(@NonNull View view) {
             super(view);
+            btnCloseReaction = view.findViewById(R.id.btn_close_reaction);
+            reactionDialog = view.findViewById(R.id.reactions);
+            if(reactionDialog != null)
+                reactionDialog.setVisibility(View.GONE);
+            rcvReactions = view.findViewById(R.id.rcvReactions);
             likeWrapper = view.findViewById(R.id.likeWrapper);
             avatar = (ShapeableImageView) view.findViewById(R.id.avatar);
             imgPost = (ImageView) view.findViewById(R.id.img_post);
@@ -769,7 +732,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvFollowed = (TextView) view.findViewById(R.id.tvFollowed);
             flo = (Button) view.findViewById(R.id.btnFlolow);
             btnShowProfile = view.findViewById(R.id.btnShowProfile);
-
+            // nameUserPost = view.findViewById(R.id.)
+            //
             ivSharedImage = view.findViewById(R.id.ivSharedImage);
             tvSharedLikeCount = view.findViewById(R.id.tvSharedLikeCount);
             tvSharedOwner = view.findViewById(R.id.tvSharedOwner);
@@ -779,10 +743,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnShare = view.findViewById(R.id.btn_Pshare);
             tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
             tvError = itemView.findViewById(R.id.tvError);
-            blueTick = view.findViewById(R.id.blueTick);
-            crown = view.findViewById(R.id.crownIcon);
-            lnWrapPost = view.findViewById(R.id.wrapPostAll);
-
         }
 
 
@@ -793,7 +753,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     Boolean[] visited;
-
 
     public int getIndexOfPost(int idFollower) {
         Arrays.fill(visited, false);

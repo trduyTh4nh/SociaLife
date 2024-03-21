@@ -26,7 +26,7 @@ public final class GlobalUser {
     private final Account account;
     private static GlobalUser INSTANCE;
 
-    public GlobalUser(User user, Account account) {
+    private GlobalUser(User user, Account account) {
         this.user = user;
         this.account = account;
     }
