@@ -2,6 +2,7 @@ package com.example.projectmain.Model;
 
 public class User {
     private int id;
+    private String likeType;
     private String name;
     private String image; //con lạy ông nội
     private int post_count;
@@ -13,6 +14,21 @@ public class User {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public User(int id, String likeType, String name, String description) {
+        this.id = id;
+        this.likeType = likeType;
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getLikeType() {
+        return likeType;
+    }
+
+    public void setLikeType(String likeType) {
+        this.likeType = likeType;
     }
 
     public User() {

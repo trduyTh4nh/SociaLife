@@ -26,6 +26,7 @@ import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.Singleton.GlobalReactionRegistry;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -136,7 +137,7 @@ public class ShareFragment extends Fragment {
         //  posts = getSharePost();
         //List<Post> postNormal = getPostVip(user.getId());
 
-        adapter = new PostAdapter(getActivity(), posts);
+        adapter = new PostAdapter(getActivity(), posts, GlobalReactionRegistry.getInstance().getRegistry());
         adapter.notifyDataSetChanged();
         btnMenu = viewPost.findViewById(R.id.btnOptions);
         recyclerView = view.findViewById(R.id.render);
@@ -155,7 +156,7 @@ public class ShareFragment extends Fragment {
         //posts.addAll(getSharePost());
         posts.addAll(getPostMerge(user.getId()));
         //posts.addAll(getSharePost());
-        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        adapter = new PostAdapter(getContext().getApplicationContext(), posts, GlobalReactionRegistry.getInstance().getRegistry());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
