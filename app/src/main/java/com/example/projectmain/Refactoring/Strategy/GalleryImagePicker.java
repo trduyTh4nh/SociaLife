@@ -52,15 +52,7 @@ public class GalleryImagePicker implements IimagePicker {
         activity.startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY);
     }
 
-    private boolean CheckCamneraPermission() {
-        //boolean result_storage = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
-    }
 
-
-    private void pickFromGallery(Activity activity) {
-
-    }
 
 
 

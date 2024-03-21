@@ -119,6 +119,8 @@ public class EditPostActivity extends AppCompatActivity {
                 getImageGallery.setVisibility(View.VISIBLE);
             }
         });
+
+        // 2 nút sử dụng strategy
         getNewImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +135,7 @@ public class EditPostActivity extends AppCompatActivity {
                 picker.pickImage(EditPostActivity.this);
             }
         });
+
 
         Uri finalTempUri = tempUri;
         String finalTempImage = tempImage;

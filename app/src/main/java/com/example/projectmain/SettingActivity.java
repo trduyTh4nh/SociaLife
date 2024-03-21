@@ -2,12 +2,19 @@ package com.example.projectmain;
 
 import static android.app.PendingIntent.getActivity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +27,9 @@ import android.widget.TextView;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.Prototype.ItemPrototype;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 public class SettingActivity extends AppCompatActivity {
     ImageButton btnExit, btnInfo;
@@ -47,7 +56,13 @@ public class SettingActivity extends AppCompatActivity {
 
     User user;
 
-    @SuppressLint("MissingInflatedId")
+    ShapeableImageView imageOfAvatar;
+    ImageView crown;
+
+    ImageView tickBlue;
+
+    GlobalUser userInstance;
+    @SuppressLint({"MissingInflatedId", "LongLogTag", "ResourceAsColor", "WrongViewCast"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,17 +71,29 @@ public class SettingActivity extends AppCompatActivity {
         DB db = new DB(this);
         RefactorPrototype();
 
-//        btnLogoff = findViewById(R.id.btnLogoff);
-//        btnExit = findViewById(R.id.btn_exit);
+        userInstance = GlobalUser.getInstance(this);
+
+       // btnLogoff = findViewById(R.id.btnLogoff);
+        btnExit = findViewById(R.id.btn_exit);
         tvName = findViewById(R.id.setting_userName);
         tvEmail = findViewById(R.id.setting_email);
         ivAvatar = findViewById(R.id.ivAvatar);
-//        btnListFollow = findViewById(R.id.btnFlolow);
-//        btnInfo = findViewById(R.id.btn_info);
-//        btnInfo.setOnClickListener(v -> {
-//            Intent i = new Intent(SettingActivity.this, AppCreditsActivity.class);
-//            startActivity(i);
-//        });
+        //btnListFollow = findViewById(R.id.btnFlolow);
+        btnInfo = findViewById(R.id.btn_info);
+        btnInfo.setOnClickListener(v -> {
+            Intent i = new Intent(SettingActivity.this, AppCreditsActivity.class);
+            startActivity(i);
+        });
+
+        tickBlue = findViewById(R.id.blueTick);
+
+        imageOfAvatar = findViewById(R.id.ivAvatar);
+        crown = findViewById(R.id.crownIcon);
+
+
+
+
+
 //        btnListFollow.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -77,6 +104,10 @@ public class SettingActivity extends AppCompatActivity {
 
 
         db = new DB(getApplicationContext());
+
+        // Tương tác với Decorator
+        CheckBuyTick(this, userInstance.getUser().getId());
+        CheckBuyCrownAndFrame(this, userInstance.getUser().getId());
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String name = sharedPreferences.getString(KEY_NAME, null);
@@ -101,37 +132,17 @@ public class SettingActivity extends AppCompatActivity {
             tvName.setText(name);
             tvEmail.setText(email);
         }
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();;
+            }
+        });
+
 //        btnExit.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                finish();
-//            }
-//        });
-//        btnLogoff.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AlertDialog.Builder d = new AlertDialog.Builder(SettingActivity.this);
-//                d.setTitle("Đăng xuất");
-//                d.setMessage("Bạn có chắc là muốn đăng xuất không?");
-//                d.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        SharedPreferences.Editor editor = sharedPreferences.edit();
-//                        editor.clear();
-//                        editor.commit();
-//                        finish();
-//                        Intent j = new Intent(SettingActivity.this, LoginActivity.class);
-//                        startActivity(j);
-//                    }
-//                });
-//                d.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
 //
-//                    }
-//                });
-//                AlertDialog a = d.create();
-//                a.show();
 //            }
 //        });
 
@@ -145,17 +156,43 @@ public class SettingActivity extends AppCompatActivity {
 //        });
     }
 
+    public void CheckBuyTick(Context c, int idUser){
+        db = new DB(c);
+        Log.d("USER CURRENT ID: ", String.valueOf(idUser));
+        Boolean checkTick = db.CheckTick(idUser);
+        Log.d("KIEM TRA Mua: ", String.valueOf(checkTick));
+        if(checkTick){
+            tickBlue.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void CheckBuyCrownAndFrame(Context c, int idUser){
+        db = new DB(c);
+        Boolean checkCrownAndFrame = db.CheckFrameAndCrown(idUser);
+        if(checkCrownAndFrame){
+            int strokeColor = ContextCompat.getColor(c, R.color.border_frame);
+            imageOfAvatar.setStrokeColor(ColorStateList.valueOf(strokeColor));
+            crown.setVisibility(View.VISIBLE);
+        }
+    }
+
+    // class Prototype
     public void RefactorPrototype()
     {
         ItemPrototype info=new ItemPrototype(this);
         ItemPrototype follower=new ItemPrototype(this);
+        ItemPrototype payment = new ItemPrototype(this);
+
         ItemPrototype exit=new ItemPrototype(this);
+        payment.SetContent(R.drawable.baseline_payment_24, "Mua gói vip");
         follower.SetContent(R.drawable.star_line,"Danh sách người theo dõi");
         exit.SetContent(R.drawable.logout_box_r_line,"Đăng xuất");
         info.SetContent(R.drawable.user_3_line,"Chỉnh sửa thông tin cá nhân");
-        View itemView = info.getView();
-        View itemView1=follower.getView();
-        View itemView2=exit.getView();
+
+        View itemView= info.getView();
+        View itemView1= follower.getView();
+        View itemView2= exit.getView();
+        View itemView3= payment.getView();
 
         itemView.setOnClickListener(v -> {
             Intent intent=new Intent(SettingActivity.this, EditInfoActivity.class);
@@ -166,13 +203,39 @@ public class SettingActivity extends AppCompatActivity {
             startActivity(intent);
         });
         itemView2.setOnClickListener(v -> {
-            finish();
+            AlertDialog.Builder d = new AlertDialog.Builder(SettingActivity.this);
+            d.setTitle("Đăng xuất");
+            d.setMessage("Bạn có chắc là muốn đăng xuất không?");
+            d.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    finish();
+                    Intent j = new Intent(SettingActivity.this, LoginActivity.class);
+                    startActivity(j);
+                }
+            });
+            d.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            AlertDialog a = d.create();
+            a.show();
+        });
+        itemView3.setOnClickListener(v -> {
+            Intent intent=new Intent(SettingActivity.this, PaymentActivity.class);
+            startActivity(intent);
         });
 
         LinearLayout layoutCha=findViewById(R.id.linearLayout2);
         layoutCha.addView(itemView);
         layoutCha.addView(itemView1);
         layoutCha.addView(itemView2);
+        layoutCha.addView(itemView3);
     }
 
     @Override
@@ -195,6 +258,9 @@ public class SettingActivity extends AppCompatActivity {
                 ivAvatar.setImageURI(link);
             }
         }
+        CheckBuyTick(SettingActivity.this, user.getId());
+        CheckBuyCrownAndFrame(SettingActivity.this, user.getId());
+
     }
 
     @Override
