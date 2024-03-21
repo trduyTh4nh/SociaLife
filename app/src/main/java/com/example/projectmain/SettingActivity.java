@@ -176,6 +176,7 @@ public class SettingActivity extends AppCompatActivity {
         }
     }
 
+    // class Prototype
     public void RefactorPrototype()
     {
         ItemPrototype info=new ItemPrototype(this);
@@ -188,10 +189,10 @@ public class SettingActivity extends AppCompatActivity {
         exit.SetContent(R.drawable.logout_box_r_line,"Đăng xuất");
         info.SetContent(R.drawable.user_3_line,"Chỉnh sửa thông tin cá nhân");
 
-        View itemView=info.getView();
-        View itemView1=follower.getView();
-        View itemView2=exit.getView();
-        View itemView3=payment.getView();
+        View itemView= info.getView();
+        View itemView1= follower.getView();
+        View itemView2= exit.getView();
+        View itemView3= payment.getView();
 
         itemView.setOnClickListener(v -> {
             Intent intent=new Intent(SettingActivity.this, EditInfoActivity.class);

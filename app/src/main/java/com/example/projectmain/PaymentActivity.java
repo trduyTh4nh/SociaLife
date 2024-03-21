@@ -108,7 +108,10 @@ public class PaymentActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 IDecorator normalUser = null;
-                                IDecorator buyAll = new BlueTickDecorator(new PurpleFrameDecorator(new GoldCrownDecorator(normalUser)));
+                                IDecorator buyAll =
+                                        new BlueTickDecorator(
+                                             new PurpleFrameDecorator(
+                                                new GoldCrownDecorator(normalUser)));
                                 buyAll.addItem(PaymentActivity.this);
 
 //                                IDecorator buyFrame = new BlueFrameDecorator(new CrownDecorator(new GreenTickDecorator()));

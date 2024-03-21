@@ -1,5 +1,7 @@
 package com.example.projectmain.Adapter;
 
+import static com.example.projectmain.Fragment.DiscoverFragment.recyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -38,6 +40,9 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.Mememto.GlobalMemento;
+import com.example.projectmain.Refactoring.Mememto.PostHistory;
+import com.example.projectmain.Refactoring.Mememto.PostMemento;
 import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -57,8 +62,23 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             Size = posts.size();
         }
+
+        history = new PostHistory();
+
+
+    }
+    public Post getPosts(int idPost) {
+        Post post = null;
+        for (int i = 0; i < posts.size(); i++){
+            if (posts.get(i).getId() == idPost){
+                post = posts.get(i);
+            }
+        }
+
+        return post;
     }
 
+    PostHistory history;
     int Size;
     Context context;
     List<Post> posts;
@@ -141,6 +161,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return new PostViewHolder(view);
     }
 
+
     @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -165,6 +186,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         user = db.getUser(email);
         editor.apply();
+
+        // Lặp qua danh sách bài post trong adapter
+        GlobalMemento globalMemento = GlobalMemento.getInstance();
+        for (int i = 0; i < globalMemento.getArrs().size(); i++) {
+            if (posts.get(position).getId() == globalMemento.getArrs().get(i).getState().getId()) {
+                final int removePosition = position; // Lưu vị trí cần xóa
+                recyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Xóa phần tử khỏi danh sách dữ liệu
+//                        posts.remove(removePosition);
+//                        notifyItemRemoved(removePosition);
+
+                        recyclerView.findViewById(R.id.wrapPostAll).setVisibility(View.GONE);
+                        //notifyDataSetChanged();
+                    }
+                });
+                break;
+            }
+        }
+
+
 
         if (post == null)
             return;
@@ -350,7 +393,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
-
         holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -427,6 +469,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.tvFollowed.setVisibility(View.GONE);
         }
 
+        // history of Post
+
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -455,6 +499,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                 b.setPositiveButton("Ok, hãy xóa nó cho tôi.", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+
                                         //này tự hiểu
                                         if(type == 5){
                                             db.RemoveSharedPost(post.getId());
@@ -466,6 +511,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                         notifyItemChanged(position);
                                         //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
                                         Size = posts.size();
+
+                                        Post postMem = post;
+
+                                        history.save(post.saveToMemento());
+
+                                        ArrayList<PostMemento> postMen = new ArrayList<>();
+                                        postMen = history.getArrs();
+                                        GlobalMemento globalMemento;
+                                        globalMemento = GlobalMemento.getInstance();
+                                        globalMemento.setArrs(history.getArrs());
+
+//                                        for (PostMemento postMemento : postMen) {
+//                                            if(posts.get(position).getId() == postMemento.getState().getId()){
+//                                                posts.remove(position);
+//                                                notifyItemRemoved(position);
+//                                            }
+//                                            Log.d("Bài đã bị xóa ", String.valueOf(postMemento.getState().getContent()));
+//                                        }
+
                                     }
                                 });
                                 b.setNegativeButton("Hủy, đừng xóa nó", null);
@@ -679,11 +743,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private TextView name, userName, numberLike, content, time, nameUserPost, tvSharedOwner, tvTime, tvSharedCaption, tvSharedLikeCount;
         private LinearLayout btnShowProfile, likeWrapper;
 
-        LinearLayout llUser;
+        LinearLayout lnWrapPost;
         TextView tvErrorMsg, tvError;
 
         private ImageView blueTick;
         private ImageView crown;
+
+
 
 
         public PostViewHolder(@NonNull View view) {
@@ -715,6 +781,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             tvError = itemView.findViewById(R.id.tvError);
             blueTick = view.findViewById(R.id.blueTick);
             crown = view.findViewById(R.id.crownIcon);
+            lnWrapPost = view.findViewById(R.id.wrapPostAll);
 
         }
 
@@ -726,6 +793,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     }
 
     Boolean[] visited;
+
 
     public int getIndexOfPost(int idFollower) {
         Arrays.fill(visited, false);

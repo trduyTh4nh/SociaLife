@@ -15,9 +15,7 @@ public class ItemPrototype implements Prototype{
 
     private ImageView imageView;
     private TextView title;
-
     private View view;
-
 
     public ItemPrototype( Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -30,8 +28,6 @@ public class ItemPrototype implements Prototype{
     {
         this.imageView.setImageResource(imageView);
         this.title.setText(title);
-
-
     }
     public View getView() {
         return view;
