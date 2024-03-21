@@ -1,5 +1,7 @@
 package com.example.projectmain.Model;
 
+import com.example.projectmain.Refactoring.Mememto.PostMemento;
+
 public class  Post {
     public Boolean getShare() {
         return isShare;
@@ -183,4 +185,20 @@ public Post(int id, int iduser, String avatar, String imgPost, String username, 
         this.time = time;
     }
 
+    public PostMemento saveToMemento() {
+        return new PostMemento(this);
+    }
+
+    public void restoreFromMemento(PostMemento memento) {
+        this.id = memento.getState().id;
+        this.iduser = memento.getState().iduser;
+        this.avatar = memento.getState().avatar;
+        this.imgPost = memento.getState().imgPost;
+        this.username = memento.getState().username;
+        this.name = memento.getState().name;
+        this.number_like = memento.getState().number_like;
+        this.content = memento.getState().content;
+        this.time = memento.getState().time;
+        this.isShare = memento.getState().isShare;
+    }
 }

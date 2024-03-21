@@ -22,6 +22,9 @@
         android:theme="@style/Theme.ProjectMain"
         tools:targetApi="31">
         <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".AppCreditsActivity"
             android:exported="false" />
         <activity

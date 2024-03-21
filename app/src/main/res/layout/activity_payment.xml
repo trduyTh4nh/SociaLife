@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PaymentActivity"
+    android:orientation="vertical">
+    <LinearLayout
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+        <ImageButton
+            android:id="@+id/btn_exit"
+            style="@android:style/Widget.DeviceDefault.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="0"
+            android:background="@drawable/exitbtn"
+            android:padding="10dp"
+            app:srcCompat="@drawable/close_line"
+            app:tint="@color/icon" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btnTickGreen"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mua tick xanh"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/card_1">
+            </Button>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tvTickGreenPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$10"
+                android:gravity="right"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_primary_dark">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btnGoldFrameAndCrown"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mua khung gold và vương miệng"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/card_3">
+            </Button>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tvGoldFrameAndCrownPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$20"
+                android:gravity="right"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_primary_dark">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/btnGoldFrameAndCrownAndTick"
+                android:layout_gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tất cả các gói"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/border_fb">
+            </Button>
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tvGoldFrameAndCrownAndTickPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$30"
+                android:gravity="right"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/design_default_color_primary_dark">
+            </TextView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--    <LinearLayout-->
+<!--        android:padding="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="left"-->
+<!--        android:orientation="vertical">-->
+<!--       <LinearLayout-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="wrap_content">-->
+<!--           <Button-->
+<!--               android:id="@+id/btnTickGreen"-->
+<!--               android:layout_gravity="center"-->
+<!--               android:layout_width="wrap_content"-->
+<!--               android:layout_height="wrap_content"-->
+<!--               android:text="Mua tick xanh">-->
+<!--           </Button>-->
+
+<!--       </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <Button-->
+<!--                android:id="@+id/btnGoldFrameAndCrown"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Mua khung gold và vương miệng">-->
+<!--            </Button>-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <Button-->
+<!--                android:id="@+id/btnGoldFrameAndCrownAndTick"-->
+<!--                android:layout_gravity="left"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Mua khung gold và vương miệng và Tick xanh">-->
+<!--            </Button>-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
+
+</LinearLayout>

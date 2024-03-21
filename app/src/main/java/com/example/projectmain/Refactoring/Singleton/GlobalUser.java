@@ -32,14 +32,12 @@ public final class GlobalUser {
     }
 
     public static GlobalUser getInstance(Context c){
-        if(INSTANCE == null){
-            DB db = new DB(c);
-            SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String email = sharedPreferences.getString(KEY_EMAIL, null);
-            Account tmpAccount = new Account();
-            tmpAccount.setEmail(email);
-            INSTANCE = new GlobalUser(db.getUser(email), tmpAccount);
-        }
+        DB db = new DB(c);
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        Account tmpAccount = new Account();
+        tmpAccount.setEmail(email);
+        INSTANCE = new GlobalUser(db.getUser(email), tmpAccount);
         return INSTANCE;
     }
 
