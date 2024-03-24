@@ -1,5 +1,7 @@
 package com.example.projectmain.Adapter;
 
+import static com.example.projectmain.Fragment.DiscoverFragment.recyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -40,11 +42,15 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.Command.Command;
+import com.example.projectmain.Refactoring.Command.DeleteCommand;
+import com.example.projectmain.Refactoring.Command.UndoCommand;
 import com.example.projectmain.Refactoring.Prototype.IReaction;
 import com.example.projectmain.Refactoring.Prototype.IReactionRegistry;
 import com.example.projectmain.Refactoring.Prototype.ReactionRegistry;
 import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -57,6 +63,7 @@ import kotlin.Unit;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     Cursor likes;
+
     public PostAdapter(Context context, List<Post> posts, IReactionRegistry reactionRegistry) {
         this.posts = posts;
         this.context = context;
@@ -67,6 +74,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
         this.reactionRegistry = reactionRegistry;
     }
+
     IReactionRegistry reactionRegistry = new ReactionRegistry();
     int Size;
     Context context;
@@ -84,6 +92,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private static final String KEY_NAME = "name";
     String email = null;
     String name = null;
+
+
+
 
     /*
      * Lấy kiểu view
@@ -228,7 +239,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 }
             });
         } else if (type == 5) {
-            if(post.getId() == 0){
+            if (post.getId() == 0) {
                 holder.tvTime.setText("Bài đăng không tồn tại");
                 holder.ivSharedImage.setImageResource(R.drawable.circle_question_solid);
                 holder.tvSharedOwner.setText("Bài đăng không tồn tại");
@@ -253,7 +264,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.tvSharedLikeCount.setText(childPost.getNumber_like());
             Uri u;
             if (!childPost.getImgPost().equals("null")) {
-                 u = Uri.parse(childPost.getImgPost());
+                u = Uri.parse(childPost.getImgPost());
                 holder.ivSharedImage.setImageURI(u);
             } else {
                 holder.ivSharedImage.setVisibility(View.GONE);
@@ -344,12 +355,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.VISIBLE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
-        if(holder.blueTick != null){
-            if(db.CheckTick(post.getIduser())){
+        if (holder.blueTick != null) {
+            if (db.CheckTick(post.getIduser())) {
                 holder.blueTick.setVisibility(View.VISIBLE);
             }
         }
-        if(db.CheckFrameAndCrown(post.getIduser())){
+        if (db.CheckFrameAndCrown(post.getIduser())) {
             int strokeColor = ContextCompat.getColor(context, R.color.border_frame);
             holder.avatar.setStrokeColor(ColorStateList.valueOf(strokeColor));
 
@@ -379,7 +390,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 bn.putInt("idUser", post.getIduser());
                 bn.putString("Time", holder.time.getText().toString());
                 bn.putString("Like", String.valueOf(db.getLike(post.getId()).getCount()));
-                if(type == 5){
+                if (type == 5) {
                     bn.putInt("childID", childPost.getId());
                 }
                 intent.putExtras(bn);
@@ -397,7 +408,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
         } else {
             holder.btnLike.setBackgroundResource(0);
-            if(likes.moveToNext()){
+            if (likes.moveToNext()) {
 
                 reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
                 holder.btnLike.setText(reaction.getEmoji());
@@ -419,7 +430,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         likes = db.CheckLike(iduser, idpost);
                         notifyItemChanged(position);
                         IReaction reaction;
-                        if(likes.moveToNext()){
+                        if (likes.moveToNext()) {
                             reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
                             holder.btnLike.setText(reaction.getEmoji());
                         }
@@ -467,7 +478,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.edit_post:
-                                if(type == 5){
+                                if (type == 5) {
                                     Toast.makeText(context, "Chức năng edit không hỗ trợ bài viết Share.", Toast.LENGTH_SHORT).show();
                                     return false;
                                 }
@@ -485,16 +496,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         //này tự hiểu
-                                        if(type == 5){
-                                            db.RemoveSharedPost(post.getId());
-                                        } else
-                                            db.removePost(post.getId());
-                                        posts.remove(position);
-                                        notifyItemRemoved(position);
-                                        // cập nhật lại position của recyclerview
-                                        notifyItemChanged(position);
-                                        //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
-                                        Size = posts.size();
+//                                        if(type == 5){
+//                                            db.RemoveSharedPost(post.getId());
+//                                        } else
+//                                            db.removePost(post.getId());
+//                                        posts.remove(position);
+//                                        notifyItemRemoved(position);
+//                                        // cập nhật lại position của recyclerview
+//                                        notifyItemChanged(position);
+//                                        //quan trọng hơn hết: cập nhật lại size của recyclerview để position nó đúng
+//                                        Size = posts.size();
+
+//                                        Post deletedPost = posts.get(position);
+//                                        Command deleteCommand = new DeleteCommand(deletedPost, posts, recyclerView.getAdapter(), position);
+//                                        deleteCommand.execute();
+                                        //  showSnackbar(holder.itemView, "Bạn có muốn Undo bài viết", 5000, deletedPost, posts, position, recyclerView.getAdapter());
+
+
+                                        Post deletedPost = posts.get(position);
+                                        Command deleteCommand = new DeleteCommand(deletedPost, posts, recyclerView.getAdapter(), position);
+                                        deleteCommand.execute();
+                                        holder.showSnackbar(recyclerView.getRootView(), "Bạn có muốn Undo bài viết", 10000, deletedPost, posts, position, recyclerView.getAdapter());
+                                        //showSnackbar(View view, String message, int duration, Post deletedPost, List<Post> posts, int position, RecyclerView.Adapter adapter) {
+
+
                                     }
                                 });
                                 b.setNegativeButton("Hủy, đừng xóa nó", null);
@@ -627,7 +652,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
         });
         holder.btnLike.setOnLongClickListener(v -> {
-            if(holder.reactionDialog.getVisibility() == View.VISIBLE)
+            if (holder.reactionDialog.getVisibility() == View.VISIBLE)
                 holder.reactionDialog.setVisibility(View.GONE);
             else
                 holder.reactionDialog.setVisibility(View.VISIBLE);
@@ -729,7 +754,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             super(view);
             btnCloseReaction = view.findViewById(R.id.btn_close_reaction);
             reactionDialog = view.findViewById(R.id.reactions);
-            if(reactionDialog != null)
+            if (reactionDialog != null)
                 reactionDialog.setVisibility(View.GONE);
             rcvReactions = view.findViewById(R.id.rcvReactions);
             likeWrapper = view.findViewById(R.id.likeWrapper);
@@ -764,7 +789,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
 
+        public void showSnackbar(View view, String message, int duration, Post deletedPost, List<Post> posts, int position, RecyclerView.Adapter adapter) {
+            final Snackbar snackbar = Snackbar.make(view, message, duration);
+            snackbar.setAction("Undo", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Command undoCommand = new UndoCommand(deletedPost, posts, adapter, position);
+                    undoCommand.execute();
+                    Toast.makeText(view.getContext(), "Undo", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            snackbar.show();
+        }
+
     }
+
 
     public void refreshView(int position) {
         notifyItemChanged(position);

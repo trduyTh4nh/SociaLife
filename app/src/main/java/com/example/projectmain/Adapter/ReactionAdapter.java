@@ -38,6 +38,7 @@ public class ReactionAdapter extends RecyclerView.Adapter<ReactionAdapter.Reacti
         this.idPost = idPost;
         idUser = GlobalUser.getInstance(c).getUser().getId();
     }
+
     @NonNull
     @Override
     public ReactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
