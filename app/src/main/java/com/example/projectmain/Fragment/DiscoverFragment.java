@@ -26,6 +26,9 @@ import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.Mememto.GlobalMemento;
+import com.example.projectmain.Refactoring.Mememto.PostHistory;
+import com.example.projectmain.Refactoring.Mememto.PostMemento;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -74,6 +77,7 @@ public class DiscoverFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_discover, container, false);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,16 +104,12 @@ public class DiscoverFragment extends Fragment {
         Post p = new Post();
         while (cursorGetUser.moveToNext()) {
             int idfit = cursorGetUser.getInt(0);
-
             list.add(idfit);
             int idUser = cursorGetUser.getInt(0);
-
             String userName = cursorGetUser.getString(1);
 
 
         }
-
-
         //   Log.d("LinkImage: ", db.getImgAvata(3));
 
 
@@ -123,6 +123,38 @@ public class DiscoverFragment extends Fragment {
 
         adapter = new PostAdapter(getActivity(), posts);
         adapter.notifyDataSetChanged();
+
+//        GlobalMemento globalMemento = GlobalMemento.getInstance();
+//        for (PostMemento postMemento : globalMemento.getArrs()) {
+//            Log.d("Bài đã bị xóa ", String.valueOf(postMemento.getState().getContent()));
+//        }
+//
+//        // Lặp qua danh sách bài post trong adapter
+//        for (int i = adapter.getItemCount() - 1; i >= 0; i--) {
+//            Post post = adapter.getPosts(posts.get(i).getId());
+//
+//            for (PostMemento postMemento : globalMemento.getArrs()) {
+//                if (post.getId() == postMemento.getState().getId()) {
+//
+//                    adapter.notifyItemRemoved(i);
+//                    break;
+//                }
+//            }
+//        }
+//
+//
+//        for (int i = adapter.getItemCount() - 1; i >= 0; i--) {
+//            Post post = adapter.getPosts(posts.get(i).getId());
+//
+//            for (PostMemento postMemento : globalMemento.getArrs()) {
+//                if (post.getId() == postMemento.getState().getId()) {
+//                    posts.remove(i);
+//                    adapter.notifyItemRemoved(i);
+//                    break;
+//                }
+//            }
+//        }
+
 
 
         btnMenu = viewPost.findViewById(R.id.btnOptions);

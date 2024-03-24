@@ -32,6 +32,7 @@ import com.example.projectmain.Fragment.HomeFragment;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.Refactoring.Builder.ContentValueBuilder;
 import com.example.projectmain.Refactoring.Builder.Director;
+import com.example.projectmain.Refactoring.Builder.TextAndImageBuilder;
 import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -108,6 +109,8 @@ public class    AddActivity extends AppCompatActivity {
 
                     int iduser = db.getIduser(name);
                     SQLiteDatabase myDB = db.getWritableDatabase();
+
+
 //                    ContentValues contentValues = new ContentValues();
 //
 //                    contentValues.put("iduser", iduser);
@@ -119,9 +122,11 @@ public class    AddActivity extends AppCompatActivity {
 //                    long t = c.getTimeInMillis();
 //                    contentValues.put("datetime", String.valueOf(t));
 //                    contentValues.put("image", String.valueOf(imageUri));
+
+
                     Log.d("ID USER IN Acitivty: ", String.valueOf(iduser));
                     // BUILDER DESIGN PATTERN
-                    ContentValueBuilder post = new ContentValueBuilder();
+                    TextAndImageBuilder post = new TextAndImageBuilder();
                     Director director = new Director(post, iduser);
                     ContentValues contentValues = director.buildImageAndContentPost(imageUri, content, 0);
 
@@ -137,12 +142,11 @@ public class    AddActivity extends AppCompatActivity {
                     int idshare = 0;
                     int idlike = 0;
                     int idComment = 0;
+
                     Date currentTime = Calendar.getInstance().getTime();
                     Log.d("Time: ", String.valueOf(currentTime));
                     db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
-
                     Log.d("Content Value of post: ", String.valueOf(contentValues));
-
                     long result = myDB.insert("post", null, contentValues);
 
                     if (result > 0) {
@@ -215,7 +219,6 @@ public class    AddActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Image title");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
-
 
         imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 

@@ -2,7 +2,7 @@ package com.example.projectmain.Refactoring.Builder;
 
 import android.content.ContentValues;
 
-public class ContentValueBuilder implements IPostContentValueBuilder{
+public class OnlyImageBuilder implements IPostContentValueBuilder{
     ContentValues _contentValues = new ContentValues();
 
     public ContentValues GetContentValue(){
@@ -10,8 +10,7 @@ public class ContentValueBuilder implements IPostContentValueBuilder{
         this.Reset();
         return result;
     }
-
-    public ContentValueBuilder() {
+    public OnlyImageBuilder() {
     }
 
     @Override
@@ -53,5 +52,4 @@ public class ContentValueBuilder implements IPostContentValueBuilder{
     public void Reset() {
         this._contentValues = new ContentValues();
     }
-
 }

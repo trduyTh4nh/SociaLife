@@ -91,21 +91,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/ivAvatar"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:padding="5dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/def"
-                        app:shapeAppearanceOverlay="@style/circleImageView"
-                        app:strokeWidth="6dp"
-                        app:strokeColor="@color/border_fb"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/crownIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/vip_crown_2_line"
+                            android:layout_gravity="top|center_horizontal"
+                            android:visibility="gone"
+                            />
+
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivAvatar"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:padding="5dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/def"
+                            app:shapeAppearanceOverlay="@style/circleImageView"
+                            app:strokeWidth="6dp" />
+
+
+                    </LinearLayout>
+
+                    <!-- Các thành phần khác trong LinearLayout -->
+
+
+                    <!--                    <com.google.android.material.imageview.ShapeableImageView-->
+<!--                        android:id="@+id/ivAvatar"-->
+<!--                        android:layout_width="120dp"-->
+<!--                        android:layout_height="120dp"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:scaleType="centerCrop"-->
+<!--                        android:src="@drawable/def"-->
+<!--                        app:shapeAppearanceOverlay="@style/circleImageView"-->
+<!--                        app:strokeWidth="6dp"-->
+
+<!--                        />-->
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,10 +158,12 @@
                         </TextView>
 
                         <ImageView
+                            android:id="@+id/blueTick"
                             android:src="@drawable/baseline_verified_24"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
+                            android:visibility="gone"
                             >
                         </ImageView>
 

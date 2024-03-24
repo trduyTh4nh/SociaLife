@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
@@ -36,6 +38,8 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.Prototype.IReaction;
+import com.example.projectmain.Refactoring.Prototype.IReactionRegistry;
 import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -46,8 +50,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import kotlin.Unit;
+
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
-    public PostAdapter(Context context, List<Post> posts) {
+    Cursor likes;
+    public PostAdapter(Context context, List<Post> posts, IReactionRegistry reactionRegistry) {
         this.posts = posts;
         this.context = context;
         if (posts.size() == 0) {
@@ -55,8 +62,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             Size = posts.size();
         }
+        this.reactionRegistry = reactionRegistry;
     }
-
+    IReactionRegistry reactionRegistry;
     int Size;
     Context context;
     List<Post> posts;
@@ -139,7 +147,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return new PostViewHolder(view);
     }
 
-    @SuppressLint({"SuspiciousIndentation", "SetTextI18n"})
+    @SuppressLint({"SuspiciousIndentation", "SetTextI18n", "Range"})
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (getItemViewType(position) == -3) {
@@ -369,23 +377,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         int iduser = db.getIduser(name);
         int idpost = post.getId();
-
-        if (!db.CheckLike(iduser, idpost)) {
+        likes = db.CheckLike(iduser, idpost);
+        IReaction reaction;
+        if (likes.getCount() == 0) {
             holder.btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
+            holder.btnLike.setText("");
+            holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 0);
         } else {
-            holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+            holder.btnLike.setBackgroundResource(0);
+            if(likes.moveToNext()){
+                reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
+                holder.btnLike.setText(reaction.getEmoji());
+                holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);
+            }
         }
 
         holder.btnLike.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if (db.CheckLike(iduser, idpost) == false) {
+                likes = db.CheckLike(iduser, idpost);
+                if (likes.getCount() == 0) {
                     Boolean insertLike = db.insertLikes(iduser, idpost);
-                    if (insertLike == true && holder.btnLike.isChecked()) {
+                    if (insertLike && holder.btnLike.isChecked()) {
                         holder.btnLike.setChecked(false);
-                        holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
+                        //holder.btnLike.setBackgroundResource(R.drawable.outline_favorite_24);
                         holder.numberLike.setText(String.valueOf(db.getLike(idpost).getCount()));
+                        likes = db.CheckLike(iduser, idpost);
                         notifyItemChanged(position);
+                        IReaction reaction;
+                        if(likes.moveToNext()){
+                            reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
+                            holder.btnLike.setText(reaction.getEmoji());
+                        }
                     }
                 } else {
                     db.Unlike(iduser, idpost);
@@ -410,7 +434,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.GONE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
-
+        ReactionAdapter adap = reactionRegistry.prepareAdapter(context, posts.get(position).getId());
+        adap.setOnReaction(v -> {
+            holder.reactionDialog.setVisibility(View.GONE);
+            notifyItemChanged(position);
+        });
+        holder.rcvReactions.setAdapter(adap);
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(RecyclerView.HORIZONTAL);
+        holder.rcvReactions.setLayoutManager(llm);
         holder.btnOpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -581,7 +613,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 context.startActivity(i);
             }
         });
-
+        holder.btnLike.setOnLongClickListener(v -> {
+            if(holder.reactionDialog.getVisibility() == View.VISIBLE)
+                holder.reactionDialog.setVisibility(View.GONE);
+            else
+                holder.reactionDialog.setVisibility(View.VISIBLE);
+            return true;
+        });
+        holder.btnCloseReaction.setOnClickListener(v -> {
+            holder.reactionDialog.setVisibility(View.GONE);
+        });
         holder.btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -665,9 +706,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         LinearLayout llUser;
         TextView tvErrorMsg, tvError;
+        RecyclerView rcvReactions;
+        LinearLayout reactionDialog;
+        ImageButton btnCloseReaction;
 
         public PostViewHolder(@NonNull View view) {
             super(view);
+            btnCloseReaction = view.findViewById(R.id.btn_close_reaction);
+            reactionDialog = view.findViewById(R.id.reactions);
+            if(reactionDialog != null)
+                reactionDialog.setVisibility(View.GONE);
+            rcvReactions = view.findViewById(R.id.rcvReactions);
             likeWrapper = view.findViewById(R.id.likeWrapper);
             avatar = (ShapeableImageView) view.findViewById(R.id.avatar);
             imgPost = (ImageView) view.findViewById(R.id.img_post);

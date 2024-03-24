@@ -11,4 +11,6 @@ public interface IPostContentValueBuilder {
 
     ContentValues build();
 
+    void Reset();
+
 }

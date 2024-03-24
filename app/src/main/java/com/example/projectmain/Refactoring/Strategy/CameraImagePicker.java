@@ -66,22 +66,6 @@ public class CameraImagePicker implements IimagePicker {
         ActivityCompat.requestPermissions((Activity) context, cameraPermission, CAMERA_REQUEST);
     }
 
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case CAMERA_REQUEST:
-//                if (grantResults.length > 0) {
-//                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-//                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-//
-//                    if (cameraAccepted && storageAccepted) {
-//                        pickFromCamera(ac);
-//                    } else {
-//                        Toast.makeText(context, "Yêu cầu quyền camera và thư viện ảnh", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//                break;
-//        }
-//    }
 
 }
 
