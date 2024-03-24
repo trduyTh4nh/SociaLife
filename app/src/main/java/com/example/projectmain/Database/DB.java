@@ -36,7 +36,7 @@ import java.util.List;
 
 public class DB extends SQLiteOpenHelper {
     public DB(Context context) {
-        super(context, "dbSocialNetwork.db", null, 3);
+        super(context, "dbSocialNetwork.db", null, 4);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
-
+        myDB.execSQL("ALTER TABLE post ADD isshare INTEGER;");
     }
 
     //Get ID của user để truyển qua cho Account

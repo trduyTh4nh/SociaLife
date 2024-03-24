@@ -11,6 +11,7 @@ import com.example.projectmain.Model.Account;
 import com.example.projectmain.Model.User;
 
 import java.sql.SQLClientInfoException;
+import java.util.List;
 
 public final class GlobalUser {
     private static final String SHARED_PREF_NAME = "mypref";
@@ -22,6 +23,8 @@ public final class GlobalUser {
 
     private final String KEY_IMAGE_LINK = "linkImage";
     private final String KEY_NAME = "name";
+
+
     private final User user;
     private final Account account;
     private static GlobalUser INSTANCE;
