@@ -42,6 +42,7 @@ import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
 import com.example.projectmain.Refactoring.Prototype.IReaction;
 import com.example.projectmain.Refactoring.Prototype.IReactionRegistry;
+import com.example.projectmain.Refactoring.Prototype.ReactionRegistry;
 import com.example.projectmain.UserActivity;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -66,7 +67,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
         this.reactionRegistry = reactionRegistry;
     }
-    IReactionRegistry reactionRegistry;
+    IReactionRegistry reactionRegistry = new ReactionRegistry();
     int Size;
     Context context;
     List<Post> posts;
@@ -397,6 +398,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         } else {
             holder.btnLike.setBackgroundResource(0);
             if(likes.moveToNext()){
+
                 reaction = reactionRegistry.getByEmoji(likes.getString(likes.getColumnIndex("liketype")));
                 holder.btnLike.setText(reaction.getEmoji());
                 holder.btnLike.setTextSize(TypedValue.COMPLEX_UNIT_SP, 36);

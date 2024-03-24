@@ -39,7 +39,7 @@ import java.util.List;
 public class DB extends SQLiteOpenHelper {
     Context c;
     public DB(Context context) {
-        super(context, "dbSocialNetwork.db", null, 4);
+        super(context, "dbSocialNetwork.db", null, 5);
         c = context;
     }
 
