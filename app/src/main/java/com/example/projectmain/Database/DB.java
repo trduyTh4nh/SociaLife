@@ -40,7 +40,9 @@ public class DB extends SQLiteOpenHelper {
     Context c;
     public DB(Context context) {
         super(context, "dbSocialNetwork.db", null, 4);
+
         c = context;
+
     }
 
     @Override
@@ -142,7 +144,9 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase myDB, int i, int i1) {
+
         myDB.execSQL("ALTER TABLE likes ADD liketype nvarchar(2)");
+
     }
 
     //Get ID của user để truyển qua cho Account

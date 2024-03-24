@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
         <ImageButton
+            android:id="@+id/btnLike2"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="@drawable/transparent_ripple"
