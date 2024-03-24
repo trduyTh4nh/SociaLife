@@ -10,6 +10,7 @@ public class ColorManager {
 
 
 
+
     private ColorManager() {
         // Khởi tạo màu mặc định
         backgroundColor = Color.WHITE;

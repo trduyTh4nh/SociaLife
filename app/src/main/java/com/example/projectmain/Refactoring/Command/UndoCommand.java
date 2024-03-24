@@ -28,7 +28,6 @@ public class UndoCommand extends Command {
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void execute() {
-
        postList.add(post);
        adapter.notifyDataSetChanged();
     }
