@@ -38,9 +38,9 @@
                         android:layout_marginRight="10dp">
 
                         <LinearLayout
+                            android:orientation="vertical"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
                             <ImageView
                                 android:id="@+id/crownIcon"
                                 android:layout_width="wrap_content"
@@ -51,13 +51,11 @@
                                 android:layout_marginBottom="-8dp"
                                 android:visibility="gone"
                                 ></ImageView>
+
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:cardCornerRadius="@dimen/bubble_round"
-                                android:layout_marginBottom="10dp">
-
-
+                                app:cardCornerRadius="@dimen/bubble_round">
 
                                 <com.google.android.material.imageview.ShapeableImageView
                                     android:id="@+id/avatar"
@@ -67,8 +65,8 @@
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/imgquang"
                                     app:shapeAppearanceOverlay="@style/circleImageView"
-                                    app:strokeWidth="6dp" />
-
+                                    app:strokeWidth="6dp"
+                                    />
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
 
@@ -95,7 +93,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center_vertical"
-                                    android:visibility="gone"></ImageView>
+                                    android:visibility="gone"
+                                    >
+                                </ImageView>
                             </LinearLayout>
 
                             <TextView

@@ -29,6 +29,7 @@ import com.example.projectmain.R;
 import com.example.projectmain.Refactoring.Mememto.GlobalMemento;
 import com.example.projectmain.Refactoring.Mememto.PostHistory;
 import com.example.projectmain.Refactoring.Mememto.PostMemento;
+import com.example.projectmain.Refactoring.Prototype.ReactionRegistry;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -121,7 +122,7 @@ public class DiscoverFragment extends Fragment {
         //  posts = getSharePost();
         //List<Post> postNormal = getPostVip(user.getId());
 
-        adapter = new PostAdapter(getActivity(), posts);
+        adapter = new PostAdapter(getActivity(), posts, new ReactionRegistry());
         adapter.notifyDataSetChanged();
 
 //        GlobalMemento globalMemento = GlobalMemento.getInstance();
@@ -174,7 +175,7 @@ public class DiscoverFragment extends Fragment {
         posts.addAll(getPost());
         //posts.addAll(getPostMerge(user.getId()));
         //posts.addAll(getSharePost());
-        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        adapter = new PostAdapter(getContext().getApplicationContext(), posts, new ReactionRegistry());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

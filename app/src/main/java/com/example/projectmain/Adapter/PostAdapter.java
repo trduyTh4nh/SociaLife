@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -341,8 +343,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             holder.flo.setVisibility(View.VISIBLE);
             holder.tvFollowed.setVisibility(View.GONE);
         }
+        if(holder.blueTick != null){
+            if(db.CheckTick(post.getIduser())){
+                holder.blueTick.setVisibility(View.VISIBLE);
+            }
+        }
+        if(db.CheckFrameAndCrown(post.getIduser())){
+            int strokeColor = ContextCompat.getColor(context, R.color.border_frame);
+            holder.avatar.setStrokeColor(ColorStateList.valueOf(strokeColor));
 
-
+            holder.crown.setVisibility(View.VISIBLE);
+        }
         holder.btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -703,12 +714,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         private ImageView imgPost, ivSharedImage;
         private TextView name, userName, numberLike, content, time, nameUserPost, tvSharedOwner, tvTime, tvSharedCaption, tvSharedLikeCount;
         private LinearLayout btnShowProfile, likeWrapper;
-
+        private ImageView blueTick;
+        private ImageView crown;
         LinearLayout llUser;
         TextView tvErrorMsg, tvError;
         RecyclerView rcvReactions;
         LinearLayout reactionDialog;
         ImageButton btnCloseReaction;
+        LinearLayout lnWrapPost;
 
         public PostViewHolder(@NonNull View view) {
             super(view);
@@ -743,6 +756,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             btnShare = view.findViewById(R.id.btn_Pshare);
             tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
             tvError = itemView.findViewById(R.id.tvError);
+            blueTick = view.findViewById(R.id.blueTick);
+            crown = view.findViewById(R.id.crownIcon);
+            lnWrapPost = view.findViewById(R.id.wrapPostAll);
         }
 
 

@@ -59,7 +59,10 @@ public class DB extends SQLiteOpenHelper {
                 "post_count Integer NOT NULL DEFAULT (0)," +
                 "follower_count Integer NOT NULL DEFAULT (0)," +
                 "following_count Integer NOT NULL DEFAULT (0)," +
-                "description  TEXT)");
+                "description  TEXT," +
+                "status_tick Integer DEFAULT (0)," +
+                "status_green_frame Integer DEFAULT (0)," +
+                "status_crown Integer DEFAULT (0))");
         //post
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -708,4 +711,48 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.insert("comment", null, contentValues);
     }
+
+
+
+
+    // mua vật phẩm
+    public void buyCrown(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_crown = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyBlueFrame(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_green_frame = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyTickGreen(int idUser){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_tick = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    // checking
+
+    public Boolean CheckTick(int idUser) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("user", null,"id = ? and status_tick = 1", new String[]{String.valueOf(idUser)},null,null,null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean CheckFrameAndCrown(int idUser){
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("user", null, "id = ? and status_crown = 1 and status_green_frame = 1", new String[]{String.valueOf(idUser)}, null, null, null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+
+
+
+
 }

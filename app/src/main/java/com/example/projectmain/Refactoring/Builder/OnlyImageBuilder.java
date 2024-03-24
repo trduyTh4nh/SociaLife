@@ -3,7 +3,7 @@ package com.example.projectmain.Refactoring.Builder;
 import android.content.ContentValues;
 
 public class OnlyImageBuilder implements IPostContentValueBuilder{
-    ContentValues _contentValues = new ContentValues();
+    private ContentValues _contentValues = new ContentValues();
 
     public ContentValues GetContentValue(){
         ContentValues result = this._contentValues;
