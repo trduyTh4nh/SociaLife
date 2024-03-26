@@ -25,10 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.projectmain.Adapter.CategoryAdapter;
+import com.example.projectmain.Adapter.PostAdapter;
 import com.example.projectmain.Adapter.SearchPostAdapter;
 import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Model.Category;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Refactoring.Singleton.GlobalReactionRegistry;
 import com.example.projectmain.StrategyDB.CustomSearch;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
@@ -52,7 +54,7 @@ public class SreachFragment extends Fragment  {
     ArrayList<Post> posts=new ArrayList<Post>();
     ArrayAdapter<String> a;
     RecyclerView r, rcvSearchByPost;
-    SearchPostAdapter searchPostAdapter;
+    //SearchPostAdapter searchPostAdapter;
     TextView tvSearch;
     public CustomSearch searchByName, searchByContent;
     public SreachFragment() {
@@ -107,12 +109,13 @@ public class SreachFragment extends Fragment  {
 
         //adapter
         UserSearchAdapter adap = new UserSearchAdapter(getActivity(), arrUser);
-        searchPostAdapter=new SearchPostAdapter(posts,getContext());
+       // searchPostAdapter=new SearchPostAdapter(posts,getContext());
+        PostAdapter postAdapter=new PostAdapter(getActivity(),posts, GlobalReactionRegistry.getInstance().getRegistry());
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         LinearLayoutManager g = new LinearLayoutManager(view.getContext());
         rcvSearchByPost.setLayoutManager(layoutManager);
-        rcvSearchByPost.setAdapter(searchPostAdapter);
+        rcvSearchByPost.setAdapter(postAdapter);
 
         r.setLayoutManager(g);
         r.setAdapter(adap);
@@ -132,6 +135,8 @@ public class SreachFragment extends Fragment  {
                  String selectedCategory = categoryAdapter.getItem(position).getName();
                  if(selectedCategory.equals("Tìm kiếm theo tên")){
                      searchByNameSelected = true;
+                     r.setVisibility(View.VISIBLE);
+                     rcvSearchByPost.setVisibility(View.GONE);
                      sview.setHint("Tìm kiếm theo tên người dùng");
                      sview.setText("");
                      sview.requestFocus();
@@ -139,6 +144,8 @@ public class SreachFragment extends Fragment  {
 
                  }else if (selectedCategory.equals("Tìm kiếm theo bài viết")) {
                      searchByNameSelected = false;
+                     rcvSearchByPost.setVisibility(View.VISIBLE);
+                     r.setVisibility(View.GONE);
                      sview.setHint("Tìm kiếm theo nội dung bài viết");
                      sview.setText("");
 
@@ -193,13 +200,13 @@ public class SreachFragment extends Fragment  {
                 if(sview.getText().toString().equals("")){
                     tvSearch.setText("Vui lòng nhập từ khóa.");
                     arrUser.clear();
-                   if (searchByNameSelected){
-                       adap.notifyDataSetChanged();
-                   }
-                   else {
-                       posts.clear();
-                       searchPostAdapter.notifyDataSetChanged();
-                   }
+                    if (searchByNameSelected){
+                        adap.notifyDataSetChanged();
+                    }
+                    else {
+                        posts.clear();
+                        postAdapter.notifyDataSetChanged();
+                    }
                     return;
                 }
 
@@ -209,7 +216,7 @@ public class SreachFragment extends Fragment  {
                     tvSearch.setText("Đang hiển thị " + arrUser.size() + " kết quả khớp với từ khóa \"" + sview.getText().toString() + "\"");
                 } else {
                     updateDataPost(sview.getText().toString());
-                    searchPostAdapter.notifyDataSetChanged();
+                    postAdapter.notifyDataSetChanged();
                     tvSearch.setText("Đang hiển thị " + posts.size() + " kết quả khớp với từ khóa \"" + sview.getText().toString() + "\"");
                 }
             }
@@ -240,8 +247,17 @@ public class SreachFragment extends Fragment  {
         }
 //        Cursor c = db.getUserFromSearch(k);
         Cursor c= searchByContent.performSearch(k);
+
         while(c.moveToNext()){
-            posts.add(new Post());
+            Post post = new Post();
+            post.setId(c.getInt(0));
+            post.setIduser(c.getInt(1));
+            post.setImgPost(c.getString(3));
+            post.setContent(c.getString(2));
+            post.setUsername(c.getString(10));
+            post.setName(c.getString(10));
+            post.setAvatar(c.getString(11));
+            posts.add(post);
         }
         Log.d("Length", String.valueOf(arrUser.size()));
     }

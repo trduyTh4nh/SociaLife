@@ -190,7 +190,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             return;
 
         String ava = post.getAvatar();
-        if (ava.equals("null")) {
+        if (ava == null || ava.equals("null")) {
             holder.avatar.setImageResource(R.drawable.def);
         } else
             holder.avatar.setImageURI(Uri.parse(ava));
