@@ -39,7 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class DiscoverFragment extends Fragment {
+public class DiscoverFragment extends Fragment  {
     public static DiscoverFragment newInstance() {
         DiscoverFragment fragment = new DiscoverFragment();
 
@@ -291,3 +291,5 @@ public class DiscoverFragment extends Fragment {
         return posts;
     }
 }
+
+
