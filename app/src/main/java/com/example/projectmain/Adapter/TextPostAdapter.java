@@ -7,11 +7,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -21,11 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.EditPostActivity;
+import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.SingletonColorChange.ColorManager;
 
 import java.util.ArrayList;
 
@@ -67,11 +72,15 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
     public void onBindViewHolder(@NonNull TPHolder holder, @SuppressLint("RecyclerView") int position) {
         if (isEmpty) {
             holder.tvError.setText("Chưa có bài đăng văn bản");
+            holder.tvError.setTextColor(ColorManager.getInstance().getTextColor());
             holder.tvErrorMsg.setText("Hãy đăng 1 bài đăng dưới dạng văn bản như là một trạng thái hoặc một đoạn văn.");
+            holder.tvErrorMsg.setTextColor(ColorManager.getInstance().getTextColor());
+            holder.ivIcon.setColorFilter(ColorManager.getInstance().getTextColor());
             return;
         }
         holder.tvContent.setText(posts.get(position).getContent());
         holder.tvLike.setText(String.valueOf(db.getLike(posts.get(position).getId()).getCount()));
+        holder.like.setColorFilter(ColorManager.getInstance().getTextColor());
         holder.Body.setOnClickListener(v -> {
             int type;
             Intent i = new Intent(c, PostDetailActitivty.class);
@@ -143,6 +152,8 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
                 }
             });
         }
+        holder.updateTextColor(ColorManager.getInstance().getTextColor());
+//        UserFragment.setFragmentBackgroundColor(ColorManager.getInstance().getBackgroundColor());
     }
     @Override
     public int getItemCount() {
@@ -151,7 +162,9 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
 
     public class TPHolder extends RecyclerView.ViewHolder {
         private TextView tvContent, tvLike, tvError, tvErrorMsg;
+        ImageView ivIcon;
         LinearLayout Body, btnLike;
+        ImageButton like;
         public TPHolder(@NonNull View itemView) {
             super(itemView);
             tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
@@ -160,7 +173,14 @@ public class TextPostAdapter extends RecyclerView.Adapter<TextPostAdapter.TPHold
             tvLike = itemView.findViewById(R.id.tvLikeCount);
             Body = itemView.findViewById(R.id.Body);
             btnLike = itemView.findViewById(R.id.btnLike);
+            ivIcon = itemView.findViewById(R.id.ivIcon);
+            like = itemView.findViewById(R.id.btnLike2);
+        }
 
+
+        public void updateTextColor(int color) {
+            tvContent.setTextColor(color);
+            tvLike.setTextColor(color);
         }
     }
 }

@@ -30,5 +30,8 @@
     <!-- color load -->
     <color name="thumb">@drawable/thumbsel</color>
     <color name="transparent_black">#7C000000</color>
+    <color name="border_fb">#378CE7</color>
+    <color name="instagram_gradient">@drawable/gradient_instargram</color>
+    <color name="border_frame">#9195F6</color>
 
 </resources>

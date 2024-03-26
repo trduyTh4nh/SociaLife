@@ -26,10 +26,18 @@
         android:orientation="vertical">
 
 
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right"
+            android:src="@drawable/box_in_login" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -44,6 +52,7 @@
                     android:src="@drawable/def">
                 </ImageView>
             </androidx.cardview.widget.CardView>
+
 
 
         </LinearLayout>
@@ -94,6 +103,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
+                    android:id="@+id/following"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đang theo dõi"
@@ -119,6 +129,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
+                    android:id="@+id/followuser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Người theo dõi"
@@ -144,6 +155,7 @@
                     android:textStyle="bold"></TextView>
 
                 <TextView
+                    android:id="@+id/post"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bài đăng"
@@ -157,12 +169,21 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvborder1"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"/>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlPostType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabIndicatorFullWidth="false">
+
     </com.google.android.material.tabs.TabLayout>
+    <TextView
+        android:id="@+id/tvborder2"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"/>
     <androidx.viewpager2.widget.ViewPager2
         android:layout_marginTop="20dp"
         android:id="@+id/vpPosts"

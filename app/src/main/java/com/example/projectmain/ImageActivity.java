@@ -54,7 +54,7 @@ public class ImageActivity extends AppCompatActivity {
 
         ivPicture.setImageURI(Uri.parse(b.getString("ImgRes")));
         int idPost = b.getInt("idPost");
-        if (db.CheckLike(id, idPost)) {
+        if (db.CheckLike(id, idPost).getCount() > 0) {
             btnLike.setImageResource(R.drawable.heart_fill);
             isLiked = true;
         }
@@ -123,7 +123,6 @@ public class ImageActivity extends AppCompatActivity {
                     bn.putInt("ViewType", 3);
                 } else
                     bn.putInt("ViewType", 0);
-
                 intent.putExtras(bn);
                 startActivity(intent);
 

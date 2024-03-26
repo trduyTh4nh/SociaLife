@@ -8,12 +8,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.projectmain.Adapter.UserSearchAdapter;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Prototype.ReactionRegistry;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class LikeActivity extends AppCompatActivity {
     UserSearchAdapter a;
     RecyclerView rcvLike;
     ImageButton btnExits;
+    ReactionRegistry registry = new ReactionRegistry();
     int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,8 @@ public class LikeActivity extends AppCompatActivity {
 
         Cursor c = database.getLikeUser(id);
         while(c.moveToNext()){
-            users.add(new User(c.getInt(0), c.getString(1), c.getString(6)));
+            Log.d("emoji", c.getString(7));
+            users.add(new User(c.getInt(0), registry.getByEmoji(c.getString(c.getColumnIndex("liketype"))).getEmoji(), c.getString(1), c.getString(6)));
         }
         c.close();
     }

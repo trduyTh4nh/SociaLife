@@ -167,7 +167,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         int idUser = db.getIduser(name);
         int idPost = b.getInt("idPost");
         numberLike.setText(String.valueOf(db.getLike(idPost).getCount()));
-        if (!db.CheckLike(idUser, idPost)) {
+        if (db.CheckLike(idUser, idPost).getCount() == 0) {
             btnLike.setChecked(false);
             btnLike.setBackgroundResource(R.drawable.favorite_svgrepo_com);
         } else {
@@ -231,7 +231,7 @@ public class PostDetailActitivty extends AppCompatActivity {
         btnLike.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (!db.CheckLike(idUser, idPost)) {
+                if (db.CheckLike(idUser, idPost).getCount() == 0) {
                     Boolean insertLike = db.insertLikes(idUser, idPost);
                     if (insertLike && b) {
                         btnLike.setBackgroundResource(R.drawable.outline_favorite_24);

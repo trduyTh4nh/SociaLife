@@ -53,6 +53,10 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
         SQLiteDatabase d = db.getReadableDatabase();
         User usr = usrs.get(position);
+        if(usr.getLikeType() != null){
+            holder.txtLkike.setVisibility(View.VISIBLE);
+            holder.txtLkike.setText(usr.getLikeType());
+        }
         holder.tvName.setText(usr.getName());
         if(db.getImagefor(usr.getId()) == null){
             holder.ivProfile.setImageResource(R.drawable.def);
@@ -104,7 +108,7 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         Button btnFlo, btnUnflo, btnSelf;
-        TextView tvName;
+        TextView tvName, txtLkike;
         ImageView ivProfile;
         LinearLayout layoutUser;
         public ViewHolder(@NonNull View itemView) {
@@ -115,6 +119,7 @@ public class UserSearchAdapter extends RecyclerView.Adapter<UserSearchAdapter.Vi
             btnFlo = itemView.findViewById(R.id.btnFollow);
             btnUnflo = itemView.findViewById(R.id.btnUnFollow);
             btnSelf = itemView.findViewById(R.id.btnSelf);
+            txtLkike = itemView.findViewById(R.id.txtLike);
         }
     }
 }

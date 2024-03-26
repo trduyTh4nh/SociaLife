@@ -11,6 +11,7 @@ import com.example.projectmain.Model.Account;
 import com.example.projectmain.Model.User;
 
 import java.sql.SQLClientInfoException;
+import java.util.List;
 
 public final class GlobalUser {
     private static final String SHARED_PREF_NAME = "mypref";
@@ -22,24 +23,24 @@ public final class GlobalUser {
 
     private final String KEY_IMAGE_LINK = "linkImage";
     private final String KEY_NAME = "name";
+
+
     private final User user;
     private final Account account;
     private static GlobalUser INSTANCE;
 
-    public GlobalUser(User user, Account account) {
+    private GlobalUser(User user, Account account) {
         this.user = user;
         this.account = account;
     }
 
     public static GlobalUser getInstance(Context c){
-        if(INSTANCE == null){
-            DB db = new DB(c);
-            SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            String email = sharedPreferences.getString(KEY_EMAIL, null);
-            Account tmpAccount = new Account();
-            tmpAccount.setEmail(email);
-            INSTANCE = new GlobalUser(db.getUser(email), tmpAccount);
-        }
+        DB db = new DB(c);
+        SharedPreferences sharedPreferences = c.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        Account tmpAccount = new Account();
+        tmpAccount.setEmail(email);
+        INSTANCE = new GlobalUser(db.getUser(email), tmpAccount);
         return INSTANCE;
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/color_white"
+        android:title="Trắng" />
+    <item
+        android:id="@+id/color_yellow"
+        android:title="Vàng" />
+    <item
+        android:id="@+id/color_red"
+        android:title="Đỏ" />
+    <item
+        android:id="@+id/color_blue"
+        android:title="Xanh" />
+</menu>
