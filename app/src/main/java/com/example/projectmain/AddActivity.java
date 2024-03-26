@@ -29,10 +29,12 @@ import android.widget.Toast;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.HomeFragment;
+import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
 import com.example.projectmain.Refactoring.Builder.ContentValueBuilder;
 import com.example.projectmain.Refactoring.Builder.Director;
 import com.example.projectmain.Refactoring.Builder.TextAndImageBuilder;
+import com.example.projectmain.Refactoring.Observer.AccountFl;
 import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -70,6 +72,7 @@ public class    AddActivity extends AppCompatActivity {
     private static final String KEY_NAME = "name";
     private static final String KEY_IMAGE_LINK = "linkImage";
 
+    AccountFl accountFl = new AccountFl(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,12 +148,19 @@ public class    AddActivity extends AppCompatActivity {
 
                     Date currentTime = Calendar.getInstance().getTime();
                     Log.d("Time: ", String.valueOf(currentTime));
-                    db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
+                 //   db.insertNotify(user.getId(), user.getName() + " đã đăng 1 bài viết", String.valueOf(currentTime), idPost, idlike, idComment, idshare, idUserFollower);
                     Log.d("Content Value of post: ", String.valueOf(contentValues));
                     long result = myDB.insert("post", null, contentValues);
 
                     if (result > 0) {
                         Toast.makeText(AddActivity.this, "Đăng bài thành công", Toast.LENGTH_SHORT).show();
+
+                        Log.d("ID BAI POST DA DANG: ", String.valueOf(idPost));
+                     //   accountFl.setUser(user);
+                        accountFl.update();
+//                            accountFl.setPost(p);
+//                            accountFl.update();
+//                        Log.d("POST DA DANG: ", p.getContent());
                         finish();
                     } else {
                         Toast.makeText(AddActivity.this, "Đăng bài thất bại", Toast.LENGTH_SHORT).show();
@@ -175,7 +185,7 @@ public class    AddActivity extends AppCompatActivity {
         builder.setItems(option, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                if (i == 0) {
+                 if (i == 0) {
                     if (!CheckCamneraPermission()) {
                         requestCameraPermisson();
                     } else {
