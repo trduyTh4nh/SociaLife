@@ -13,10 +13,8 @@ public class DeleteCommand extends Command {
 
     public DeleteCommand(Post post, List<Post> postList, RecyclerView.Adapter adapter, int position) {
         super(post, postList, adapter, position);
-
         undoCommand = new UndoCommand(post, postList, adapter, position);
        // undoCommand.addPostToUndo(undoCommand);
-
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UndoCommand extends Command {
-    private List<Post> undo_posts;
+    private List<Post> undoPosts;
 
     public UndoCommand(Post post, List<Post> postList, RecyclerView.Adapter adapter, int position) {
         super(post, postList, adapter, position);
-        this.undo_posts = new ArrayList<>();
+        this.undoPosts = new ArrayList<>();
     }
 
     public void addPostToUndo(Post post_) {
         if (post != null) {
-            undo_posts.add(post_);
+            undoPosts.add(post_);
         }
     }
 
