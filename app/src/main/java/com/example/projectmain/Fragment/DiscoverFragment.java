@@ -29,6 +29,7 @@ import com.example.projectmain.R;
 import com.example.projectmain.Refactoring.Mememto.GlobalMemento;
 import com.example.projectmain.Refactoring.Mememto.PostHistory;
 import com.example.projectmain.Refactoring.Mememto.PostMemento;
+import com.example.projectmain.Refactoring.Prototype.ReactionRegistry;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,7 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class DiscoverFragment extends Fragment {
+public class DiscoverFragment extends Fragment  {
     public static DiscoverFragment newInstance() {
         DiscoverFragment fragment = new DiscoverFragment();
 
@@ -121,7 +122,7 @@ public class DiscoverFragment extends Fragment {
         //  posts = getSharePost();
         //List<Post> postNormal = getPostVip(user.getId());
 
-        adapter = new PostAdapter(getActivity(), posts);
+        adapter = new PostAdapter(getActivity(), posts, new ReactionRegistry());
         adapter.notifyDataSetChanged();
 
 //        GlobalMemento globalMemento = GlobalMemento.getInstance();
@@ -174,14 +175,13 @@ public class DiscoverFragment extends Fragment {
         posts.addAll(getPost());
         //posts.addAll(getPostMerge(user.getId()));
         //posts.addAll(getSharePost());
-        adapter = new PostAdapter(getContext().getApplicationContext(), posts);
+        adapter = new PostAdapter(getContext().getApplicationContext(), posts, new ReactionRegistry());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
     @SuppressLint("Range")
     public List<Post> getPost() {
-        String[] column = {"content", "image", "comment_count", "datetime"};
         List<Post> posts = new ArrayList<Post>();
         SQLiteDatabase myDB = db.getWritableDatabase();
 
@@ -231,7 +231,9 @@ public class DiscoverFragment extends Fragment {
             d.setCalendar(c);
             String test = d.format(new Date(Long.parseLong(time)));
             timedifference += " (Đăng ngày " + test + ")";
-            posts.add(new Post(idPost, iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, timedifference));
+            Post post = new Post(idPost, iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, timedifference);
+            post.setStatePost(cursor.getInt(cursor.getColumnIndex("state_post_edit")));
+            posts.add(post);
 
         }
         return posts;
@@ -290,3 +292,5 @@ public class DiscoverFragment extends Fragment {
         return posts;
     }
 }
+
+

@@ -27,6 +27,9 @@ import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Follower;
 import com.example.projectmain.Model.Post;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Proxy.UserManager;
+import com.example.projectmain.Refactoring.Proxy.UserProxy;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -55,13 +58,9 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-        share = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-        String name = share.getString(KEY_NAME, null);
-        Log.d("Name", name);
         db = new DB(this);
-        curID = db.getIduser(name);
+        curID = GlobalUser.getInstance(this).getUser().getId();
         prepareView();
-
         Intent i = getIntent();
         Bundle b = i.getExtras();
         id = b.getInt("idUser");

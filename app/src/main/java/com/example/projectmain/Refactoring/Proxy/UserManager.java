@@ -1,8 +1,11 @@
 package com.example.projectmain.Refactoring.Proxy;
 
 import android.annotation.SuppressLint;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.widget.Toast;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
@@ -43,8 +46,26 @@ public class UserManager implements IUserManager {
     }
 
     @Override
-    public void postEditedInfo(User newInfo) {
-        //TODO: Sau khi thanh xong Builder
+    public void postEditedInfo(User newInfo, String password, String confirmPass) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(GlobalUser.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String pass = sharedPreferences.getString("password", null);
+        String userName = newInfo.getName();
+        String story = newInfo.getDescription();
+        DB db = new DB(c);
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("imageEdit", String.valueOf(newInfo.getImage()));
+        String linkImage = String.valueOf(newInfo.getImage());
+        SharedPreferences.Editor saveImage = sharedPreferences.edit();
+        saveImage.putString("linkImage", linkImage);
+        if (password.equals(pass)) {
+            if (!password.equals("") && !confirmPass.equals("") && password.equals(confirmPass)) {
+                db.UpdateDataEditInfo(user, userName, story, linkImage);
+                Toast.makeText(c, "Thành công", Toast.LENGTH_SHORT).show();
+            } else
+                Toast.makeText(c, "Nhập mật khẩu để xác nhận!", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(c, "Sai mật khẩu.", Toast.LENGTH_SHORT).show();
+        saveImage.apply();
     }
 
     @Override

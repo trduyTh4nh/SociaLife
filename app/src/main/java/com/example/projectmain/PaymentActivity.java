@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.projectmain.Refactoring.Decorator.BlueTickDecorator;
+import com.example.projectmain.Refactoring.Decorator.Decorator;
 import com.example.projectmain.Refactoring.Decorator.GoldCrownDecorator;
 import com.example.projectmain.Refactoring.Decorator.IDecorator;
 import com.example.projectmain.Refactoring.Decorator.PurpleFrameDecorator;
@@ -47,9 +48,11 @@ public class PaymentActivity extends AppCompatActivity {
                         .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 IDecorator normalUser = null;
-                                IDecorator buyBlueTick = new BlueTickDecorator(normalUser);
+                                Decorator buyBlueTick = new BlueTickDecorator(normalUser);
                                 buyBlueTick.addItem(PaymentActivity.this);
+
                                 dialogInterface.dismiss();
                             }
                         })
@@ -74,13 +77,15 @@ public class PaymentActivity extends AppCompatActivity {
                         .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 IDecorator normalUser = null;
-                                IDecorator buyFrameAndCrown = new GoldCrownDecorator(new PurpleFrameDecorator(normalUser));
+                                Decorator buyFrameAndCrown = new GoldCrownDecorator(new PurpleFrameDecorator(normalUser));
                                 buyFrameAndCrown.addItem(PaymentActivity.this);
 //                                IDecorator buyFrame = new BlueFrameDecorator();
 //                                IDecorator buyCrown = new CrownDecorator();
 //                                buyFrame.addItem(PaymentActivity.this);
 //                                buyCrown.addItem(PaymentActivity.this);
+
                                 dialogInterface.dismiss();
                             }
                         })
@@ -107,12 +112,14 @@ public class PaymentActivity extends AppCompatActivity {
                         .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                                 IDecorator normalUser = null;
-                                IDecorator buyAll =
+                                Decorator buyAll =
                                         new BlueTickDecorator(
                                              new PurpleFrameDecorator(
                                                 new GoldCrownDecorator(normalUser)));
                                 buyAll.addItem(PaymentActivity.this);
+
 
 //                                IDecorator buyFrame = new BlueFrameDecorator(new CrownDecorator(new GreenTickDecorator()));
 //                                IDecorator buyCrown = new CrownDecorator();

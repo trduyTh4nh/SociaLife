@@ -64,15 +64,22 @@ public Post(int id, int iduser, String avatar, String imgPost, String username, 
     String content;
     String time;
 
-
+    Integer statePost;
 
     String postContent;
 
     Post sharedPost;
 
 
+    public Integer getStatePost() {
+        return statePost;
+    }
 
-    public Post(int iduser,String avatar, String imgPost, String username, String name, String number_like, String content, String time) {
+    public void setStatePost(Integer statePost) {
+        this.statePost = statePost;
+    }
+
+    public Post(int iduser, String avatar, String imgPost, String username, String name, String number_like, String content, String time) {
         this.avatar = avatar;
         this.iduser = iduser;
         this.imgPost = imgPost;

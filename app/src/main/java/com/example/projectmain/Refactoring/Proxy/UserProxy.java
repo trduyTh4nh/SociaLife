@@ -29,9 +29,9 @@ public class UserProxy implements IUserManager {
     }
 
     @Override
-    public void postEditedInfo(User newInfo) {
+    public void postEditedInfo(User newInfo, String password, String confirmPass) {
         if(checkAccess()){
-            realUserManager.postEditedInfo(newInfo);
+            realUserManager.postEditedInfo(newInfo, password, confirmPass);
         }
     }
 

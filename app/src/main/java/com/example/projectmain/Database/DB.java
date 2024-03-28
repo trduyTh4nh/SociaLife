@@ -38,8 +38,9 @@ import java.util.List;
 
 public class DB extends SQLiteOpenHelper {
     Context c;
+
     public DB(Context context) {
-        super(context, "dbSocialNetwork.db", null, 4);
+        super(context, "dbSocialNetwork.db", null, 5);
         c = context;
     }
 
@@ -59,7 +60,10 @@ public class DB extends SQLiteOpenHelper {
                 "post_count Integer NOT NULL DEFAULT (0)," +
                 "follower_count Integer NOT NULL DEFAULT (0)," +
                 "following_count Integer NOT NULL DEFAULT (0)," +
-                "description  TEXT)");
+                "description  TEXT," +
+                "status_tick Integer DEFAULT (0)," +
+                "status_green_frame Integer DEFAULT (0)," +
+                "status_crown Integer DEFAULT (0))");
         //post
         myDB.execSQL("create Table post(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -70,14 +74,13 @@ public class DB extends SQLiteOpenHelper {
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "datetime Datetime" +
+                "datetime Datetime, " +
+                "state_post_edit Integer NOT NULL DEFAULT (0)" +
                 ")");
 
 
-
-
 //        myDB.execSQL("ALTER TABLE post add isshare Integer NOT NULL DEFAULT (0)");
-       // myDB.execSQL("ALTER TABLE post drop column isshare");
+        // myDB.execSQL("ALTER TABLE post drop column isshare");
         //likes
         myDB.execSQL("create Table likes(" +
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
@@ -100,7 +103,7 @@ public class DB extends SQLiteOpenHelper {
                 "id Integer PRIMARY KEY NOT NULL UNIQUE," +
                 "iduser Integer REFERENCES user(id) NOT NULL," +
                 "idpost Integer REFERENCES post(id) NOT NULL," +
-                "datetime Datetime,"+
+                "datetime Datetime," +
                 "frompost Integer REFERENCES post(id) NOT NULL)");
         //follower
         myDB.execSQL("create Table follower(" +
@@ -120,12 +123,10 @@ public class DB extends SQLiteOpenHelper {
                 "idfollower Integer REFERENCES follower(id) NOT NULL)");
 
 
-
-
     }
 
 
-    public void saveShare(int idUser, int idCurPost, String curTime){
+    public void saveShare(int idUser, int idCurPost, String curTime) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         insertPostShare(idUser);
@@ -136,8 +137,6 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put("frompost", frompost);
         database.insert("share", null, contentValues);
     }
-
-
 
 
     @Override
@@ -289,13 +288,14 @@ public class DB extends SQLiteOpenHelper {
     }
 
     // insert post
-    public int getJustAddedPost(){
+    public int getJustAddedPost() {
         SQLiteDatabase MyDB = this.getWritableDatabase();
-        Cursor c = MyDB.query("post", null,"isshare =?", new String[]{"1"}, "id", null, "id desc");
+        Cursor c = MyDB.query("post", null, "isshare =?", new String[]{"1"}, "id", null, "id desc");
         c.moveToFirst();
         int id = c.getInt(0);
         return id;
     }
+
     public void insertPostShare(int iduser) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
 
@@ -306,7 +306,8 @@ public class DB extends SQLiteOpenHelper {
         contentValues.put("isshare", 1);
         long result = MyDB.insert("post", null, contentValues);
     }
-    public void RemoveSharedPost(int idpost){
+
+    public void RemoveSharedPost(int idpost) {
         removePost(idpost);
         SQLiteDatabase db = getWritableDatabase();
         db.delete("share", "frompost =?", new String[]{String.valueOf(idpost)});
@@ -372,15 +373,16 @@ public class DB extends SQLiteOpenHelper {
 //        cursor.close();
 //        myDB.close();
         return myDB.rawQuery("SELECT u.* FROM user u JOIN account ac on u.id = ac.iduser WHERE u.name LIKE '%" + keyword + "%'", null);
+//        return myDB.rawQuery("SELECT p.*, u.* FROM post p JOIN user u ON p.iduser = u.id  WHERE content LIKE '%" + keyword + "%'", null);
     }
 
 
     @SuppressLint("Range")
-    public Cursor getPostFromSearch(String keyword)
-    {
-        SQLiteDatabase myDB=this.getWritableDatabase();
-
-        return myDB.rawQuery("SELECT p.* FROM post p  WHERE content LIKE '%"+keyword+"%'", null);
+    public Cursor getPostFromSearch(String keyword) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        Post post = null;
+        SQLiteDatabase myDB = this.getWritableDatabase();
+        return myDB.rawQuery("SELECT p.*, u.* FROM post p JOIN user u ON p.iduser = u.id  WHERE content LIKE '%" + keyword + "%'", null);
     }
 
     public List<String> getListName() {
@@ -544,13 +546,14 @@ public class DB extends SQLiteOpenHelper {
 
         return listPost;
     }
-    public Post getPostFromID(int id, String nameUser){
+
+    public Post getPostFromID(int id, String nameUser) {
         int idUser = getIduser(nameUser);
         User u = getUser(idUser);
         Post post;
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("post", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
-        if(c.moveToFirst()){
+        if (c.moveToFirst()) {
             post = new Post();
             post.setImgPost(c.getString(3));
             post.setContent(c.getString(2));
@@ -569,11 +572,11 @@ public class DB extends SQLiteOpenHelper {
     }
 
     @SuppressLint("Range")
-    public Post getPost(int id){
+    public Post getPost(int id) {
         SQLiteDatabase database = this.getWritableDatabase();
         Post post = null;
-        Cursor cursor = database.query("post", null, "id = ?" , new String[]{String.valueOf(id)}, null, null, null, null);
-        while (cursor.moveToNext()){
+        Cursor cursor = database.query("post", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null, null);
+        while (cursor.moveToNext()) {
             post = new Post();
             User u = getUser(cursor.getInt(1));
             post.setImgPost(cursor.getString(3));
@@ -588,7 +591,8 @@ public class DB extends SQLiteOpenHelper {
         }
         return post;
     }
-    public long UpdatePost(Post p){
+
+    public long UpdatePost(Post p) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("iduser", p.getIduser());
@@ -624,10 +628,10 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public int CountMyFollower(int myID) {
-        int count =0;
-        Cursor cursor = sqLiteDatabase.query("follower", null, "idfollowing = ?" , new String[]{String.valueOf(myID)}, null, null, null);
+        int count = 0;
+        Cursor cursor = sqLiteDatabase.query("follower", null, "idfollowing = ?", new String[]{String.valueOf(myID)}, null, null, null);
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             count++;
         }
 
@@ -648,16 +652,18 @@ public class DB extends SQLiteOpenHelper {
     //TODO: Refactor lại
     public Cursor CheckLike(int idUser, int idPost) {
         SQLiteDatabase MyDB = this.getReadableDatabase();
-        Cursor cursor = MyDB.query("likes", null,"iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)},null,null,null);
+        Cursor cursor = MyDB.query("likes", null, "iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)}, null, null, null);
         return cursor;
     }
-    public void editLike(int idPost, String newEmoji){
+
+    public void editLike(int idPost, String newEmoji) {
         SQLiteDatabase myDb = this.getWritableDatabase();
         int idUser = GlobalUser.getInstance(c).getUser().getId();
         ContentValues cv = new ContentValues();
         cv.put("liketype", newEmoji);
         myDb.update("likes", cv, "iduser = ? and idpost = ?", new String[]{String.valueOf(idUser), String.valueOf(idPost)});
     }
+
     //insertLike
     public Boolean insertLikes(int iduser, int idpost, String reaction) {
         SQLiteDatabase MyDB = this.getWritableDatabase();
@@ -684,28 +690,94 @@ public class DB extends SQLiteOpenHelper {
         else
             return true;
     }
+
     // unlike
-    public void Unlike(int iduser,int idpost) {
+    public void Unlike(int iduser, int idpost) {
         SQLiteDatabase database = this.getWritableDatabase();
-        database.delete("likes", "iduser = ? and idpost = ?" , new String[]{String.valueOf(iduser), String.valueOf(idpost)});
+        database.delete("likes", "iduser = ? and idpost = ?", new String[]{String.valueOf(iduser), String.valueOf(idpost)});
     }
 
     // getlike
-    public Cursor getLike(int idPost){
+    public Cursor getLike(int idPost) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.query("likes", null,"idpost = ?", new String[] {String.valueOf(idPost)}, null, null, null);
+        return db.query("likes", null, "idpost = ?", new String[]{String.valueOf(idPost)}, null, null, null);
     }
-    public Cursor getLikeUser(int idPost){
+
+    public Cursor getLikeUser(int idPost) {
         SQLiteDatabase db = getWritableDatabase();
         return db.rawQuery("SELECT u.*, l.liketype FROM Likes l, Post p, user u WHERE l.idpost = p.id and idpost=? and l.iduser = u.id", new String[]{String.valueOf(idPost)});
     }
-    public Post getPostFromID(int id){
+
+    public Post getPostFromID(int id) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.query("post", null, "id =?", new String[]{String.valueOf(id)}, null, null, null, null);
         return new Post(c.getInt(0), c.getInt(1), getImgAvata(c.getInt(1)), c.getString(3), getName(c.getInt(1)), getName(c.getInt(1)), "0", c.getString(2), c.getString(7), c.getInt(8) == 1);
     }
-    public void insertReplyComment(ContentValues contentValues){
+
+    public void insertReplyComment(ContentValues contentValues) {
         SQLiteDatabase db = getWritableDatabase();
         db.insert("comment", null, contentValues);
     }
+
+
+    // mua vật phẩm
+    public void buyCrown(int idUser) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_crown = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyBlueFrame(int idUser) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_green_frame = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    public void buyTickGreen(int idUser) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("UPDATE user SET status_tick = 1 WHERE id = ?", new String[]{String.valueOf(idUser)});
+    }
+
+    // checking
+
+    public Boolean CheckTick(int idUser) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = MyDB.query("user", null, "id = ? and status_tick = 1", new String[]{String.valueOf(idUser)}, null, null, null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Boolean CheckFrameAndCrown(int idUser) {
+        SQLiteDatabase MyDB = this.getReadableDatabase();
+        Cursor cursor = MyDB.query("user", null, "id = ? and status_crown = 1 and status_green_frame = 1", new String[]{String.valueOf(idUser)}, null, null, null);
+        if (cursor.getCount() > 0)
+            return true;
+        else
+            return false;
+    }
+
+
+    public List<Integer> getFollowerIds(int userId) {
+        List<Integer> followerIds = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT iduser FROM follower WHERE idfollowing = ?", new String[]{String.valueOf(userId)});
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") int followerId = cursor.getInt(cursor.getColumnIndex("iduser"));
+            followerIds.add(followerId);
+        }
+
+        cursor.close();
+        db.close();
+
+        return followerIds;
+    }
+
+    public void updateStateEdit(int post) {
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        sqlDb.execSQL("UPDATE post SET state_post_edit = 1 WHERE id = ?", new String[]{String.valueOf(post)});
+
+    }
+
+
 }

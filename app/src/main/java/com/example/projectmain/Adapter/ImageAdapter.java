@@ -1,5 +1,6 @@
 package com.example.projectmain.Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,6 +28,7 @@ import com.example.projectmain.Model.User;
 import com.example.projectmain.Model.TimeHelper;
 import com.example.projectmain.PostDetailActitivty;
 import com.example.projectmain.R;
+import com.example.projectmain.Refactoring.SingletonColorChange.ColorManager;
 
 import java.util.List;
 
@@ -66,10 +68,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (isEmpty) {
             holder.tvError.setText("Không có bài đăng hình ảnh.");
+            holder.tvError.setTextColor(ColorManager.getInstance().getTextColor());
             holder.tvErrorMsg.setText("Người dùng này chưa có bài đăng nào có hình ảnh.");
+            holder.tvErrorMsg.setTextColor(ColorManager.getInstance().getTextColor());
+            holder.ivIcon.setColorFilter(ColorManager.getInstance().getTextColor());
             return;
         }
         Post imagePost = imageList.get(position);
@@ -165,13 +170,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView tvError, tvErrorMsg;
-        private ImageView image;
+        private ImageView image, ivIcon;
         private ItemClickListener i;
         public ViewHolder(@NonNull View v){
             super(v);
             image = v.findViewById(R.id.ivImage);
             tvErrorMsg = itemView.findViewById(R.id.tvErrorMsg);
             tvError = itemView.findViewById(R.id.tvError);
+            ivIcon = v.findViewById(R.id.ivIcon);
             v.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener listener){

@@ -64,7 +64,8 @@
                                     android:scaleType="centerCrop"
                                     android:src="@drawable/imgquang"
                                     app:shapeAppearanceOverlay="@style/circleImageView"
-                                    app:strokeWidth="6dp" />
+                                    app:strokeWidth="6dp"
+                                    />
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
 
@@ -75,24 +76,27 @@
                             android:layout_marginLeft="20dp"
                             android:orientation="vertical">
 
-                           <LinearLayout
-                               android:layout_width="wrap_content"
-                               android:layout_height="wrap_content">
-                               <TextView
-                                   android:id="@+id/name"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   android:text="Trí Quang"
-                                   android:textColor="@color/black"
-                                   android:textStyle="bold" />
-                               <ImageView
-                                   android:id="@+id/blueTick"
-                                   android:src="@drawable/baseline_verified_24"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="match_parent"
-                                   android:layout_gravity="center_vertical"
-                                   android:visibility="gone"></ImageView>
-                           </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Trí Quang"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+                                <ImageView
+                                    android:id="@+id/blueTick"
+                                    android:src="@drawable/baseline_verified_24"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center_vertical"
+                                    android:visibility="gone"
+                                    >
+                                </ImageView>
+                            </LinearLayout>
+
                             <TextView
                                 android:id="@+id/nameu_user"
                                 android:layout_width="wrap_content"
@@ -112,39 +116,40 @@
                         android:paddingEnd="10dp">
 
                         <TextView
-                            android:id="@+id/tvFollowed"
-                            android:layout_width="99dp"
-                            android:layout_height="50dp"
-                            android:layout_marginEnd="10dp"
-                            android:gravity="center"
-                            android:text="Đã theo dõi"
+                            android:visibility="gone"
                             android:textColor="#5381F8"
+                            android:gravity="center"
                             android:textStyle="bold"
-                            android:visibility="gone">
+                            android:layout_marginEnd="10dp"
+                            android:id="@+id/tvFollowed"
+                            android:text="Đã theo dõi"
+                            android:layout_width="99dp"
+                            android:layout_height="50dp">
 
                         </TextView>
 
                         <Button
+                            android:visibility="visible"
                             android:id="@+id/btnFlolow"
                             style="@style/FollowBtn"
+                            android:backgroundTint="#5381F8"
                             android:layout_width="99dp"
                             android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:layout_marginEnd="10dp"
-                            android:backgroundTint="#5381F8"
                             android:gravity="center"
                             android:text="Theo dõi"
                             android:textAlignment="center"
-                            android:textAllCaps="false"
-                            android:visibility="visible" />
+                            android:textAllCaps="false" />
 
                         <ImageButton
+                            android:paddingLeft="15dp"
                             android:id="@+id/btnOptions"
+                            android:background="@drawable/transparent_ripple"
+                            android:src="@drawable/ellipsis_v_solid"
                             android:layout_width="35dp"
                             android:layout_height="50dp"
-                            android:background="@drawable/transparent_ripple"
-                            android:paddingLeft="15dp"
-                            android:src="@drawable/ellipsis_v_solid" />
+                            />
                     </LinearLayout>
 
                 </LinearLayout>

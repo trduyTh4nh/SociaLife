@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Model.Post;
+import com.example.projectmain.Refactoring.State.EditedPostState;
+import com.example.projectmain.Refactoring.State.PostContext;
 import com.example.projectmain.Refactoring.Strategy.CameraImagePicker;
 import com.example.projectmain.Refactoring.Strategy.GalleryImagePicker;
 import com.example.projectmain.Refactoring.Strategy.IimagePicker;
@@ -103,6 +105,13 @@ public class EditPostActivity extends AppCompatActivity {
                 }
                 p.setContent(edtContent.getText().toString());
                 long l = db.UpdatePost(p);
+
+                // user State design pattern
+
+                EditedPostState editedPostState = new EditedPostState(EditPostActivity.this);
+                PostContext postContext = new PostContext(editedPostState);
+                postContext.editState(p.getId());
+
                 if(l == 0){
                     Toast.makeText(EditPostActivity.this, "lỗi!", Toast.LENGTH_SHORT).show();
                 }
