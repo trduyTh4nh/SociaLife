@@ -34,6 +34,9 @@ import android.widget.Toast;
 import com.example.projectmain.Database.DB;
 import com.example.projectmain.Fragment.UserFragment;
 import com.example.projectmain.Model.User;
+import com.example.projectmain.Refactoring.Proxy.UserManager;
+import com.example.projectmain.Refactoring.Proxy.UserProxy;
+import com.example.projectmain.Refactoring.Singleton.GlobalUser;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -83,13 +86,8 @@ public class    EditInfoActivity extends AppCompatActivity {
         db = new DB(this);
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
-
-        String email = sharedPreferences.getString(KEY_EMAIL, null);
-        String name = sharedPreferences.getString(KEY_NAME, null);
-        String desc = sharedPreferences.getString(KEY_DESCRIPTION, null);
-        //
-        edtUserName.setText(name);
-        user = db.getUser(email);
+        user = GlobalUser.getInstance(this).getUser();
+        edtUserName.setText(user.getName());
         if(db.getImagefor(user.getId()) == null){
             imgCurrent.setImageResource(R.drawable.def);
         } else {
@@ -110,36 +108,15 @@ public class    EditInfoActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String pass = sharedPreferences.getString(KEY_PASSWORD, null);
-
-                String userName = edtUserName.getText().toString();
-                String story = edtStory.getText().toString();
-                String password = edtPassword.getText().toString();
-                String confirmPass = edtConfirmPass.getText().toString();
-
-
-
-
-
-                SQLiteDatabase myDB = db.getWritableDatabase();
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("imageEdit", String.valueOf(imageUri));
-
-                String linkImage = String.valueOf(imageUri);
-                SharedPreferences.Editor saveImage = sharedPreferences.edit();
-
-                saveImage.putString(KEY_IMAGE_LINK, linkImage);
-                if (password.equals(pass)) {
-                    if (!password.equals("") && !confirmPass.equals("") && password.equals(confirmPass)) {
-                        db.UpdateDataEditInfo(user, userName, story, linkImage);
-                        Toast.makeText(EditInfoActivity.this, "Thành công", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(EditInfoActivity.this, "Nhập mật khẩu để xác nhận!", Toast.LENGTH_SHORT).show();
-                } else
-                    Toast.makeText(EditInfoActivity.this, "Sai mật khẩu.", Toast.LENGTH_SHORT).show();
-                saveImage.commit();
-
+                UserProxy proxy = new UserProxy(new UserManager(getApplicationContext(), user), getApplicationContext());
+                if(proxy.getUser() != null){
+                    user.setName(edtUserName.getText().toString());
+                    user.setDescription(edtStory.getText().toString());
+                    user.setImage(imageUri.toString());
+                    proxy.postEditedInfo(user, edtPassword.getText().toString(), edtConfirmPass.getText().toString());
+                } else {
+                    Toast.makeText(EditInfoActivity.this, "Không có quyền truy cập!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
