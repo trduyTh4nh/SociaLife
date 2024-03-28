@@ -8,10 +8,10 @@ import com.example.projectmain.Model.User;
 
 public class AccountFl implements IObserver {
 
-    Publisher publisher;
-    User user;
+    private Publisher publisher;
+    private User user;
 
-    Context context;
+    private Context context;
     public AccountFl(Context context) {
         this.context = context;
     }

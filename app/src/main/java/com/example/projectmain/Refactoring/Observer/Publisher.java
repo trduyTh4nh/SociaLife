@@ -15,10 +15,10 @@ import java.util.List;
 
 public class Publisher  {
 
-    private SQLiteDatabase database;
-    DB db;
 
-    Context context;
+    private DB db;
+
+    private Context context;
 
     public Publisher(Context context) {
         this.context = context;

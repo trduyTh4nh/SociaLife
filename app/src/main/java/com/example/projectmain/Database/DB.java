@@ -74,7 +74,8 @@ public class DB extends SQLiteOpenHelper {
                 "like_count Integer NOT NULL DEFAULT (0)," +
                 "comment_count Integer NOT NULL DEFAULT (0)," +
                 "share_count Integer NOT NULL DEFAULT (0)," +
-                "datetime Datetime" +
+                "datetime Datetime, " +
+                "state_post_edit Integer NOT NULL DEFAULT (0)" +
                 ")");
 
 
@@ -761,7 +762,7 @@ public class DB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT iduser FROM follower WHERE idfollowing = ?", new String[]{String.valueOf(userId)});
 
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             @SuppressLint("Range") int followerId = cursor.getInt(cursor.getColumnIndex("iduser"));
             followerIds.add(followerId);
         }
@@ -770,6 +771,12 @@ public class DB extends SQLiteOpenHelper {
         db.close();
 
         return followerIds;
+    }
+
+    public void updateStateEdit(int post) {
+        SQLiteDatabase sqlDb = this.getWritableDatabase();
+        sqlDb.execSQL("UPDATE post SET state_post_edit = 1 WHERE id = ?", new String[]{String.valueOf(post)});
+
     }
 
 

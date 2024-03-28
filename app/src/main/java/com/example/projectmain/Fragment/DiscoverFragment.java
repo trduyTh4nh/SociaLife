@@ -182,7 +182,6 @@ public class DiscoverFragment extends Fragment  {
 
     @SuppressLint("Range")
     public List<Post> getPost() {
-        String[] column = {"content", "image", "comment_count", "datetime"};
         List<Post> posts = new ArrayList<Post>();
         SQLiteDatabase myDB = db.getWritableDatabase();
 
@@ -232,7 +231,9 @@ public class DiscoverFragment extends Fragment  {
             d.setCalendar(c);
             String test = d.format(new Date(Long.parseLong(time)));
             timedifference += " (Đăng ngày " + test + ")";
-            posts.add(new Post(idPost, iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, timedifference));
+            Post post = new Post(idPost, iduser, db.getImgAvata(iduser), img, db.getName(iduser), db.getName(iduser), String.valueOf(count_like), content, timedifference);
+            post.setStatePost(cursor.getInt(cursor.getColumnIndex("state_post_edit")));
+            posts.add(post);
 
         }
         return posts;
