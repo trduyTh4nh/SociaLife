@@ -14,7 +14,7 @@ import java.sql.SQLClientInfoException;
 import java.util.List;
 
 public final class GlobalUser {
-    private static final String SHARED_PREF_NAME = "mypref";
+    public static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_EMAIL = "email";
 
     private final String KEY_PASSWORD = "password";

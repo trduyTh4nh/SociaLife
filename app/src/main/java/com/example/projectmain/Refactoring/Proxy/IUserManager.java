@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public interface IUserManager {
     ArrayList<Post> getOwnPosts();
-    void postEditedInfo(User newInfo);
+
+    void postEditedInfo(User newInfo, String password, String confirmPass);
+
     User getUser();
 
 }
