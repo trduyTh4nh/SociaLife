@@ -9,7 +9,15 @@
      <img src='https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white'/>
      <hr>
 </div>
-
+# Chức năng
+- CRUD Bài viết
+- Like bài viết
+- Comment trên bài viết
+- Share bài viết
+- Follow người dùng khác
+- Unfollow người dùng khác
+- Đăng nhập, đăng ký
+- Chỉnh sửa thông tin cá nhân
 # Cách build và cài đặt
 #### Lưu ý khi chạy Ứng dụng trên phiên bản Android quá cũ (Android 7.1 trở về trước):
 - Hình ảnh sẽ không được hiển thị đúng cách.
